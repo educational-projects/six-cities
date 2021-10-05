@@ -1,7 +1,11 @@
-import MainScreen from '../pages/main-screen/main-screen';
+import MainScreen from '../../pages/main-screen/main-screen';
 
-function App(): JSX.Element {
-  return <MainScreen/>;
+type AppScreenProps = {
+  cards: number[]
+}
+
+function App({cards}: AppScreenProps): JSX.Element {
+  return <MainScreen cards={cards}/>;
 }
 
 export default App;

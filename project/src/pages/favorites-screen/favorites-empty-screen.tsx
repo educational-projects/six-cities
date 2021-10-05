@@ -1,5 +1,5 @@
-import FooterComponent from '../../footer/footer';
-import HeaderComponent from '../../header/header';
+import FooterComponent from '../../components/footer/footer';
+import HeaderComponent from '../../components/header/header';
 
 function FavoritesEmptyScreen(): JSX.Element {
   return (

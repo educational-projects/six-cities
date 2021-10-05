@@ -1,4 +1,4 @@
-import LoginComponent from '../login/login';
+import LoginComponent from '../user-nav/user-nav';
 
 function HeaderComponent(): JSX.Element {
   return (
