@@ -1,9 +1,19 @@
+import { Link } from 'react-router-dom';
+import FooterComponent from '../../components/footer/footer';
+
 function NotFoundScreen(): JSX.Element {
   return (
-    <section className="">
-      <h1>404. Page not found</h1>
-      <a href="/#">Вернуться на главную</a>
-    </section>
+    <>
+      <section
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        <h1>404. Page not found</h1>
+        <Link to='/'>Вернуться на главную</Link>
+      </section>
+      <FooterComponent/>
+    </>
   );
 }
 
