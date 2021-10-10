@@ -1,20 +1,21 @@
 import { Link } from 'react-router-dom';
-import FooterComponent from '../../components/footer/footer';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import styles from './not-found.module.css';
 
-function NotFoundScreen(): JSX.Element {
+function NotFound(): JSX.Element {
   return (
     <>
-      <section
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        <h1>404. Page not found</h1>
-        <Link to='/'>Вернуться на главную</Link>
+      <Header/>
+      <section className={styles.container}>
+        <h1 className={styles.title}>404. Page not found</h1>
+        <Link className={styles.link} to='/'>
+          <span className={styles.span}>Go to back</span>
+        </Link>
       </section>
-      <FooterComponent/>
+      <Footer/>
     </>
   );
 }
 
-export default NotFoundScreen;
+export default NotFound;

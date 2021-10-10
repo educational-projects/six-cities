@@ -1,4 +1,4 @@
-function CitiesComponent(): JSX.Element {
+function CitiesMenu(): JSX.Element {
   return (
     <>
       <h1 className="visually-hidden">Cities</h1>
@@ -42,4 +42,4 @@ function CitiesComponent(): JSX.Element {
   );
 }
 
-export default CitiesComponent;
+export default CitiesMenu;

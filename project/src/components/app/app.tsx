@@ -1,10 +1,10 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-import LoginScreen from '../../pages/login-screen/login-screen';
-import MainScreen from '../../pages/main-screen/main-screen';
-import NotFoundScreen from '../../pages/not-found/not-found-screen';
-import PropertyScreen from '../../pages/property-screen/property-screen';
+import Favorites from '../../pages/favorites-screen/favorites-screen';
+import Login from '../../pages/login-screen/login-screen';
+import Main from '../../pages/main-screen/main-screen';
+import NotFound from '../../pages/not-found/not-found-screen';
+import Property from '../../pages/property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
@@ -16,22 +16,22 @@ function App({cards}: AppScreenProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen cards={cards}/>
+          <Main cards={cards}/>
         </Route>
-        <Route exact path={AppRoute['Sign-in']}>
-          <LoginScreen/>
+        <Route exact path={AppRoute.Login}>
+          <Login/>
         </Route>
         <PrivateRoute exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen/>}
+          render={() => <Favorites/>}
           authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
-          <PropertyScreen/>
+          <Property/>
         </Route>
         <Route>
-          <NotFoundScreen/>
+          <NotFound/>
         </Route>
       </Switch>
     </BrowserRouter>

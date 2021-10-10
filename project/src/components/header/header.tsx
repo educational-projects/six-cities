@@ -1,20 +1,21 @@
-import LoginComponent from '../user-nav/user-nav';
+import { Link } from 'react-router-dom';
+import UserLogin from '../user-nav/user-nav';
 
-function HeaderComponent(): JSX.Element {
+function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link header__logo-link--active" href="/#">
+            <Link className="header__logo-link header__logo-link--active" to='/'>
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-            </a>
+            </Link>
           </div>
-          <LoginComponent/>
+          <UserLogin/>
         </div>
       </div>
     </header>
   );
 }
 
-export default HeaderComponent;
+export default Header;

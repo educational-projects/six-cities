@@ -1,4 +1,4 @@
-function LoginComponent(): JSX.Element {
+function UserLogin(): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -19,4 +19,4 @@ function LoginComponent(): JSX.Element {
   );
 }
 
-export default LoginComponent;
+export default UserLogin;

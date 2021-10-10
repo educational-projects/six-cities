@@ -4,7 +4,7 @@ type CardListProps = {
   cards: number[]
 }
 
-function CardListComponent({cards}: CardListProps): JSX.Element {
+function CardList({cards}: CardListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {cards.map((index) => <ItemCard key={index}/>)}
@@ -12,4 +12,4 @@ function CardListComponent({cards}: CardListProps): JSX.Element {
   );
 }
 
-export default CardListComponent;
+export default CardList;
