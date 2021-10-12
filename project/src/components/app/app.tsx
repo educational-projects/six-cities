@@ -5,10 +5,11 @@ import Login from '../../pages/login-screen/login-screen';
 import Main from '../../pages/main-screen/main-screen';
 import NotFound from '../../pages/not-found/not-found-screen';
 import Property from '../../pages/property-screen/property-screen';
+import { Offers } from '../../types/offer';
 import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
-  cards: number[]
+  cards: Offers
 }
 
 function App({cards}: AppScreenProps): JSX.Element {
