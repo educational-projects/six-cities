@@ -21,7 +21,7 @@ export const offers: Offers = [
     },
     id: 1,
     images: ['img/1.png'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 52.35514938496378,
@@ -111,7 +111,7 @@ export const offers: Offers = [
         longitude: 4.895168,
         zoom: 10,
       },
-      name: 'Hamburg',
+      name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Hamburg.',
     goods: ['Coffee machine', 'Dishwasher'],
