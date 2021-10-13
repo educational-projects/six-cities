@@ -1,26 +1,29 @@
 import { Link } from 'react-router-dom';
-import { offersType } from '../../const';
+import { cardArticleType, offersType } from '../../const';
 import { Offer } from '../../types/offer';
 
 type ItemCardProps = {
   card: Offer,
+  typeCard?: string
 }
 
-function ItemCard({card}: ItemCardProps): JSX.Element {
+function ItemCard({card, typeCard='cities'}: ItemCardProps): JSX.Element {
+
   const {isPremium, isFavorite, previewImage, price, type, rating, title} = card;
   const offerRating = `${Math.round(rating) * 20}%`;
+
   return (
-    <article className="cities__place-card place-card">
+    <article className={`${cardArticleType[typeCard]} place-card`}>
       {isPremium &&
             <div className="place-card__mark">
               <span>Premium</span>
             </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${typeCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="/">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Apartament"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${typeCard === 'favorite' ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -40,7 +43,7 @@ function ItemCard({card}: ItemCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/">{title}</Link>
+          <Link to="offer/1">{title}</Link>
         </h2>
         <p className="place-card__type">{offersType[type]}</p>
       </div>

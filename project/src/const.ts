@@ -1,4 +1,4 @@
-import { OfferType } from './types/const';
+import { CardArticleType, OfferType } from './types/const';
 
 export enum AppRoute {
   Main = '/',
@@ -18,3 +18,14 @@ export const offersType: OfferType = {
   house: 'House',
   hotel: 'Hotel',
 };
+
+export const cardArticleType: CardArticleType = {
+  cities: 'cities__place-card',
+  favorite: 'favorites__card',
+  near: 'near-places__card',
+};
+// export const cardArticleType: CardArticleType = {
+//   default: 'cities__place-card',
+//   favorite: 'favorites__card',
+//   near: 'near-places__card',
+// };

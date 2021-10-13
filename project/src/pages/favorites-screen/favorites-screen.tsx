@@ -9,7 +9,7 @@ type FavoritesProps = {
 
 function Favorites({favoritesCards}: FavoritesProps): JSX.Element {
   const favoritesList = favoritesCards.filter((card) => card.isFavorite);
-  const citiesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
+  const cityesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
 
   return (
     <div className="page">
@@ -19,7 +19,7 @@ function Favorites({favoritesCards}: FavoritesProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoriteItemList citys={citiesList} cards={favoritesList} />
+            <FavoriteItemList citys={cityesList} cards={favoritesList} />
           </section>
         </div>
       </main>
