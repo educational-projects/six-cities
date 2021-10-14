@@ -24,8 +24,3 @@ export const cardArticleType: CardArticleType = {
   favorite: 'favorites__card',
   near: 'near-places__card',
 };
-// export const cardArticleType: CardArticleType = {
-//   default: 'cities__place-card',
-//   favorite: 'favorites__card',
-//   near: 'near-places__card',
-// };
