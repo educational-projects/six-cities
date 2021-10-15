@@ -7,23 +7,27 @@ type ItemCardProps = {
   typeCard?: string
 }
 
-function ItemCard({card, typeCard='cities'}: ItemCardProps): JSX.Element {
-
+function ItemCard({card, typeCard ='cities'}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title} = card;
-  const offerRating = `${Math.round(rating) * 20}%`;
+  const offerRating = `${(Math.round(rating) / 5) * 100}%`;
+  const favoriteType = typeCard === 'favorites';
 
   return (
     <article className={`${cardArticleType[typeCard]} place-card`}>
-      {isPremium &&
-            <div className="place-card__mark">
-              <span>Premium</span>
-            </div>}
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>)}
       <div className={`${typeCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="/">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Apartament"/>
+          <img className="place-card__image" src={previewImage}
+            width={`${favoriteType ? '150' : '260'}`}
+            height={`${favoriteType ? '110' : '200'}`}
+            alt="Apartament"
+          />
         </Link>
       </div>
-      <div className={`${typeCard === 'favorite' ? 'favorites__card-info' : ''} place-card__info`}>
+      <div className={`${favoriteType ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

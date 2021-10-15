@@ -1,4 +1,8 @@
-import { CardArticleType, OfferType } from './types/const';
+// import { CardArticleType, OfferType } from './types/const';
+
+export type ObjectStrings = {
+  [key: string]: string
+}
 
 export enum AppRoute {
   Main = '/',
@@ -12,15 +16,15 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
 }
 
-export const offersType: OfferType = {
+export const offersType: ObjectStrings = {
   apartment: 'Apartment',
   room: 'Room',
   house: 'House',
   hotel: 'Hotel',
 };
 
-export const cardArticleType: CardArticleType = {
+export const cardArticleType: ObjectStrings = {
   cities: 'cities__place-card',
-  favorite: 'favorites__card',
+  favorites: 'favorites__card',
   near: 'near-places__card',
 };

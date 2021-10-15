@@ -19,7 +19,7 @@ function FavoriteItem({city, cards}: FavoriteItemProps): JSX.Element {
         </div>
       </div>
       <div className="favorites__places">
-        {cityProposals.map((card) => <ItemCard card={card} typeCard={'favorite'} key={card.id}/>)}
+        {cityProposals.map((card) => <ItemCard card={card} typeCard={'favorites'} key={card.id}/>)}
       </div>
     </li>
   );

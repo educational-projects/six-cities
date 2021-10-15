@@ -7,7 +7,7 @@ type CardListProps = {
 }
 
 function CardList({cards}: CardListProps): JSX.Element {
-  // const [focusCard, setFocusCard] = useState(cards[0].id);
+  // const [activCard, setActivCard] = useState(null);
 
   return (
     <div className="cities__places-list places__list tabs__content">
