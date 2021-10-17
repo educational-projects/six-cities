@@ -3,17 +3,21 @@ import { cardArticleType, offersType } from '../../const';
 import { Offer } from '../../types/offer';
 
 type ItemCardProps = {
-  card: Offer,
-  typeCard?: string
+  card: Offer;
+  typeCard?: string;
+  onActivCard?: (id: number | null) => void;
 }
 
-function ItemCard({card, typeCard ='cities'}: ItemCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, price, type, rating, title} = card;
+function ItemCard({card, typeCard ='cities', onActivCard}: ItemCardProps): JSX.Element {
+  const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
   const offerRating = `${(Math.round(rating) / 5) * 100}%`;
   const favoriteType = typeCard === 'favorites';
 
   return (
-    <article className={`${cardArticleType[typeCard]} place-card`}>
+    <article className={`${cardArticleType[typeCard]} place-card`}
+      onMouseEnter={() => onActivCard ? onActivCard(id) : undefined}
+      onMouseLeave={() => onActivCard ? onActivCard(null) : undefined}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -47,7 +51,7 @@ function ItemCard({card, typeCard ='cities'}: ItemCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="offer/1">{title}</Link>
+          <Link to={`offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{offersType[type]}</p>
       </div>

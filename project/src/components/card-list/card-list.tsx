@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Offers } from '../../types/offer';
 import ItemCard from '../card/card';
 
@@ -7,11 +7,15 @@ type CardListProps = {
 }
 
 function CardList({cards}: CardListProps): JSX.Element {
-  // const [activCard, setActivCard] = useState(null);
+  const [, setActivCard] = useState<number | null>(null);
+
+  const handleActivCard = (id: number | null) => {
+    setActivCard(id);
+  };
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cards.map((card) => <ItemCard card={card} key={card.id}/>)}
+      {cards.map((card) => <ItemCard card={card} key={card.id} onActivCard={handleActivCard}/>)}
     </div>
   );
 }
