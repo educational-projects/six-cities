@@ -2,9 +2,10 @@ import CardList from '../../components/card-list/card-list';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
 import Header from '../../components/header/header';
 import Sorting from '../../components/sorting/sorting';
+import { Offers } from '../../types/offer';
 
 type MainScreenProps = {
-  cards: number[]
+  cards: Offers
 }
 
 function Main({cards}: MainScreenProps): JSX.Element {

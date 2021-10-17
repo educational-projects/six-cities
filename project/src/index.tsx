@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
-const Setting = {
-  CARDS: new Array(5).fill(null).map((item, index) => index),
-};
+import { offers } from './mock/offers';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App cards = {Setting.CARDS} />
+    <App cards = {offers} />
   </React.StrictMode>,
   document.getElementById('root'));
