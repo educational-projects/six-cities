@@ -22,3 +22,11 @@ export const cardArticleType: {[key: string]: string} = {
   favorites: 'favorites__card',
   near: 'near-places__card',
 };
+
+export const ratingStarSetting: {[key: string]: string} = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+};

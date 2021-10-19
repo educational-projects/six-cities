@@ -38,31 +38,5 @@ function App({cards}: AppScreenProps): JSX.Element {
     </BrowserRouter>
   );
 }
-// function App({cards}: AppScreenProps): JSX.Element {
-//   return (
-//     <BrowserRouter>
-//       <Switch>
-//         <Route exact path={AppRoute.Main}>
-//           <Main cards={cards}/>
-//         </Route>
-//         <Route exact path={AppRoute.Login}>
-//           <Login/>
-//         </Route>
-//         <PrivateRoute exact
-//           path={AppRoute.Favorites}
-//           render={() => <Favorites favoritesCards={cards}/>}
-//           authorizationStatus={AuthorizationStatus.Auth}
-//         >
-//         </PrivateRoute>
-//         <Route exact path={AppRoute.Room}>
-//           <Property/>
-//         </Route>
-//         <Route>
-//           <NotFound/>
-//         </Route>
-//       </Switch>
-//     </BrowserRouter>
-//   );
-// }
 
 export default App;
