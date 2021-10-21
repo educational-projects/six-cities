@@ -6,30 +6,32 @@ import { Offers } from '../../types/offer';
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
+const PIN_WIDTH = 40;
+const PIN_HEIGHT = 40;
 
 type MapProps = {
   cards: Offers
-  activCard?: number | null;
+  activeCard?: number | null;
 }
 
-function Map({cards, activCard}: MapProps): JSX.Element {
+const defaultCustomIcon = leaflet.icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [PIN_WIDTH, PIN_HEIGHT],
+  iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
+});
+
+const currentCustomIcon = leaflet.icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [PIN_WIDTH, PIN_HEIGHT],
+  iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
+});
+
+function Map({cards, activeCard}: MapProps): JSX.Element {
   const city = cards[0].city;
   const points = cards;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
 
   useEffect(() => {
     if (map) {
@@ -40,14 +42,14 @@ function Map({cards, activCard}: MapProps): JSX.Element {
             lat: location.latitude,
             lng: location.longitude,
           }, {
-            icon: (point.id === activCard)
+            icon: (point.id === activeCard)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [activCard, currentCustomIcon, defaultCustomIcon, map, points]);
+  }, [activeCard, map, points]);
 
   return (
     <div
