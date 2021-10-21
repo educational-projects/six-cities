@@ -11,8 +11,8 @@ type MainScreenProps = {
 }
 
 function Main({cards}: MainScreenProps): JSX.Element {
-  const [activCard, setActivCard] = useState<number | null>(null);
-  const handleActivCard = (id: number | null) => {
+  const [activeCard, setActivCard] = useState<number | null>(null);
+  const handleActiveCard = (id: number | null) => {
     setActivCard(id);
   };
 
@@ -28,11 +28,11 @@ function Main({cards}: MainScreenProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">312 places to stay in Amsterdam</b>
               <Sorting/>
-              <CardList cards={cards} onActivCard={handleActivCard}/>
+              <CardList cards={cards} onActiveCard={handleActiveCard}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map cards={cards} activCard={activCard}/>
+                <Map cards={cards} activeCard={activeCard}/>
               </section>
             </div>
           </div>

@@ -5,18 +5,18 @@ import { Offer } from '../../types/offer';
 type ItemCardProps = {
   card: Offer;
   typeCard?: string;
-  onActivCard?: (id: number | null) => void;
+  onActiveCard?: (id: number | null) => void;
 }
 
-function ItemCard({card, typeCard ='cities', onActivCard}: ItemCardProps): JSX.Element {
+function ItemCard({card, typeCard ='cities', onActiveCard}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
   const offerRating = `${(Math.round(rating) / 5) * 100}%`;
   const favoriteType = typeCard === 'favorites';
 
   return (
     <article className={`${cardArticleType[typeCard]} place-card`}
-      onMouseEnter={() => onActivCard ? onActivCard(id) : undefined}
-      onMouseLeave={() => onActivCard ? onActivCard(null) : undefined}
+      onMouseEnter={() => onActiveCard ? onActiveCard(id) : undefined}
+      onMouseLeave={() => onActiveCard ? onActiveCard(null) : undefined}
     >
       {isPremium && (
         <div className="place-card__mark">
