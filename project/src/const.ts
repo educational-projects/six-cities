@@ -17,12 +17,6 @@ export const offersType: {[key: string]: string} = {
   hotel: 'Hotel',
 };
 
-export const cardArticleType: {[key: string]: string} = {
-  cities: 'cities__place-card',
-  favorites: 'favorites__card',
-  'near-places': 'near-places__card',
-};
-
 export const ratingStarSetting: {[key: string]: string} = {
   1: 'terribly',
   2: 'badly',

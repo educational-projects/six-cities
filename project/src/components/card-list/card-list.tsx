@@ -1,22 +1,29 @@
-import { Offers } from '../../types/offer';
+import cn from 'classnames';
 import ItemCard from '../card/card';
+import { Offers } from '../../types/offer';
 
 type CardListProps = {
   cards: Offers
   onActiveCard?: (id: number | null) => void;
-  typeList?: string;
-  typeCard?: string
+  listType?: string;
+  cardType?: string
 }
 
-const defaultClass = 'cities__places-list places__list tabs__content';
-const nearClass = 'near-places__list places__list';
-
-function CardList({cards, onActiveCard, typeList='default', typeCard}: CardListProps): JSX.Element {
-  const defaultList = typeList === 'default';
+function CardList({cards, onActiveCard, cardType, listType ='default'}: CardListProps): JSX.Element {
+  const listClasses = cn('places__list', {
+    'cities__places-list tabs__content'  : listType === 'default',
+    'near-places__list' : listType ==='near',
+  });
 
   return (
-    <div className={defaultList ? defaultClass : nearClass}>
-      {cards.map((card) => (<ItemCard card={card} key={card.id} typeCard={typeCard} onActiveCard={onActiveCard}/>))}
+    <div className={listClasses}>
+      {cards.map((card) => (
+        <ItemCard
+          card={card}
+          key={card.id}
+          cardType={cardType}
+          onActiveCard={onActiveCard}
+        />))}
     </div>
   );
 }

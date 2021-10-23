@@ -5,14 +5,16 @@ import Login from '../../pages/login-screen/login-screen';
 import Main from '../../pages/main-screen/main-screen';
 import NotFound from '../../pages/not-found/not-found-screen';
 import Property from '../../pages/property-screen/property-screen';
+import { UsersComments } from '../../types/comment';
 import { Offers } from '../../types/offer';
 import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
   cards: Offers
+  comments: UsersComments
 }
 
-function App({cards}: AppScreenProps): JSX.Element {
+function App({cards, comments}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -29,7 +31,10 @@ function App({cards}: AppScreenProps): JSX.Element {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
-          <Property cards={cards}/>
+          <Property
+            cards={cards}
+            comments={comments}
+          />
         </Route>
         <Route>
           <NotFound/>
