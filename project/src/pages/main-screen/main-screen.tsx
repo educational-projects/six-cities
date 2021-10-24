@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CardList from '../../components/card-list/card-list';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
 import Header from '../../components/header/header';
+import MapList from '../../components/map-list/map-list';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 import { Offers } from '../../types/offer';
@@ -28,12 +29,18 @@ function Main({cards}: MainScreenProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">312 places to stay in Amsterdam</b>
               <Sorting/>
-              <CardList cards={cards} onActiveCard={handleActiveCard}/>
+              <CardList
+                cards={cards}
+                onActiveCard={handleActiveCard}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map cards={cards} activeCard={activeCard}/>
-              </section>
+              <MapList>
+                <Map
+                  cards={cards}
+                  activeCard={activeCard}
+                />
+              </MapList>
             </div>
           </div>
         </div>

@@ -61,3 +61,5 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
 }
 
 export default Map;
+
+

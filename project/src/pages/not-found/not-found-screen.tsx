@@ -5,16 +5,18 @@ import styles from './not-found.module.css';
 
 function NotFound(): JSX.Element {
   return (
-    <>
+    <div className={styles.pageContainer}>
       <Header/>
       <section className={styles.container}>
-        <h1 className={styles.title}>404. Page not found</h1>
+        <div className={styles.imageWrapper}>
+          <img src='../../img/test.png' alt='404'/>
+        </div>
         <Link className={styles.link} to='/'>
-          <span className={styles.span}>Go to back</span>
+          <span className={styles.span}>Go back</span>
         </Link>
       </section>
       <Footer/>
-    </>
+    </div>
   );
 }
 
