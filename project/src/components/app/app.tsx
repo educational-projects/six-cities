@@ -55,34 +55,6 @@ function App({cards, comments, currentCity}: ConnectedComponentsProps): JSX.Elem
   );
 }
 
-export default App;
+export { App };
 
-// function App({cards, comments}: AppScreenProps): JSX.Element {
-//   return (
-//     <BrowserRouter>
-//       <Switch>
-//         <Route exact path={AppRoute.Main}>
-//           <Main cards={cards}/>
-//         </Route>
-//         <Route exact path={AppRoute.Login}>
-//           <Login/>
-//         </Route>
-//         <PrivateRoute exact
-//           path={AppRoute.Favorites}
-//           render={() => <Favorites favoritesCards={cards}/>}
-//           authorizationStatus={AuthorizationStatus.Auth}
-//         >
-//         </PrivateRoute>
-//         <Route exact path={AppRoute.Room}>
-//           <Property
-//             cards={cards}
-//             comments={comments}
-//           />
-//         </Route>
-//         <Route>
-//           <NotFound/>
-//         </Route>
-//       </Switch>
-//     </BrowserRouter>
-//   );
-// }
+export default connector(App);

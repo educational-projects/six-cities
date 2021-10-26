@@ -17,7 +17,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        cards = {offers}
+        cards={offers}
         comments={comments}
       />
     </Provider>
