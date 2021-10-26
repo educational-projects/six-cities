@@ -49,4 +49,5 @@ function Main({cards}: MainScreenProps): JSX.Element {
   );
 }
 
+
 export default Main;
