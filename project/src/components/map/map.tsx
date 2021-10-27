@@ -68,39 +68,3 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
 }
 
 export default Map;
-
-// function Map({cards, activeCard}: MapProps): JSX.Element {
-//   const city = cards[0].city;
-//   const points = cards;
-
-//   const mapRef = useRef(null);
-//   const map = useMap(mapRef, city);
-
-//   useEffect(() => {
-//     if (map) {
-//       points.forEach((point) => {
-//         const { location } = point;
-//         leaflet
-//           .marker({
-//             lat: location.latitude,
-//             lng: location.longitude,
-//           }, {
-//             icon: (point.id === activeCard)
-//               ? currentCustomIcon
-//               : defaultCustomIcon,
-//           })
-//           .addTo(map);
-//       });
-//     }
-//   }, [activeCard, map, points]);
-
-//   return (
-//     <div
-//       style={{height: '100%'}}
-//       ref={mapRef}
-//     >
-//     </div>
-//   );
-// }
-
-
