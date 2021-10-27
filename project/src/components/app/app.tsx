@@ -26,11 +26,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
 
 function App({cards, comments, currentCity}: ConnectedComponentsProps): JSX.Element {
+  const filteredCards = cards.filter((card) => card.city.name === currentCity);
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main cards={cards}/>
+          <Main cards={filteredCards}/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <Login/>

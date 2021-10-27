@@ -12,6 +12,8 @@ type MainScreenProps = {
 }
 
 function Main({cards}: MainScreenProps): JSX.Element {
+  const cityName = cards[0].city.name;
+
   const [activeCard, setActivCard] = useState<number | null>(null);
   const handleActiveCard = (id: number | null) => {
     setActivCard(id);
@@ -27,7 +29,7 @@ function Main({cards}: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{cards.length} 312 places to stay in {cityName}</b>
               <Sorting/>
               <CardList
                 cards={cards}

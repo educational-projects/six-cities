@@ -2,7 +2,7 @@ import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
 const initialState = {
-  currentCity: 'Amsterdam',
+  currentCity: 'Paris',
   cardList: [],
 };
 

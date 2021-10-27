@@ -1,4 +1,4 @@
-import leaflet from 'leaflet';
+import leaflet, { LayerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap/useMap';
@@ -26,6 +26,8 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
 });
 
+const markersLayer = new LayerGroup();
+
 function Map({cards, activeCard}: MapProps): JSX.Element {
   const city = cards[0].city;
   const points = cards;
@@ -34,19 +36,24 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+
+    markersLayer.clearLayers();
+
     if (map) {
       points.forEach((point) => {
         const { location } = point;
-        leaflet
-          .marker({
-            lat: location.latitude,
-            lng: location.longitude,
-          }, {
-            icon: (point.id === activeCard)
-              ? currentCustomIcon
-              : defaultCustomIcon,
-          })
-          .addTo(map);
+
+        const marker = new Marker({
+          lat: location.latitude,
+          lng: location.longitude,
+        });
+
+        marker.setIcon(
+          point.id === activeCard ? currentCustomIcon : defaultCustomIcon,
+        );
+
+        markersLayer.addLayer(marker);
+        markersLayer.addTo(map);
       });
     }
   }, [activeCard, map, points]);
@@ -61,5 +68,39 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
 }
 
 export default Map;
+
+// function Map({cards, activeCard}: MapProps): JSX.Element {
+//   const city = cards[0].city;
+//   const points = cards;
+
+//   const mapRef = useRef(null);
+//   const map = useMap(mapRef, city);
+
+//   useEffect(() => {
+//     if (map) {
+//       points.forEach((point) => {
+//         const { location } = point;
+//         leaflet
+//           .marker({
+//             lat: location.latitude,
+//             lng: location.longitude,
+//           }, {
+//             icon: (point.id === activeCard)
+//               ? currentCustomIcon
+//               : defaultCustomIcon,
+//           })
+//           .addTo(map);
+//       });
+//     }
+//   }, [activeCard, map, points]);
+
+//   return (
+//     <div
+//       style={{height: '100%'}}
+//       ref={mapRef}
+//     >
+//     </div>
+//   );
+// }
 
 
