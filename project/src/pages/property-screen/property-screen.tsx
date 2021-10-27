@@ -1,23 +1,33 @@
+import { useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import CardList from '../../components/card-list/card-list';
 import CommentList from '../../components/comment-list/comment-list';
 import Header from '../../components/header/header';
 import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
+import MapList from '../../components/map-list/map-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
+import { UsersComments } from '../../types/comment';
 import { Offers } from '../../types/offer';
 
 type PropertyProps = {
   cards: Offers;
+  comments: UsersComments
 }
 
-function Property({cards}: PropertyProps): JSX.Element {
+function Property({cards, comments}: PropertyProps): JSX.Element {
   const { id } = useParams() as { id: string};
+
+  const [activeCard, setActivCard] = useState<number | null>(null);
+  const handleActiveCard = (cardId: number | null) => {
+    setActivCard(cardId);
+  };
 
   const currentCard = cards.find((card) => card.id === Number(id));
   const otherCards = cards.slice(0,3);
+  const filteredComments = comments.filter((comment) => comment.id === Number(id));
 
   if (!currentCard) {
     return <Redirect to="/"/>;
@@ -72,17 +82,25 @@ function Property({cards}: PropertyProps): JSX.Element {
               </div>
               <OptionList options={currentCard?.goods}/>
               <HostList host={currentCard?.host} description={currentCard?.description}/>
-              <CommentList/>
+              <CommentList comments={filteredComments}/>
             </div>
           </div>
-          <section className="property__map map">
-            <Map cards={otherCards}/>
-          </section>
+          <MapList listType = 'property'>
+            <Map
+              cards={otherCards}
+              activeCard={activeCard}
+            />
+          </MapList>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList cards={otherCards} typeList={'near-list'} typeCard={'near-places'}/>
+            <CardList
+              cards={otherCards}
+              listType={'near'}
+              cardType={'near'}
+              onActiveCard={handleActiveCard}
+            />
           </section>
         </div>
       </main>

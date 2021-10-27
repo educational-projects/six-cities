@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CardList from '../../components/card-list/card-list';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
 import Header from '../../components/header/header';
+import MapList from '../../components/map-list/map-list';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 import { Offers } from '../../types/offer';
@@ -11,6 +12,8 @@ type MainScreenProps = {
 }
 
 function Main({cards}: MainScreenProps): JSX.Element {
+  const cityName = cards[0].city.name;
+
   const [activeCard, setActivCard] = useState<number | null>(null);
   const handleActiveCard = (id: number | null) => {
     setActivCard(id);
@@ -26,14 +29,20 @@ function Main({cards}: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{cards.length} 312 places to stay in {cityName}</b>
               <Sorting/>
-              <CardList cards={cards} onActiveCard={handleActiveCard}/>
+              <CardList
+                cards={cards}
+                onActiveCard={handleActiveCard}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map cards={cards} activeCard={activeCard}/>
-              </section>
+              <MapList>
+                <Map
+                  cards={cards}
+                  activeCard={activeCard}
+                />
+              </MapList>
             </div>
           </div>
         </div>
@@ -41,5 +50,6 @@ function Main({cards}: MainScreenProps): JSX.Element {
     </div>
   );
 }
+
 
 export default Main;

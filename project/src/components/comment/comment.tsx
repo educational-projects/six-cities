@@ -1,25 +1,49 @@
-function Comment(): JSX.Element {
+import { UserComment } from '../../types/comment';
+import { getFormatDate, getRating } from '../../utils';
+
+type CommentPrors = {
+  comment: UserComment;
+}
+
+function Comment({comment}: CommentPrors): JSX.Element {
+  const {
+    rating,
+    user,
+    date,
+    comment: userComment,
+  } = comment;
+  const {avatarUrl, isPro, name} = user;
+  const commentRating = getRating(rating);
+
+  const commentDate = getFormatDate(date, 'MMMM YYYY');
+  const commentDateTime = getFormatDate(date, 'YYYY-MM-DD');
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-                      Max
+          {name}
         </span>
+        {isPro && (
+          <span className="property__user-status">
+          Pro
+          </span>
+        )}
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: commentRating}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+          {userComment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={commentDateTime}>{commentDate}</time>
       </div>
     </li>
   );
