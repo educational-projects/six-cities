@@ -27,6 +27,7 @@ function Property({cards, comments}: PropertyProps): JSX.Element {
 
   const currentCard = cards.find((card) => card.id === Number(id));
   const otherCards = cards.slice(0,3);
+  const filteredComments = comments.filter((comment) => comment.id === Number(id));
 
   if (!currentCard) {
     return <Redirect to="/"/>;
@@ -81,7 +82,7 @@ function Property({cards, comments}: PropertyProps): JSX.Element {
               </div>
               <OptionList options={currentCard?.goods}/>
               <HostList host={currentCard?.host} description={currentCard?.description}/>
-              <CommentList comments={comments}/>
+              <CommentList comments={filteredComments}/>
             </div>
           </div>
           <MapList listType = 'property'>
