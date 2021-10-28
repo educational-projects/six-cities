@@ -37,7 +37,7 @@ function Main({cards}: MainScreenProps): JSX.Element {
               />
             </section>
             <div className="cities__right-section">
-              <MapList>
+              <MapList className={'cities__map'}>
                 <Map
                   cards={cards}
                   activeCard={activeCard}
