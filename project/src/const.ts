@@ -24,3 +24,12 @@ export const ratingStarSetting: {[key: string]: string} = {
   4: 'good',
   5: 'perfect',
 };
+
+export const SortType = {
+  POPULAR: 'Popular',
+  PRICE_UP: 'Price: low to high',
+  PRICE_DOWN: 'Price: high to low',
+  RATING_DOWN: 'Top rated first',
+};
+
+export const сitiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

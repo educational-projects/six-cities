@@ -16,8 +16,9 @@ type AppScreenProps = {
   comments: UsersComments
 }
 
-const mapStateToProps = ({currentCity}: State) => ({
+const mapStateToProps = ({currentCity, currentSortType}: State) => ({
   currentCity,
+  currentSortType,
 });
 
 const connector = connect(mapStateToProps);
@@ -25,14 +26,17 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
 
-function App({cards, comments, currentCity}: ConnectedComponentsProps): JSX.Element {
+function App({cards, comments, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
   const filteredCards = cards.filter((card) => card.city.name === currentCity);
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main cards={filteredCards}/>
+          <Main
+            cards={filteredCards}
+            currentSortType={currentSortType}
+          />
         </Route>
         <Route exact path={AppRoute.Login}>
           <Login/>

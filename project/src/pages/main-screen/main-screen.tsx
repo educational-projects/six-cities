@@ -6,18 +6,32 @@ import MapList from '../../components/map-list/map-list';
 import Map from '../../components/map/map';
 import Sorting from '../../components/sorting/sorting';
 import { Offers } from '../../types/offer';
+import { sort } from '../../utils';
 
 type MainScreenProps = {
   cards: Offers
+  currentSortType: string
 }
 
-function Main({cards}: MainScreenProps): JSX.Element {
+function Main({cards, currentSortType}: MainScreenProps): JSX.Element {
   const cityName = cards[0].city.name;
 
   const [activeCard, setActivCard] = useState<number | null>(null);
+
   const handleActiveCard = (id: number | null) => {
     setActivCard(id);
   };
+
+  const getSortedCards = (sortType: string, cardsList: Offers) => {
+    switch(sortType) {
+      case sortType:
+        return cardsList.slice().sort(sort[sortType]);
+      default:
+        return cardsList;
+    }
+  };
+
+  const sortedCards = getSortedCards(currentSortType, cards);
 
   return (
     <div className="page page--gray page--main">
@@ -32,7 +46,7 @@ function Main({cards}: MainScreenProps): JSX.Element {
               <b className="places__found">{cards.length} 312 places to stay in {cityName}</b>
               <Sorting/>
               <CardList
-                cards={cards}
+                cards={sortedCards}
                 onActiveCard={handleActiveCard}
               />
             </section>

@@ -6,6 +6,11 @@ export const changeCity = (city: string) => ({
   payload: city,
 } as const);
 
+export const changeSortType = (sortType: string) => ({
+  type: ActionType.ChangeSortType,
+  payload: sortType,
+} as const);
+
 export const getAllCards = (cards: Offers) => ({
   type: ActionType.GetAllCards,
   payload: cards,
