@@ -35,7 +35,6 @@ function App({cards, comments, currentCity, currentSortType}: ConnectedComponent
         <Route exact path={AppRoute.Main}>
           <Main
             cards={filteredCards}
-            currentSortType={currentSortType}
           />
         </Route>
         <Route exact path={AppRoute.Login}>

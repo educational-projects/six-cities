@@ -6,8 +6,8 @@ import { Offers } from '../../types/offer';
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
-const PIN_WIDTH = 40;
-const PIN_HEIGHT = 40;
+const PIN_WIDTH = 27;
+const PIN_HEIGHT = 39;
 
 type MapProps = {
   cards: Offers

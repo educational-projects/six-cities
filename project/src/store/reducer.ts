@@ -1,11 +1,11 @@
 import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
-const DEFAULT_CYTI = 'Paris';
+const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT = 'Popular';
 
 const initialState = {
-  currentCity: DEFAULT_CYTI,
+  currentCity: DEFAULT_CITY,
   currentSortType: DEFAULT_SORT,
   cardList: [],
 };
