@@ -85,7 +85,7 @@ function Property({cards, comments}: PropertyProps): JSX.Element {
               <CommentList comments={filteredComments}/>
             </div>
           </div>
-          <MapList listType = 'property'>
+          <MapList className={'property__map'}>
             <Map
               cards={otherCards}
               activeCard={activeCard}

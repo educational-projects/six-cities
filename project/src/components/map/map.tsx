@@ -6,8 +6,8 @@ import { Offers } from '../../types/offer';
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
-const PIN_WIDTH = 40;
-const PIN_HEIGHT = 40;
+const PIN_WIDTH = 27;
+const PIN_HEIGHT = 39;
 
 type MapProps = {
   cards: Offers
@@ -26,20 +26,20 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
 });
 
-const markersLayer = new LayerGroup();
-
 function Map({cards, activeCard}: MapProps): JSX.Element {
   const city = cards[0].city;
   const points = cards;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const markersLayer = useRef<LayerGroup>();
 
   useEffect(() => {
-
-    markersLayer.clearLayers();
-
     if (map) {
+      markersLayer.current?.clearLayers();
+
+      markersLayer.current = new LayerGroup().addTo(map);
+
       points.forEach((point) => {
         const { location } = point;
 
@@ -48,12 +48,11 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
           lng: location.longitude,
         });
 
-        marker.setIcon(
-          point.id === activeCard ? currentCustomIcon : defaultCustomIcon,
-        );
-
-        markersLayer.addLayer(marker);
-        markersLayer.addTo(map);
+        marker
+          .setIcon(
+            point.id === activeCard ? currentCustomIcon : defaultCustomIcon,
+          )
+          .addTo(markersLayer.current as LayerGroup);
       });
     }
   }, [activeCard, map, points]);

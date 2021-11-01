@@ -6,7 +6,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
 import { comments } from './mock/comments';
 import { offers } from './mock/offers';
-import { reducer } from './store/reduser';
+import { reducer } from './store/reducer';
 
 const store = createStore(
   reducer,
