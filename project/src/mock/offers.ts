@@ -239,38 +239,4 @@ export const offers: Offers = [
     title: 'Beautiful & luxurious',
     type: 'hotel',
   },
-  {
-    bedrooms: 4,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Hamburg',
-    },
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Hamburg.',
-    goods: ['Coffee machine', 'Dishwasher'],
-    host: {
-      avatarUrl: 'img/avatar-angelina.jpg',
-      id: 8,
-      isPro: false,
-      name: 'Sasha',
-    },
-    id: 8,
-    images: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/room.jpg'],
-    isFavorite: true,
-    isPremium: false,
-    location: {
-      latitude: 52.4009553943508,
-      longitude: 4.939309666406198,
-      zoom: 8,
-    },
-    maxAdults: 4,
-    previewImage: 'img/apartment-03.jpg',
-    price: 420,
-    rating: 3.9,
-    title: 'Beautiful & luxurious',
-    type: 'hotel',
-  },
 ];
