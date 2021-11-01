@@ -9,7 +9,7 @@ import MapList from '../map-list/map-list';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
 
-type BulletinBoardProps = {
+type OffersBoardProps = {
   cards: Offers
 }
 
@@ -21,10 +21,10 @@ const mapStateToProps = ({currentCity, currentSortType}: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux & BulletinBoardProps;
+type ConnectedComponentsProps = PropsFromRedux & OffersBoardProps;
 
 
-function BulletinBoard({cards, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
+function OffersBoard({cards, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
   const [activeCard, setActivCard] = useState<number | null>(null);
 
   const handleActiveCard = (id: number | null) => {
@@ -72,5 +72,5 @@ function BulletinBoard({cards, currentCity, currentSortType}: ConnectedComponent
   );
 }
 
-export {BulletinBoard};
-export default connector(BulletinBoard);
+export {OffersBoard};
+export default connector(OffersBoard);

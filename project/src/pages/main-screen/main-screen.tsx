@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import BulletinBoard from '../../components/bulletin-board/bulletin-board';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
 import Header from '../../components/header/header';
+import OffersBoard from '../../components/offers-board/offers-board';
 import { Offers } from '../../types/offer';
 
 type MainScreenProps = {
@@ -19,7 +19,7 @@ function Main({cards}: MainScreenProps): JSX.Element {
       <Header/>
       <main className={containerClass}>
         <CitiesMenu/>
-        <BulletinBoard cards={cards}/>
+        <OffersBoard cards={cards}/>
       </main>
     </div>
   );
