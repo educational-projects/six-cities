@@ -16,7 +16,7 @@ const reducer = (state: State = initialState, actions: Actions): State => {
       return {...state, currentCity: actions.payload};
     case ActionType.ChangeSortType:
       return {...state, currentSortType: actions.payload};
-    case ActionType.GetAllCards:
+    case ActionType.LoadCards:
       return {...state, cardList: actions.payload};
     default:
       return state;

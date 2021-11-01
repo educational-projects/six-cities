@@ -10,6 +10,10 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
 }
 
+export enum APIRoute  {
+  Cards = '/hotels',
+}
+
 export const offersType: {[key: string]: string} = {
   apartment: 'Apartment',
   room: 'Room',
