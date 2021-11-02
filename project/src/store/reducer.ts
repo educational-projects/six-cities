@@ -8,6 +8,7 @@ const initialState = {
   currentCity: DEFAULT_CITY,
   currentSortType: DEFAULT_SORT,
   cardList: [],
+  isDataLoaded: false,
 };
 
 const reducer = (state: State = initialState, actions: Actions): State => {
@@ -17,7 +18,9 @@ const reducer = (state: State = initialState, actions: Actions): State => {
     case ActionType.ChangeSortType:
       return {...state, currentSortType: actions.payload};
     case ActionType.LoadCards:
-      return {...state, cardList: actions.payload};
+      return {...state,
+        cardList: actions.payload,
+        isDataLoaded: true};
     default:
       return state;
   }
