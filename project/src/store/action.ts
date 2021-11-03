@@ -11,7 +11,15 @@ export const changeSortType = (sortType: string) => ({
   payload: sortType,
 } as const);
 
-export const loadCards = (cards: Offers) => ({
-  type: ActionType.LoadCards,
+export const loadCardsRequest = () => ({
+  type: ActionType.LoadCardsRequest,
+} as const);
+
+export const loadCardsSuccess = (cards: Offers) => ({
+  type: ActionType.LoadCardsSuccess,
   payload: cards,
+} as const);
+
+export const loadCardsError = () => ({
+  type: ActionType.LoadCardsError,
 } as const);

@@ -1,18 +1,22 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, loadCards } from '../store/action';
+import { changeCity, changeSortType, loadCardsError, loadCardsRequest, loadCardsSuccess } from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
   ChangeCity = 'main/changeCity',
   ChangeSortType ='main/changeSortType',
-  LoadCards = 'data/loadCards',
+  LoadCardsError = 'data/loadCardsError',
+  LoadCardsSuccess = 'data/loadCardsSuccess',
+  LoadCardsRequest = 'LoadCardsRequest'
 }
 
 export type Actions =
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSortType>
-  | ReturnType<typeof loadCards>;
+  | ReturnType<typeof loadCardsRequest>
+  | ReturnType<typeof loadCardsError>
+  | ReturnType<typeof loadCardsSuccess>;
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

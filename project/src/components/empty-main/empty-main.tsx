@@ -1,8 +1,8 @@
-type MainEmptyScreenProps = {
+type MainEmptyProps = {
   currentCity: string
 }
 
-function MainEmptyScreen({currentCity}: MainEmptyScreenProps): JSX.Element {
+function MainEmpty({currentCity}: MainEmptyProps): JSX.Element {
   return (
     <div className="cities">
       <div className="cities__places-container cities__places-container--empty container">
@@ -18,6 +18,4 @@ function MainEmptyScreen({currentCity}: MainEmptyScreenProps): JSX.Element {
   );
 }
 
-export default MainEmptyScreen;
-
-
+export default MainEmpty;

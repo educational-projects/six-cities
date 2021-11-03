@@ -1,14 +1,24 @@
 import cn from 'classnames';
+import { connect, ConnectedProps } from 'react-redux';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
+import MainEmpty from '../../components/empty-main/empty-main';
 import Header from '../../components/header/header';
 import OffersBoard from '../../components/offers-board/offers-board';
-import { Offers } from '../../types/offer';
+import { State } from '../../types/state';
 
-type MainScreenProps = {
-  cards: Offers
-}
+const mapStateToProps = ({currentCity, cardList}: State) => ({
+  currentCity,
+  cardList,
+});
 
-function Main({cards}: MainScreenProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentsProps = PropsFromRedux;
+
+
+function Main({currentCity, cardList}: ConnectedComponentsProps): JSX.Element {
+  const cards = cardList.filter((card) => card.city.name === currentCity);
 
   const containerClass = cn('page__main page__main--index', {
     'page__main--index-empty' : !cards.length,
@@ -19,10 +29,16 @@ function Main({cards}: MainScreenProps): JSX.Element {
       <Header/>
       <main className={containerClass}>
         <CitiesMenu/>
-        <OffersBoard cards={cards}/>
+        {
+          cards.length ?
+            <OffersBoard cards={cards}/>
+            :
+            <MainEmpty currentCity={currentCity}/>
+        }
       </main>
     </div>
   );
 }
 
-export default Main;
+export {Main};
+export default connector(Main);

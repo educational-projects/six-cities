@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import MainEmptyScreen from '../../pages/main-screen/main-empty-screen';
 import { Offers } from '../../types/offer';
 import { State } from '../../types/state';
 import { sort } from '../../utils';
 import CardList from '../card-list/card-list';
-import MapList from '../map-list/map-list';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
 
@@ -43,10 +41,6 @@ function OffersBoard({cards, currentCity, currentSortType}: ConnectedComponentsP
   const sortedCards = getSortedCards(currentSortType, cards);
   const cardsCount = sortedCards.length;
 
-  if (!cards.length) {
-    return <MainEmptyScreen currentCity={currentCity}/>;
-  }
-
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -60,12 +54,11 @@ function OffersBoard({cards, currentCity, currentSortType}: ConnectedComponentsP
           />
         </section>
         <div className="cities__right-section">
-          <MapList className={'cities__map'}>
-            <Map
-              cards={cards}
-              activeCard={activeCard}
-            />
-          </MapList>
+          <Map
+            cards={cards}
+            activeCard={activeCard}
+            className="cities__map"
+          />
         </div>
       </div>
     </div>
