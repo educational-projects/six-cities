@@ -9,9 +9,13 @@ import { comments } from './mock/comments';
 import { reducer } from './store/reducer';
 import { createApi } from './services/api';
 import { ThunkAppDispatch } from './types/action';
-import { fetchCardsAction } from './store/api-actions';
+import { checkAuthAction, fetchCardsAction } from './store/api-actions';
+import { requireAuthorizationSucces } from './store/action';
+import { AuthorizationStatus } from './const';
 
-const api = createApi();
+const api = createApi(
+  () => store.dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth)),
+);
 
 const store = createStore(
   reducer,
@@ -20,6 +24,7 @@ const store = createStore(
   ),
 );
 
+(store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchCardsAction());
 
 ReactDOM.render(

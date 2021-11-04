@@ -6,4 +6,6 @@ export type State = {
   cardList: Offers
   offersLoading: boolean
   offersError: boolean
+  authorizationStatus: string
+  authorizationStatusLoading: boolean
 }

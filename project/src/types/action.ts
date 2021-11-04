@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, loadCardsError, loadCardsRequest, loadCardsSuccess } from '../store/action';
+import { changeCity, changeSortType, loadCardsError, loadCardsRequest, loadCardsSuccess, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutRequest, requireLogoutSucces } from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
@@ -8,7 +8,11 @@ export enum ActionType {
   ChangeSortType ='main/changeSortType',
   LoadCardsError = 'data/loadCardsError',
   LoadCardsSuccess = 'data/loadCardsSuccess',
-  LoadCardsRequest = 'LoadCardsRequest'
+  LoadCardsRequest = 'data/loadCardsRequest',
+  RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
+  RequireAuthorizationSucces = 'user/requireAuthorizationSucces',
+  RequireLogoutRequest = 'user/requireLogoutRequest',
+  RequireLogoutSucces = 'user/requireLogoutSucces',
 }
 
 export type Actions =
@@ -16,7 +20,11 @@ export type Actions =
   | ReturnType<typeof changeSortType>
   | ReturnType<typeof loadCardsRequest>
   | ReturnType<typeof loadCardsError>
-  | ReturnType<typeof loadCardsSuccess>;
+  | ReturnType<typeof loadCardsSuccess>
+  | ReturnType<typeof requireAuthorizationRequest>
+  | ReturnType<typeof requireAuthorizationSucces>
+  | ReturnType<typeof requireLogoutRequest>
+  | ReturnType<typeof requireLogoutSucces>;
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

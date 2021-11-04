@@ -8,10 +8,13 @@ export enum AppRoute {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export enum APIRoute  {
   Cards = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export const offersType: {[key: string]: string} = {
