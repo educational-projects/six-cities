@@ -10,8 +10,9 @@ const PIN_WIDTH = 27;
 const PIN_HEIGHT = 39;
 
 type MapProps = {
-  cards: Offers
+  cards: Offers;
   activeCard?: number | null;
+  className: string;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -26,7 +27,7 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
 });
 
-function Map({cards, activeCard}: MapProps): JSX.Element {
+function Map({cards, activeCard, className }: MapProps): JSX.Element {
   const city = cards[0].city;
   const points = cards;
 
@@ -58,11 +59,11 @@ function Map({cards, activeCard}: MapProps): JSX.Element {
   }, [activeCard, map, points]);
 
   return (
-    <div
-      style={{height: '100%'}}
+    <section
+      className={`${className} map`}
       ref={mapRef}
     >
-    </div>
+    </section>
   );
 }
 

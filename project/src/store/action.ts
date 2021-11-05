@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offers } from '../types/offer';
 
@@ -11,7 +12,34 @@ export const changeSortType = (sortType: string) => ({
   payload: sortType,
 } as const);
 
-export const getAllCards = (cards: Offers) => ({
-  type: ActionType.GetAllCards,
+export const loadCardsRequest = () => ({
+  type: ActionType.LoadCardsRequest,
+} as const);
+
+export const loadCardsSuccess = (cards: Offers) => ({
+  type: ActionType.LoadCardsSuccess,
   payload: cards,
 } as const);
+
+export const loadCardsError = () => ({
+  type: ActionType.LoadCardsError,
+} as const);
+
+export const requireAuthorizationRequest = () => ({
+  type: ActionType.RequireAuthorizationRequest,
+} as const);
+
+export const requireAuthorizationSucces = (authStatus: AuthorizationStatus) => ({
+  type: ActionType.RequireAuthorizationSucces,
+  payload: authStatus,
+} as const);
+
+export const requireLogoutRequest = () => ({
+  type: ActionType.RequireLogoutRequest,
+} as const);
+
+export const requireLogoutSucces = () => ({
+  type: ActionType.RequireLogoutSucces,
+} as const);
+
+

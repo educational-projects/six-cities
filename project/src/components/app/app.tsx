@@ -7,18 +7,15 @@ import Main from '../../pages/main-screen/main-screen';
 import NotFound from '../../pages/not-found/not-found-screen';
 import Property from '../../pages/property-screen/property-screen';
 import { UsersComments } from '../../types/comment';
-import { Offers } from '../../types/offer';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
-  cards: Offers
   comments: UsersComments
 }
 
-const mapStateToProps = ({currentCity, currentSortType}: State) => ({
-  currentCity,
-  currentSortType,
+const mapStateToProps = ({cardList}: State) => ({
+  cardList,
 });
 
 const connector = connect(mapStateToProps);
@@ -26,29 +23,25 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
 
-function App({cards, comments, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
-  const filteredCards = cards.filter((card) => card.city.name === currentCity);
-
+function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main
-            cards={filteredCards}
-          />
+          <Main/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <Login/>
         </Route>
         <PrivateRoute exact
           path={AppRoute.Favorites}
-          render={() => <Favorites favoritesCards={cards}/>}
+          render={() => <Favorites favoritesCards={cardList}/>}
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
           <Property
-            cards={cards}
+            cards={cardList}
             comments={comments}
           />
         </Route>

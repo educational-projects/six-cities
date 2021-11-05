@@ -1,74 +1,52 @@
-import { useState } from 'react';
+import cn from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
-import CardList from '../../components/card-list/card-list';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
+import MainEmpty from '../../components/empty-main/empty-main';
 import Header from '../../components/header/header';
-import MapList from '../../components/map-list/map-list';
-import Map from '../../components/map/map';
-import Sorting from '../../components/sorting/sorting';
-import { Offers } from '../../types/offer';
+import OffersBoard from '../../components/offers-board/offers-board';
 import { State } from '../../types/state';
-import { sort } from '../../utils';
+import FallbackError from '../fallback-error/fallback-error';
+import Loader from '../loading-screen/loading-screen';
 
-type MainScreenProps = {
-  cards: Offers
-}
-
-const mapStateToProps = ({currentCity, currentSortType}: State) => ({
+const mapStateToProps = ({currentCity, cardList, offersLoading, offersError}: State) => ({
   currentCity,
-  currentSortType,
+  cardList,
+  offersLoading,
+  offersError,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux & MainScreenProps;
+type ConnectedComponentsProps = PropsFromRedux;
 
-function Main({cards, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
-  const [activeCard, setActivCard] = useState<number | null>(null);
 
-  const handleActiveCard = (id: number | null) => {
-    setActivCard(id);
-  };
+function Main({currentCity, cardList, offersLoading, offersError}: ConnectedComponentsProps): JSX.Element {
+  const cards = cardList.filter((card) => card.city.name === currentCity);
 
-  const getSortedCards = (sortType: string, cardsList: Offers) => {
-    switch(sortType) {
-      case sortType:
-        return cardsList.slice().sort(sort[sortType]);
-      default:
-        return cardsList;
-    }
-  };
+  const containerClass = cn('page__main page__main--index', {
+    'page__main--index-empty' : !cards.length,
+  });
 
-  const sortedCards = getSortedCards(currentSortType, cards);
-  const cardsCount = sortedCards.length;
+  if (offersLoading) {
+    return <Loader/>;
+  }
+
+  if (offersError) {
+    return <FallbackError/>;
+  }
 
   return (
     <div className="page page--gray page--main">
       <Header/>
-      <main className="page__main page__main--index">
+      <main className={containerClass}>
         <CitiesMenu/>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cardsCount} places to stay in {currentCity}</b>
-              <Sorting/>
-              <CardList
-                cards={sortedCards}
-                onActiveCard={handleActiveCard}
-              />
-            </section>
-            <div className="cities__right-section">
-              <MapList className={'cities__map'}>
-                <Map
-                  cards={cards}
-                  activeCard={activeCard}
-                />
-              </MapList>
-            </div>
-          </div>
-        </div>
+        {
+          cards.length ?
+            <OffersBoard cards={cards}/>
+            :
+            <MainEmpty currentCity={currentCity}/>
+        }
       </main>
     </div>
   );

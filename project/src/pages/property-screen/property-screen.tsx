@@ -5,7 +5,6 @@ import CommentList from '../../components/comment-list/comment-list';
 import Header from '../../components/header/header';
 import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
-import MapList from '../../components/map-list/map-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
@@ -85,12 +84,11 @@ function Property({cards, comments}: PropertyProps): JSX.Element {
               <CommentList comments={filteredComments}/>
             </div>
           </div>
-          <MapList className={'property__map'}>
-            <Map
-              cards={otherCards}
-              activeCard={activeCard}
-            />
-          </MapList>
+          <Map
+            cards={otherCards}
+            activeCard={activeCard}
+            className="property__map"
+          />
         </section>
         <div className="container">
           <section className="near-places places">
