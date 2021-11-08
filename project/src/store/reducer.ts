@@ -9,6 +9,7 @@ const initialState = {
   currentCity: DEFAULT_CITY,
   currentSortType: DEFAULT_SORT,
   cardList: [],
+  userEmail: '',
   offersLoading: false,
   offersError: false,
   authorizationStatus: AuthorizationStatus.Unknown,

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, loadCardsError, loadCardsRequest, loadCardsSuccess, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutRequest, requireLogoutSucces } from '../store/action';
+import { changeCity, changeSortType, loadCardsError, loadCardsRequest, loadCardsSuccess, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutRequest, requireLogoutSucces } from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
@@ -11,6 +11,7 @@ export enum ActionType {
   LoadCardsRequest = 'data/loadCardsRequest',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
   RequireAuthorizationSucces = 'user/requireAuthorizationSucces',
+  RequireAuthorizationError = 'data/requireAuthorizationError',
   RequireLogoutRequest = 'user/requireLogoutRequest',
   RequireLogoutSucces = 'user/requireLogoutSucces',
 }
@@ -23,6 +24,7 @@ export type Actions =
   | ReturnType<typeof loadCardsSuccess>
   | ReturnType<typeof requireAuthorizationRequest>
   | ReturnType<typeof requireAuthorizationSucces>
+  | ReturnType<typeof requireAuthorizationError>
   | ReturnType<typeof requireLogoutRequest>
   | ReturnType<typeof requireLogoutSucces>;
 

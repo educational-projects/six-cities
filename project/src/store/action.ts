@@ -34,6 +34,11 @@ export const requireAuthorizationSucces = (authStatus: AuthorizationStatus) => (
   payload: authStatus,
 } as const);
 
+export const requireAuthorizationError = (authStatus: AuthorizationStatus) => ({
+  type: ActionType.RequireAuthorizationError,
+  payload: authStatus,
+} as const);
+
 export const requireLogoutRequest = () => ({
   type: ActionType.RequireLogoutRequest,
 } as const);

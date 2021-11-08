@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import Favorites from '../../pages/favorites-screen/favorites-screen';
 import Login from '../../pages/login-screen/login-screen';
 import Main from '../../pages/main-screen/main-screen';
@@ -36,7 +36,6 @@ function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
         <PrivateRoute exact
           path={AppRoute.Favorites}
           render={() => <Favorites favoritesCards={cardList}/>}
-          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
