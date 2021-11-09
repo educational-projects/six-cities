@@ -12,6 +12,11 @@ export const changeSortType = (sortType: string) => ({
   payload: sortType,
 } as const);
 
+export const changeUserEmail = (userEmail: string) => ({
+  type: ActionType.ChangeUserEmail,
+  payload: userEmail,
+} as const);
+
 export const loadCardsRequest = () => ({
   type: ActionType.LoadCardsRequest,
 } as const);

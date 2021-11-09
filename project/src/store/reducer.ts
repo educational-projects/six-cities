@@ -22,6 +22,8 @@ const reducer = (state: State = initialState, actions: Actions): State => {
       return {...state, currentCity: actions.payload};
     case ActionType.ChangeSortType:
       return {...state, currentSortType: actions.payload};
+    case ActionType.ChangeUserEmail:
+      return {...state, userEmail: actions.payload};
     case ActionType.LoadCardsRequest:
       return {...state, offersLoading: true};
     case ActionType.LoadCardsSuccess:
