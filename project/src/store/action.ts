@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offers } from '../types/offer';
 
@@ -51,5 +51,14 @@ export const requireLogoutRequest = () => ({
 export const requireLogoutSucces = () => ({
   type: ActionType.RequireLogoutSucces,
 } as const);
+
+export const requireLogoutError = () => ({
+  type: ActionType.RequireLogoutError,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
+}) as const;
 
 

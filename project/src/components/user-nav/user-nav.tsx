@@ -2,7 +2,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
 import UserLink from '../user-link/user-link';
-import UserButton from '../user-button/user-button';
+import ButtonLogout from '../user-button/user-button-logout';
+import ButtonSignIn from '../user-button/user-button-authorization';
 
 const mapStateToProps = ({authorizationStatus, userEmail}: State) => ({
   authorizationStatus,
@@ -22,7 +23,13 @@ function UserLogin({authorizationStatus, userEmail}: PropsFromRedux): JSX.Elemen
           &&
           <UserLink userEmail={userEmail}/>
         }
-        <UserButton authorizationStatus={authorizationStatus}/>
+        {
+          authorizationStatus === AuthorizationStatus.Auth
+            ?
+            <ButtonLogout/>
+            :
+            <ButtonSignIn/>
+        }
       </ul>
     </nav>
   );

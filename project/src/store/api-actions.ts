@@ -1,10 +1,10 @@
-import { APIRoute, AuthorizationStatus } from '../const';
-import { saveToken, Token } from '../services/token';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffers } from '../types/offer';
 import { adaptToClient } from '../utils';
-import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces } from './action';
+import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
 
 export const fetchCardsAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
@@ -38,8 +38,22 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
       saveToken(token);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
       dispatch(changeUserEmail(email));
+      dispatch(redirectToRoute(AppRoute.Main));
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));
+    }
+  }
+);
+
+export const logoutAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api) => {
+    dispatch(requireLogoutRequest());
+    try {
+      api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(requireLogoutSucces());
+    } catch {
+      dispatch(requireLogoutError());
     }
   }
 );
