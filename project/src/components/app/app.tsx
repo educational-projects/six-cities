@@ -1,5 +1,5 @@
 import { connect, ConnectedProps } from 'react-redux';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Favorites from '../../pages/favorites-screen/favorites-screen';
 import Login from '../../pages/login-screen/login-screen';
@@ -9,6 +9,7 @@ import Property from '../../pages/property-screen/property-screen';
 import { UsersComments } from '../../types/comment';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 
 type AppScreenProps = {
   comments: UsersComments
@@ -25,7 +26,7 @@ type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
 
 function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <Main/>
