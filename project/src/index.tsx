@@ -13,6 +13,8 @@ import { checkAuthAction, fetchCardsAction } from './store/api-actions';
 import { requireAuthorizationSucces } from './store/action';
 import { AuthorizationStatus } from './const';
 import { redirect } from './store/middlewares/redirect';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const api = createApi(
   () => store.dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth)),
@@ -32,6 +34,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer/>
       <App
         comments={comments}
       />

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
@@ -5,6 +6,8 @@ import { AuthData } from '../types/auth-data';
 import { BackOffers } from '../types/offer';
 import { adaptToClient } from '../utils';
 import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+
+const AUTH_FAIL_MESSAGE = 'something went wrong';
 
 export const fetchCardsAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
@@ -41,6 +44,7 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));
+      toast.error(AUTH_FAIL_MESSAGE);
     }
   }
 );
@@ -54,6 +58,7 @@ export const logoutAction = (): ThunkActionResult => (
       dispatch(requireLogoutSucces());
     } catch {
       dispatch(requireLogoutError());
+      toast.error(AUTH_FAIL_MESSAGE);
     }
   }
 );
