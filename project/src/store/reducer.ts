@@ -12,6 +12,9 @@ const initialState = {
   userEmail: '',
   offersLoading: false,
   offersError: false,
+  offerLoading: false,
+  offerError: false,
+  offer: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   authorizationStatusLoading: false,
 };
@@ -37,6 +40,21 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         ...state,
         offersError: true,
         offersLoading: false,
+      };
+    case ActionType.LoadOfferRequest:
+      return {...state, offerLoading: true};
+    case ActionType.LoadOfferSuccess:
+      return {
+        ...state,
+        offerLoading: false,
+        offer: actions.payload,
+      };
+    case ActionType.LoadOfferError:
+      return {
+        ...state,
+        offerLoading: false,
+        offerError: true,
+
       };
     case ActionType.RequireAuthorizationRequest:
       return {...state, authorizationStatusLoading: true};

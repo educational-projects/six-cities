@@ -1,6 +1,6 @@
 import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
-import { Offers } from '../types/offer';
+import { Offer, Offers } from '../types/offer';
 
 export const changeCity = (city: string) => ({
   type: ActionType.ChangeCity,
@@ -28,6 +28,19 @@ export const loadCardsSuccess = (cards: Offers) => ({
 
 export const loadCardsError = () => ({
   type: ActionType.LoadCardsError,
+} as const);
+
+export const loadOfferRequest = () => ({
+  type: ActionType.LoadOfferRequest,
+} as const);
+
+export const loadOfferSuccess = (offer: Offer) => ({
+  type: ActionType.LoadOfferSuccess,
+  payload: offer,
+} as const);
+
+export const loadOfferError = () => ({
+  type: ActionType.LoadOfferError,
 } as const);
 
 export const requireAuthorizationRequest = () => ({

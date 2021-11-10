@@ -3,9 +3,9 @@ import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
-import { BackOffers } from '../types/offer';
+import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient } from '../utils';
-import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
 
@@ -17,6 +17,18 @@ export const fetchCardsAction = (): ThunkActionResult => (
       dispatch(loadCardsSuccess(data.map(adaptToClient)));
     } catch {
       dispatch(loadCardsError());
+    }
+  }
+);
+
+export const fetchOfferAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadOfferRequest());
+    try {
+      const {data} = await api.get<BackOffer>(APIRoute.Offer);
+      dispatch(loadOfferSuccess(adaptToClient(data)));
+    } catch {
+      dispatch(loadOfferError());
     }
   }
 );

@@ -15,6 +15,7 @@ export enum APIRoute  {
   Cards = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Offer = '/hotels/11'
 }
 
 export const offersType: {[key: string]: string} = {

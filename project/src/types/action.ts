@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from '../store/action';
+import { changeCity, changeSortType, changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
@@ -10,6 +10,9 @@ export enum ActionType {
   LoadCardsError = 'data/loadCardsError',
   LoadCardsSuccess = 'data/loadCardsSuccess',
   LoadCardsRequest = 'data/loadCardsRequest',
+  LoadOfferRequest = 'data/loadOffersRequet',
+  LoadOfferSuccess = 'data/loadOfferSuccess',
+  LoadOfferError = 'data/loadOfferError',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
   RequireAuthorizationSucces = 'user/requireAuthorizationSucces',
   RequireAuthorizationError = 'data/requireAuthorizationError',
@@ -35,6 +38,9 @@ export type Actions =
   | ReturnType<typeof requireLogoutError>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof redirectToBack>
+  | ReturnType<typeof loadOfferRequest>
+  | ReturnType<typeof loadOfferSuccess>
+  | ReturnType<typeof loadOfferError>
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from '../const';
-import { Offers } from './offer';
+import { Offer, Offers } from './offer';
 
 export type State = {
   currentCity: string;
@@ -8,6 +8,9 @@ export type State = {
   cardList: Offers
   offersLoading: boolean
   offersError: boolean
+  offerLoading: boolean
+  offerError: boolean
+  offer: null | Offer
   authorizationStatus: AuthorizationStatus
   authorizationStatusLoading: boolean
 }
