@@ -14,5 +14,22 @@ export const redirect: Middleware<unknown, Reducer> =
           browserHistory.push(action.payload);
         }
 
+        if (action.type === ActionType.RedirectToBack) {
+          browserHistory.goBack();
+        }
+
         return next(action);
       };
+
+
+//     export const redirect: Middleware<unknown, Reducer> =
+// (_store) =>
+//   (next) =>
+//     (action) => {
+
+//       if (action.type === ActionType.RedirectToRoute) {
+//         browserHistory.push(action.payload);
+//       }
+
+//       return next(action);
+//     };

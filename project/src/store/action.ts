@@ -61,4 +61,8 @@ export const redirectToRoute = (url: AppRoute) => ({
   payload: url,
 }) as const;
 
+export const redirectToBack = () => ({
+  type: ActionType.RedirectToBack,
+}) as const;
+
 

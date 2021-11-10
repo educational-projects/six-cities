@@ -49,7 +49,11 @@ const reducer = (state: State = initialState, actions: Actions): State => {
     case ActionType.RequireLogoutRequest:
       return {...state, authorizationStatusLoading: true};
     case ActionType.RequireLogoutSucces:
-      return {...state, authorizationStatusLoading: false};
+      return {
+        ...state,
+        authorizationStatusLoading: false,
+        userEmail: '',
+      };
     default:
       return state;
   }
