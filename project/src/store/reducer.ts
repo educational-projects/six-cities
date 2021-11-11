@@ -9,7 +9,7 @@ const initialState = {
   currentCity: DEFAULT_CITY,
   currentSortType: DEFAULT_SORT,
   cardList: [],
-  userEmail: '',
+  userData: null,
   offersLoading: false,
   offersError: false,
   offerLoading: false,
@@ -25,8 +25,8 @@ const reducer = (state: State = initialState, actions: Actions): State => {
       return {...state, currentCity: actions.payload};
     case ActionType.ChangeSortType:
       return {...state, currentSortType: actions.payload};
-    case ActionType.ChangeUserEmail:
-      return {...state, userEmail: actions.payload};
+    case ActionType.ChangeUserData:
+      return {...state, userData: actions.payload};
     case ActionType.LoadCardsRequest:
       return {...state, offersLoading: true};
     case ActionType.LoadCardsSuccess:
@@ -70,7 +70,7 @@ const reducer = (state: State = initialState, actions: Actions): State => {
       return {
         ...state,
         authorizationStatusLoading: false,
-        userEmail: '',
+        userData: null,
       };
     default:
       return state;

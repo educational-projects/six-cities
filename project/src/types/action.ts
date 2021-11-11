@@ -1,12 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from '../store/action';
+import { changeCity, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
   ChangeCity = 'main/changeCity',
   ChangeSortType ='main/changeSortType',
-  ChangeUserEmail = 'user/changeUserEmail',
+  ChangeUserData = 'user/changeUserData',
   LoadCardsError = 'data/loadCardsError',
   LoadCardsSuccess = 'data/loadCardsSuccess',
   LoadCardsRequest = 'data/loadCardsRequest',
@@ -26,7 +26,7 @@ export enum ActionType {
 export type Actions =
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSortType>
-  | ReturnType<typeof changeUserEmail>
+  | ReturnType<typeof changeUserData>
   | ReturnType<typeof loadCardsRequest>
   | ReturnType<typeof loadCardsError>
   | ReturnType<typeof loadCardsSuccess>

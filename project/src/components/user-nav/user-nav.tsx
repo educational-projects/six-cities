@@ -5,31 +5,23 @@ import UserLink from '../user-link/user-link';
 import ButtonLogout from '../user-button/user-button-logout';
 import ButtonSignIn from '../user-button/user-button-authorization';
 
-const mapStateToProps = ({authorizationStatus, userEmail}: State) => ({
+const mapStateToProps = ({authorizationStatus, userData}: State) => ({
   authorizationStatus,
-  userEmail,
+  userData,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function UserLogin({authorizationStatus, userEmail}: PropsFromRedux): JSX.Element {
+function UserLogin({authorizationStatus, userData}: PropsFromRedux): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
-        {
-          authorizationStatus === AuthorizationStatus.Auth
-          &&
-          <UserLink userEmail={userEmail}/>
-        }
-        {
-          authorizationStatus === AuthorizationStatus.Auth
-            ?
-            <ButtonLogout/>
-            :
-            <ButtonSignIn/>
-        }
+        {authorizationStatus === AuthorizationStatus.Auth && (
+          <UserLink userEmail={userData?.email}/>
+        )}
+        {authorizationStatus === AuthorizationStatus.Auth ? <ButtonLogout/> : <ButtonSignIn/>}
       </ul>
     </nav>
   );

@@ -1,6 +1,7 @@
 import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offer, Offers } from '../types/offer';
+import { User } from '../types/user';
 
 export const changeCity = (city: string) => ({
   type: ActionType.ChangeCity,
@@ -12,9 +13,9 @@ export const changeSortType = (sortType: string) => ({
   payload: sortType,
 } as const);
 
-export const changeUserEmail = (userEmail: string) => ({
-  type: ActionType.ChangeUserEmail,
-  payload: userEmail,
+export const changeUserData = (userData: User) => ({
+  type: ActionType.ChangeUserData,
+  payload: userData,
 } as const);
 
 export const loadCardsRequest = () => ({

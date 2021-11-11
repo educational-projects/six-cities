@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type UserLinkProps = {
-  userEmail: string
+  userEmail: string | undefined;
 }
 
 function UserLink({userEmail}: UserLinkProps): JSX.Element {

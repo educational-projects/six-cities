@@ -4,8 +4,9 @@ import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
-import { adaptToClient } from '../utils';
-import { changeUserEmail, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+import { adaptToClient, adaptUserDataToClient } from '../utils';
+import { BackUser } from '../types/user';
+import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
 
@@ -36,9 +37,9 @@ export const fetchOfferAction = (): ThunkActionResult => (
 export const checkAuthAction = (): ThunkActionResult => (
   async (dispatch, _getState, api) => {
     try {
-      const {data: {email}} = await api.get<{email: string}>(APIRoute.Login);
+      const {data: {...user}} = await api.get<BackUser>(APIRoute.Login);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserEmail(email));
+      dispatch(changeUserData(adaptUserDataToClient(user)));
     } catch {
       dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth));
     }
@@ -49,10 +50,10 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
   async (dispatch, _getState, api) => {
     dispatch(requireAuthorizationRequest());
     try {
-      const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+      const {data: {token, ...user}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
       saveToken(token);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserEmail(email));
+      dispatch(changeUserData(adaptUserDataToClient(user as BackUser)));
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));

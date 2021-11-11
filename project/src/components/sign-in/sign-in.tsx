@@ -5,6 +5,7 @@ import { ThunkAppDispatch } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthData } from '../../types/auth-data';
 import { loginAction } from '../../store/api-actions';
+import { State } from '../../types/state';
 
 const formFields = {
   email: 'E-mail',
@@ -22,17 +23,21 @@ type FormStateProps = {
   [key: string]: FieldProps
 }
 
+const mapStateToProps = ({authorizationStatusLoading}: State) => ({
+  authorizationStatusLoading,
+});
+
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     dispatch(loginAction(authData));
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
+function SignIn({onSubmit, authorizationStatusLoading}: PropsFromRedux): JSX.Element {
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
       value: '',
@@ -55,10 +60,10 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
     setFormState({
       ...formState,
       [name]: {
+        ...formState[name],
         value: value,
         error: !rule.test(value),
         errorText: formState[name].errorText,
-        regex: rule,
       },
     });
   };
@@ -72,6 +77,7 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
     });
   };
 
+  const buttonText = authorizationStatusLoading ? 'Loading...' : 'Sign in';
   const isDisabled = !formState.email.value || formState.email.error || !formState.password.value || formState.password.error;
 
   return (
@@ -86,9 +92,8 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
             onSubmit={handleSubmit}
           >
             {Object.entries(formFields).map(([name, label]) => {
-              const inputClass = cn('login__input',{
-                'form__input' : formState[name].error === false,
-                [styles.errorInput] : formState[name].error === true,
+              const inputClass = cn('login__input', 'form__input',{
+                [styles.errorInput] : formState[name].error,
               });
 
               return (
@@ -114,7 +119,7 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
               type="submit"
               disabled={isDisabled}
             >
-                Sign in
+              {buttonText}
             </button>
           </form>
         </section>
