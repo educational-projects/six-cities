@@ -49,10 +49,10 @@ export const adaptUserDataToClient = (userData: BackUser): User => {
       avatarUrl: userData.avatar_url,
       isPro: userData.is_pro,
     },
-  ) as User;
+  );
 
-  delete adaptedUserData.avatarUrl;
-  delete adaptedUserData.isPro;
+  delete adaptedUserData.avatar_url;
+  delete adaptedUserData.is_pro;
 
   return adaptedUserData;
 };

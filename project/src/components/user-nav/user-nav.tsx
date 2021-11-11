@@ -19,7 +19,10 @@ function UserLogin({authorizationStatus, userData}: PropsFromRedux): JSX.Element
     <nav className="header__nav">
       <ul className="header__nav-list">
         {authorizationStatus === AuthorizationStatus.Auth && (
-          <UserLink userEmail={userData?.email}/>
+          <UserLink
+            userEmail={userData?.email}
+            userAvatar={userData?.avatarUrl}
+          />
         )}
         {authorizationStatus === AuthorizationStatus.Auth ? <ButtonLogout/> : <ButtonSignIn/>}
       </ul>

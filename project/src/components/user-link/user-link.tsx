@@ -3,9 +3,10 @@ import { AppRoute } from '../../const';
 
 type UserLinkProps = {
   userEmail: string | undefined;
+  userAvatar: string | undefined
 }
 
-function UserLink({userEmail}: UserLinkProps): JSX.Element {
+function UserLink({userEmail, userAvatar}: UserLinkProps): JSX.Element {
   return (
     <li className="header__nav-item user">
       <Link
@@ -13,6 +14,7 @@ function UserLink({userEmail}: UserLinkProps): JSX.Element {
         to={AppRoute.Favorites}
       >
         <div className="header__avatar-wrapper user__avatar-wrapper">
+          {userAvatar ? <img src={userAvatar} alt="avatart" /> : ''}
         </div>
         <span className="header__user-name user__name">{userEmail}</span>
       </Link>

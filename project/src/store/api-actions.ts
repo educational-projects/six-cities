@@ -5,7 +5,7 @@ import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient } from '../utils';
-import { BackUser } from '../types/user';
+import { BackUser, User } from '../types/user';
 import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
@@ -53,7 +53,7 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
       const {data: {token, ...user}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
       saveToken(token);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserData(adaptUserDataToClient(user as BackUser)));
+      dispatch(changeUserData(adaptUserDataToClient(user as User)));
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));
