@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import styles from './user-link.module.css';
 
 type UserLinkProps = {
   userEmail: string | undefined;
@@ -14,7 +15,7 @@ function UserLink({userEmail, userAvatar}: UserLinkProps): JSX.Element {
         to={AppRoute.Favorites}
       >
         <div className="header__avatar-wrapper user__avatar-wrapper">
-          {userAvatar ? <img src={userAvatar} alt="avatart" /> : ''}
+          {userAvatar ? <img className={styles.avatar} src={userAvatar} alt="avatart" /> : ''}
         </div>
         <span className="header__user-name user__name">{userEmail}</span>
       </Link>
