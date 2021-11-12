@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { SortType } from './const';
 import { BackOffer, Offer } from './types/offer';
+import { BackUser, User } from './types/user';
 
 export const getRating = (rating: number): string => `${(Math.round(rating) / 5) * 100}%`;
 
@@ -38,4 +39,20 @@ export const adaptToClient = (card: BackOffer): Offer => {
   delete adaptedCard.host.is_pro;
 
   return adaptedCard;
+};
+
+export const adaptUserDataToClient = (userData: BackUser): User => {
+  const adaptedUserData = Object.assign(
+    {},
+    userData,
+    {
+      avatarUrl: userData.avatar_url,
+      isPro: userData.is_pro,
+    },
+  );
+
+  delete adaptedUserData.avatar_url;
+  delete adaptedUserData.is_pro;
+
+  return adaptedUserData;
 };
