@@ -10,6 +10,7 @@ import { getRandomArrayElement } from '../../utils';
 import { AppRoute, сitiesList } from '../../const';
 import { changeCity } from '../../store/action';
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 const formFields = {
   email: 'E-mail',
@@ -89,8 +90,7 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
     });
   };
 
-  const buttonText = authorizationStatusLoading ? 'Loading...' : 'Sign in';
-  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value || formState.password.error;
+  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value || formState.password.error || authorizationStatusLoading;
   const cityButton = getRandomArrayElement(сitiesList);
 
   return (
@@ -132,7 +132,7 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
               type="submit"
               disabled={isDisabled}
             >
-              {buttonText}
+              {authorizationStatusLoading ? <ClipLoader/> : 'Sign in'}
             </button>
           </form>
         </section>
