@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus } from '../const';
-import { dropToken, saveToken, Token } from '../services/token';
+import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient } from '../utils';
-import { BackUser, User } from '../types/user';
+import { BackUser } from '../types/user';
 import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
@@ -37,9 +37,9 @@ export const fetchOfferAction = (): ThunkActionResult => (
 export const checkAuthAction = (): ThunkActionResult => (
   async (dispatch, _getState, api) => {
     try {
-      const {data: {...user}} = await api.get<BackUser>(APIRoute.Login);
+      const {data} = await api.get<BackUser>(APIRoute.Login);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserData(adaptUserDataToClient(user)));
+      dispatch(changeUserData(adaptUserDataToClient(data)));
     } catch {
       dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth));
     }
@@ -50,10 +50,10 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
   async (dispatch, _getState, api) => {
     dispatch(requireAuthorizationRequest());
     try {
-      const {data: {token, ...user}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-      saveToken(token);
+      const {data} = await api.post<BackUser>(APIRoute.Login, {email, password});
+      saveToken(data.token);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserData(adaptUserDataToClient(user as User)));
+      dispatch(changeUserData(adaptUserDataToClient(data)));
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));

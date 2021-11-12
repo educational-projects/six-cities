@@ -12,4 +12,5 @@ export type BackUser = {
   id: number,
   'is_pro'?: boolean,
   name: string,
+  token: string
 }

@@ -7,6 +7,8 @@ export const getRating = (rating: number): string => `${(Math.round(rating) / 5)
 
 export const getFormatDate = (date: string, format: string): string => dayjs(date).format(format);
 
+export const getRandomArrayElement = (arr: string[]): string => arr[Math.floor(Math.random()*arr.length)];
+
 export const sort = {
   [SortType.PRICE_DOWN]: (cardA: Offer, cardB: Offer): number => cardB.price - cardA.price,
   [SortType.PRICE_UP]: (cardA: Offer, cardB: Offer): number => cardA.price - cardB.price,
