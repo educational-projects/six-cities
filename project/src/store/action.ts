@@ -1,5 +1,6 @@
 import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
+import { UsersComments } from '../types/comment';
 import { Offer, Offers } from '../types/offer';
 import { User } from '../types/user';
 
@@ -42,6 +43,32 @@ export const loadOfferSuccess = (offer: Offer) => ({
 
 export const loadOfferError = () => ({
   type: ActionType.LoadOfferError,
+} as const);
+
+export const loadNearbyRequest = () => ({
+  type: ActionType.LoadNearbyRequest,
+} as const);
+
+export const loadNearbySuccess = (nearOffers: Offers) => ({
+  type: ActionType.LoadNearbySuccess,
+  payload: nearOffers,
+} as const);
+
+export const loadNearbyError = () => ({
+  type: ActionType.LoadNearbyError,
+} as const);
+
+export const loadCommentsRequets = () => ({
+  type: ActionType.LoadCommentsRequets,
+} as const);
+
+export const loadCommentsSuccess = (comments: UsersComments) => ({
+  type: ActionType.LoadCommentsSuccess,
+  payload: comments,
+} as const);
+
+export const loadCommentsError = () => ({
+  type: ActionType.LoadCommentsError,
 } as const);
 
 export const requireAuthorizationRequest = () => ({

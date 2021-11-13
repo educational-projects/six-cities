@@ -15,6 +15,12 @@ const initialState = {
   offerLoading: false,
   offerError: false,
   offer: null,
+  offersNearbyLoading: false,
+  offersNearbyError: false,
+  offersNearby: [],
+  commentsLoading: false,
+  commentsError: false,
+  comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   authorizationStatusLoading: false,
 };
@@ -55,6 +61,34 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         offerLoading: false,
         offerError: true,
 
+      };
+    case ActionType.LoadNearbyRequest:
+      return {...state, offersNearbyLoading: true};
+    case ActionType.LoadNearbySuccess:
+      return {
+        ...state,
+        offersNearbyLoading: false,
+        offersNearby: actions.payload,
+      };
+    case ActionType.LoadNearbyError:
+      return {
+        ...state,
+        offersLoading: false,
+        offersError: true,
+      };
+    case ActionType.LoadCommentsRequets:
+      return {...state, commentsLoading: true};
+    case ActionType.LoadCommentsSuccess:
+      return {
+        ...state,
+        commentsLoading: false,
+        comments: actions.payload,
+      };
+    case ActionType.LoadCommentsError:
+      return {
+        ...state,
+        commentsLoading: false,
+        commentsError: true,
       };
     case ActionType.RequireAuthorizationRequest:
       return {...state, authorizationStatusLoading: true};

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { SortType } from './const';
+import { BackUserComment, UserComment } from './types/comment';
 import { BackOffer, Offer } from './types/offer';
 import { BackUser, User } from './types/user';
 
@@ -57,4 +58,22 @@ export const adaptUserDataToClient = (userData: BackUser): User => {
   delete adaptedUserData.is_pro;
 
   return adaptedUserData;
+};
+
+export const adatpUsersCommentsToClient = (userComment: BackUserComment): UserComment => {
+  const adaptedComments = Object.assign(
+    {},
+    userComment,
+    {
+      user: {
+        avatarUrl: userComment.user.avatar_url,
+        isPro: userComment.user.is_pro,
+      },
+    },
+  );
+
+  delete adaptedComments.user.avatar_url;
+  delete adaptedComments.user.is_pro;
+
+  return adaptedComments;
 };

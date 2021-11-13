@@ -12,6 +12,7 @@ type ItemCardProps = {
 
 function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
+
   const offerRating = getRating(rating);
   const favoriteType = cardType === 'favorites';
 

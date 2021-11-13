@@ -4,11 +4,13 @@ import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
-import { adaptToClient, adaptUserDataToClient } from '../utils';
+import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
-import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+import { UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
+
 
 export const fetchCardsAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
@@ -22,14 +24,38 @@ export const fetchCardsAction = (): ThunkActionResult => (
   }
 );
 
-export const fetchOfferAction = (): ThunkActionResult => (
+export const fetchOfferAction = (id: string): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(loadOfferRequest());
     try {
-      const {data} = await api.get<BackOffer>(APIRoute.Offer);
+      const {data} = await api.get<BackOffer>(`${APIRoute.Cards}/${id}`);
       dispatch(loadOfferSuccess(adaptToClient(data)));
     } catch {
       dispatch(loadOfferError());
+    }
+  }
+);
+
+export const fetchOffersNearby = (id: string): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadNearbyRequest());
+    try {
+      const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
+      dispatch(loadNearbySuccess(data.map(adaptToClient)));
+    } catch {
+      dispatch(loadNearbyError());
+    }
+  }
+);
+
+export const fetchCommentsAction = (id: string): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadCommentsRequets());
+    try {
+      const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
+      dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
+    } catch {
+      dispatch(loadCommentsError());
     }
   }
 );

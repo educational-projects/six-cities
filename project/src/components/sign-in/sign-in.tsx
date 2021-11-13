@@ -46,6 +46,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
+const cityButton = getRandomArrayElement(сitiesList);
+
 function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRedux): JSX.Element {
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
@@ -90,8 +92,8 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
     });
   };
 
-  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value || formState.password.error || authorizationStatusLoading;
-  const cityButton = getRandomArrayElement(сitiesList);
+  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value
+  ||formState.password.error || authorizationStatusLoading;
 
   return (
     <main className="page__main page__main--login">

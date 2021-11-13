@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
-import { comments } from './mock/comments';
 import { reducer } from './store/reducer';
 import { createApi } from './services/api';
 import { ThunkAppDispatch } from './types/action';
@@ -35,9 +34,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer/>
-      <App
-        comments={comments}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

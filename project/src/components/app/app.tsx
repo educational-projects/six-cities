@@ -6,14 +6,9 @@ import Login from '../../pages/login-screen/login-screen';
 import Main from '../../pages/main-screen/main-screen';
 import NotFound from '../../pages/not-found/not-found-screen';
 import Property from '../../pages/property-screen/property-screen';
-import { UsersComments } from '../../types/comment';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
-
-type AppScreenProps = {
-  comments: UsersComments
-}
 
 const mapStateToProps = ({cardList}: State) => ({
   cardList,
@@ -22,9 +17,8 @@ const mapStateToProps = ({cardList}: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
 
-function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
+function App({cardList}: PropsFromRedux): JSX.Element {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -40,10 +34,7 @@ function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
-          <Property
-            cards={cardList}
-            comments={comments}
-          />
+          <Property />
         </Route>
         <Route>
           <NotFound/>

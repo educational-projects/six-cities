@@ -1,6 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { changeCity, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from '../store/action';
+import {
+  changeCity, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess,
+  loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest,
+  loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute,
+  requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError,
+  requireLogoutRequest, requireLogoutSucces
+} from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
@@ -13,6 +19,12 @@ export enum ActionType {
   LoadOfferRequest = 'data/loadOffersRequet',
   LoadOfferSuccess = 'data/loadOfferSuccess',
   LoadOfferError = 'data/loadOfferError',
+  LoadNearbyRequest = 'data/loadNearbyRequest',
+  LoadNearbySuccess = 'data/LoadNearbySuccess',
+  LoadNearbyError = 'data/loadNearbyError',
+  LoadCommentsRequets = 'data/loadCommentsRequets',
+  LoadCommentsSuccess = 'data/loadCommentsSuccess',
+  LoadCommentsError = 'data/loadCommentsError',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
   RequireAuthorizationSucces = 'user/requireAuthorizationSucces',
   RequireAuthorizationError = 'data/requireAuthorizationError',
@@ -41,6 +53,12 @@ export type Actions =
   | ReturnType<typeof loadOfferRequest>
   | ReturnType<typeof loadOfferSuccess>
   | ReturnType<typeof loadOfferError>
+  | ReturnType<typeof loadNearbyRequest>
+  | ReturnType<typeof loadNearbySuccess>
+  | ReturnType<typeof loadNearbyError>
+  | ReturnType<typeof loadCommentsRequets>
+  | ReturnType<typeof loadCommentsSuccess>
+  | ReturnType<typeof loadCommentsError>
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
