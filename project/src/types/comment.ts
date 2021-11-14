@@ -1,11 +1,17 @@
 import { Host } from './offer';
 
+export type CommentData = {
+  id: string;
+  rating: string;
+  comment: string;
+}
+
 export type UserComment = {
-  comment: string,
-  date: string,
-  id: number,
-  rating: number,
-  user: Host,
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
+  user: Host;
 }
 
 export type BackUserComment = {

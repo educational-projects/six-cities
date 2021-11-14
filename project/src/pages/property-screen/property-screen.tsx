@@ -15,7 +15,10 @@ import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import NotFound from '../not-found/not-found-screen';
 
-const mapStateToProps = ({offer, offerLoading, offerError, offersNearby, offersNearbyError, offersNearbyLoading, comments}: State) => ({
+const mapStateToProps = (
+  {offer, offerLoading, offerError, offersNearby, offersNearbyError,
+    offersNearbyLoading, comments, commentsLoading, commentsError}: State,
+) => ({
   offer,
   offerLoading,
   offerError,
@@ -23,6 +26,8 @@ const mapStateToProps = ({offer, offerLoading, offerError, offersNearby, offersN
   offersNearbyError,
   offersNearbyLoading,
   comments,
+  commentsLoading,
+  commentsError,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -37,7 +42,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Property({offer, offerLoading, offerError, offersNearby, offersNearbyError, offersNearbyLoading, comments, onLoadCard}: PropsFromRedux): JSX.Element {
+function Property(
+  {offer, offerLoading, offerError, offersNearby, offersNearbyError, offersNearbyLoading,
+    comments, commentsLoading, commentsError, onLoadCard}: PropsFromRedux,
+): JSX.Element {
   const { id } = useParams() as { id: string};
 
   const [activeCard, setActivCard] = useState<number | null>(null);
@@ -49,13 +57,11 @@ function Property({offer, offerLoading, offerError, offersNearby, offersNearbyEr
     onLoadCard(id);
   }, [id, onLoadCard]);
 
-  // const filteredComments = comments.filter((comment) => comment.id === Number(id));
-
-  if (offerError || offersNearbyError) {
+  if (offerError || offersNearbyError || commentsError) {
     return <NotFound/>;
   }
 
-  if (offerLoading || offersNearbyLoading || !offer || !offersNearby) {
+  if (offerLoading || offersNearbyLoading || commentsLoading || !offer || !offersNearby) {
     return <Loader/>;
   }
 
@@ -108,7 +114,7 @@ function Property({offer, offerLoading, offerError, offersNearby, offersNearbyEr
               </div>
               <OptionList options={offer.goods}/>
               <HostList host={offer.host} description={offer.description}/>
-              <CommentList comments={comments}/>
+              <CommentList/>
             </div>
           </div>
           <Map

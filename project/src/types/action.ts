@@ -5,7 +5,7 @@ import {
   loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest,
   loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute,
   requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError,
-  requireLogoutRequest, requireLogoutSucces
+  requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess
 } from '../store/action';
 import { State } from './state';
 
@@ -25,6 +25,8 @@ export enum ActionType {
   LoadCommentsRequets = 'data/loadCommentsRequets',
   LoadCommentsSuccess = 'data/loadCommentsSuccess',
   LoadCommentsError = 'data/loadCommentsError',
+  SendCommentsRequest = 'data/sendCommentsRequest',
+  SendCommentsSuccess = 'data/sendCommentsSuccess',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
   RequireAuthorizationSucces = 'user/requireAuthorizationSucces',
   RequireAuthorizationError = 'data/requireAuthorizationError',
@@ -59,6 +61,8 @@ export type Actions =
   | ReturnType<typeof loadCommentsRequets>
   | ReturnType<typeof loadCommentsSuccess>
   | ReturnType<typeof loadCommentsError>
+  | ReturnType<typeof sendCommentsRequest>
+  | ReturnType<typeof sendCommentsSuccess>
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

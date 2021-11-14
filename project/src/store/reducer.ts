@@ -21,6 +21,7 @@ const initialState = {
   commentsLoading: false,
   commentsError: false,
   comments: [],
+  sendcommentsLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   authorizationStatusLoading: false,
 };
@@ -90,6 +91,8 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         commentsLoading: false,
         commentsError: true,
       };
+    case ActionType.SendCommentsRequest:
+      return {...state, sendcommentsLoading: true};
     case ActionType.RequireAuthorizationRequest:
       return {...state, authorizationStatusLoading: true};
     case ActionType.RequireAuthorizationSucces:

@@ -6,10 +6,11 @@ import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
-import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
-import { UsersComments } from '../types/comment';
+import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
+import { CommentData, UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
+const SEND_COMMENT_MESSAGE = 'there was an error posting your comment, please try again';
 
 
 export const fetchCardsAction = (): ThunkActionResult => (
@@ -56,6 +57,19 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
       dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
     } catch {
       dispatch(loadCommentsError());
+    }
+  }
+);
+
+export const sendCommentsAction = ({id, rating, comment}: CommentData): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(sendCommentsRequest());
+    try {
+      await api.post(`${APIRoute.Comments}/${id}`, {rating, comment});
+      dispatch(sendCommentsSuccess());
+      dispatch(fetchCommentsAction(id));
+    } catch {
+      toast.error(SEND_COMMENT_MESSAGE);
     }
   }
 );

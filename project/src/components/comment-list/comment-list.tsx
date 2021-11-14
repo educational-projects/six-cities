@@ -1,12 +1,19 @@
+import { connect, ConnectedProps } from 'react-redux';
 import CommentForm from '../../components/comment-form/comment-form';
 import Comment from '../../components/comment/comment';
-import { UsersComments } from '../../types/comment';
+import { AuthorizationStatus } from '../../const';
+import { State } from '../../types/state';
 
-type CommentListProps = {
-comments: UsersComments
-}
+const mapStateToProps = ({comments, authorizationStatus}: State) => ({
+  comments,
+  authorizationStatus,
+});
 
-function CommentList({comments}: CommentListProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function CommentList({comments, authorizationStatus}: PropsFromRedux): JSX.Element {
   const commentsCount = comments.length;
 
   return (
@@ -20,9 +27,10 @@ function CommentList({comments}: CommentListProps): JSX.Element {
           />
         ))}
       </ul>
-      <CommentForm/>
+      {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm/> : ''}
     </section>
   );
 }
 
-export default CommentList;
+export {CommentList};
+export default connector(CommentList);

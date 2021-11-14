@@ -29,7 +29,9 @@ export const adaptToClient = (card: BackOffer): Offer => {
     {
       host: {
         avatarUrl: card.host.avatar_url,
+        id: card.host.id,
         isPro: card.host.is_pro,
+        name: card.host.name,
       },
     },
   ) as Offer;
@@ -67,7 +69,9 @@ export const adatpUsersCommentsToClient = (userComment: BackUserComment): UserCo
     {
       user: {
         avatarUrl: userComment.user.avatar_url,
+        id: userComment.user.id,
         isPro: userComment.user.is_pro,
+        name: userComment.user.name,
       },
     },
   );

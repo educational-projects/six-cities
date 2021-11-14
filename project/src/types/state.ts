@@ -19,6 +19,7 @@ export type State = {
   commentsLoading: boolean;
   commentsError: boolean;
   comments: UsersComments;
+  sendcommentsLoading: boolean,
   authorizationStatus: AuthorizationStatus;
   authorizationStatusLoading: boolean;
 }

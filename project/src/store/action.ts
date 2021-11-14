@@ -71,6 +71,14 @@ export const loadCommentsError = () => ({
   type: ActionType.LoadCommentsError,
 } as const);
 
+export const sendCommentsRequest = () => ({
+  type: ActionType.SendCommentsRequest,
+} as const);
+
+export const sendCommentsSuccess = () => ({
+  type: ActionType.SendCommentsSuccess,
+} as const);
+
 export const requireAuthorizationRequest = () => ({
   type: ActionType.RequireAuthorizationRequest,
 } as const);
