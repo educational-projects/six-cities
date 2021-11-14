@@ -8,6 +8,9 @@ import { CommentData } from '../../types/comment';
 import { State } from '../../types/state';
 import RatingStar from '../rating-star/rating-star';
 
+const MIN_LENGTH_COMMENT = 50;
+const MAX_LENGTH_COMMENT = 300;
+
 const mapStateToProps = ({sendcommentsLoading}: State) => ({
   sendcommentsLoading,
 });
@@ -47,7 +50,10 @@ function CommentForm({sendcommentsLoading, onsubmit}: PropsFromRedux): JSX.Eleme
 
   const buttonText = sendcommentsLoading ? 'Submiting...' : 'Submit';
 
-  const isDisabled = formState.rating === '0' || formState.review.length < 50 || sendcommentsLoading;
+  const isDisabled = formState.rating === '0'
+   || formState.review.length < MIN_LENGTH_COMMENT
+   || sendcommentsLoading
+   || formState.review.length > MAX_LENGTH_COMMENT;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmitForm}>
