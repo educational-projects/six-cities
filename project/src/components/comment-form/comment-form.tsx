@@ -5,7 +5,12 @@ import { ratingStarSetting } from '../../const';
 import { sendCommentsAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { CommentData } from '../../types/comment';
+import { State } from '../../types/state';
 import RatingStar from '../rating-star/rating-star';
+
+const mapStateToProps = ({sendcommentsLoading}: State) => ({
+  sendcommentsLoading,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onsubmit({id, rating, comment}: CommentData) {
@@ -13,11 +18,11 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function CommentForm({onsubmit}: PropsFromRedux): JSX.Element {
+function CommentForm({sendcommentsLoading, onsubmit}: PropsFromRedux): JSX.Element {
   const { id } = useParams() as { id: string};
 
   const [formState, setFormState] = useState({
@@ -40,7 +45,9 @@ function CommentForm({onsubmit}: PropsFromRedux): JSX.Element {
     onsubmit({id: id, rating: formState.rating, comment: formState.review});
   };
 
-  const isDisabled = formState.rating === '0' || formState.review.length < 50;
+  const buttonText = sendcommentsLoading ? 'Submiting...' : 'Submit';
+
+  const isDisabled = formState.rating === '0' || formState.review.length < 50 || sendcommentsLoading;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmitForm}>
@@ -73,7 +80,13 @@ function CommentForm({onsubmit}: PropsFromRedux): JSX.Element {
           {' '}
           <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabled}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={isDisabled}
+        >
+          {buttonText}
+        </button>
       </div>
     </form>
   );
