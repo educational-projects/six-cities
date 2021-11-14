@@ -44,10 +44,9 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Property(
   {offer, offerLoading, offerError, offersNearby, offersNearbyError, offersNearbyLoading,
-    comments, commentsLoading, commentsError, onLoadCard}: PropsFromRedux,
+    commentsLoading, commentsError, onLoadCard}: PropsFromRedux,
 ): JSX.Element {
   const { id } = useParams() as { id: string};
-
   const [activeCard, setActivCard] = useState<number | null>(null);
   const handleActiveCard = (cardId: number | null) => {
     setActivCard(cardId);
