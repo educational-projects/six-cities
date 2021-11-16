@@ -65,9 +65,8 @@ export const sendCommentsAction = ({id, rating, comment}: CommentData): ThunkAct
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(sendCommentsRequest());
     try {
-      await api.post(`${APIRoute.Comments}/${id}`, {rating, comment});
-      dispatch(sendCommentsSuccess());
-      dispatch(fetchCommentsAction(id));
+      const  {data} = await api.post<UsersComments>(`${APIRoute.Comments}/${id}`, {rating, comment});
+      dispatch(sendCommentsSuccess(data.map(adatpUsersCommentsToClient)));
     } catch {
       toast.error(SEND_COMMENT_MESSAGE);
     }
@@ -80,7 +79,7 @@ export const checkAuthAction = (): ThunkActionResult => (
       const {data} = await api.get<BackUser>(APIRoute.Login);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
       dispatch(changeUserData(adaptUserDataToClient(data)));
-    } catch {
+    } catch  {
       dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth));
     }
   }

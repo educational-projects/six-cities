@@ -93,6 +93,8 @@ const reducer = (state: State = initialState, actions: Actions): State => {
       };
     case ActionType.SendCommentsRequest:
       return {...state, sendcommentsLoading: true};
+    case ActionType.SendCommentsSuccess:
+      return {...state, sendcommentsLoading: false, comments: actions.payload};
     case ActionType.RequireAuthorizationRequest:
       return {...state, authorizationStatusLoading: true};
     case ActionType.RequireAuthorizationSucces:

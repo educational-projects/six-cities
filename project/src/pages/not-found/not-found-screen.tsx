@@ -13,7 +13,7 @@ function NotFound(): JSX.Element {
           <img src='../../img/test.png' alt='404'/>
         </div>
         <Link className={styles.link} to={AppRoute.Main}>
-          <span className={styles.span}>Go back</span>
+          <span className={styles.span}>Go to main</span>
         </Link>
       </section>
       <Footer/>

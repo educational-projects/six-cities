@@ -46,7 +46,7 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
           <span>Premium</span>
         </div>)}
       <div className={imageWrapperClasses}>
-        <Link to="/">
+        <Link to={`offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}

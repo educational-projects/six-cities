@@ -16,7 +16,7 @@ const mapStateToProps = ({sendcommentsLoading}: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onsubmit({id, rating, comment}: CommentData) {
+  onSubmit({id, rating, comment}: CommentData) {
     dispatch(sendCommentsAction({id, rating, comment}));
   },
 });
@@ -25,8 +25,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function CommentForm({sendcommentsLoading, onsubmit}: PropsFromRedux): JSX.Element {
-  const { id } = useParams() as { id: string};
+function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Element {
+  const { id } = useParams<{ id: string}>();
 
   const [formState, setFormState] = useState({
     review: '',
@@ -45,10 +45,15 @@ function CommentForm({sendcommentsLoading, onsubmit}: PropsFromRedux): JSX.Eleme
   const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    onsubmit({id: id, rating: formState.rating, comment: formState.review});
+    onSubmit({id: id, rating: formState.rating, comment: formState.review});
+    setFormState({
+      ...formState,
+      rating: '0',
+      review: '',
+    });
   };
 
-  const buttonText = sendcommentsLoading ? 'Submiting...' : 'Submit';
+  const buttonText = sendcommentsLoading ? 'Submitting...' : 'Submit';
 
   const isDisabled = formState.rating === '0'
    || formState.review.length < MIN_LENGTH_COMMENT

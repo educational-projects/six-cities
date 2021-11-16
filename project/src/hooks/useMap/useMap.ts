@@ -30,6 +30,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): leafl
 
       setMap(instance);
     }
+    map?.setView({
+      lat: location.latitude,
+      lng: location.longitude,
+    }, location.zoom);
   }, [mapRef, map, location]);
 
   return map;

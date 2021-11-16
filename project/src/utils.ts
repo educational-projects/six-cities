@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { SortType } from './const';
-import { BackUserComment, UserComment } from './types/comment';
+import { BackUserComment, UserComment, UsersComments } from './types/comment';
 import { BackOffer, Offer } from './types/offer';
 import { BackUser, User } from './types/user';
 
@@ -9,6 +9,8 @@ export const getRating = (rating: number): string => `${(Math.round(rating) / 5)
 export const getFormatDate = (date: string, format: string): string => dayjs(date).format(format);
 
 export const getRandomArrayElement = (arr: string[]): string => arr[Math.floor(Math.random()*arr.length)];
+
+export const getSortedUpDays = (arr: UsersComments): UsersComments => arr.sort((a, b) => (dayjs(b.date).isAfter(dayjs(a.date)) ? 1 : -1));
 
 export const sort = {
   [SortType.PRICE_DOWN]: (cardA: Offer, cardB: Offer): number => cardB.price - cardA.price,
@@ -28,10 +30,9 @@ export const adaptToClient = (card: BackOffer): Offer => {
     },
     {
       host: {
+        ...card.host,
         avatarUrl: card.host.avatar_url,
-        id: card.host.id,
         isPro: card.host.is_pro,
-        name: card.host.name,
       },
     },
   ) as Offer;
@@ -68,10 +69,9 @@ export const adatpUsersCommentsToClient = (userComment: BackUserComment): UserCo
     userComment,
     {
       user: {
+        ...userComment.user,
         avatarUrl: userComment.user.avatar_url,
-        id: userComment.user.id,
         isPro: userComment.user.is_pro,
-        name: userComment.user.name,
       },
     },
   );

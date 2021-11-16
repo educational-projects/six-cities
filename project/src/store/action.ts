@@ -75,8 +75,9 @@ export const sendCommentsRequest = () => ({
   type: ActionType.SendCommentsRequest,
 } as const);
 
-export const sendCommentsSuccess = () => ({
+export const sendCommentsSuccess = (comments: UsersComments) => ({
   type: ActionType.SendCommentsSuccess,
+  payload: comments,
 } as const);
 
 export const requireAuthorizationRequest = () => ({

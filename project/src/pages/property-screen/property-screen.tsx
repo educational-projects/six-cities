@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
@@ -13,7 +13,9 @@ import { offersType } from '../../const';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
-import NotFound from '../not-found/not-found-screen';
+import FallbackError from '../fallback-error/fallback-error';
+
+const MAX_COUNT_NEARBY = 3;
 
 const mapStateToProps = (
   {offer, offerLoading, offerError, offersNearby, offersNearbyError,
@@ -46,18 +48,16 @@ function Property(
   {offer, offerLoading, offerError, offersNearby, offersNearbyError, offersNearbyLoading,
     commentsLoading, commentsError, onLoadCard}: PropsFromRedux,
 ): JSX.Element {
-  const { id } = useParams() as { id: string};
-  const [activeCard, setActivCard] = useState<number | null>(null);
-  const handleActiveCard = (cardId: number | null) => {
-    setActivCard(cardId);
-  };
+  const { id } = useParams<{ id: string}>();
+
+  const nearbyList = offersNearby.slice(0, MAX_COUNT_NEARBY);
 
   useEffect(() =>{
     onLoadCard(id);
   }, [id, onLoadCard]);
 
   if (offerError || offersNearbyError || commentsError) {
-    return <NotFound/>;
+    return <FallbackError/>;
   }
 
   if (offerLoading || offersNearbyLoading || commentsLoading || !offer || !offersNearby) {
@@ -117,8 +117,7 @@ function Property(
             </div>
           </div>
           <Map
-            cards={offersNearby}
-            activeCard={activeCard}
+            cards={nearbyList}
             className="property__map"
           />
         </section>
@@ -126,10 +125,9 @@ function Property(
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardList
-              cards={offersNearby}
-              listType={'near'}
-              cardType={'near'}
-              onActiveCard={handleActiveCard}
+              cards={nearbyList}
+              listType="near"
+              cardType="near"
             />
           </section>
         </div>

@@ -3,6 +3,9 @@ import CommentForm from '../../components/comment-form/comment-form';
 import Comment from '../../components/comment/comment';
 import { AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
+import { getSortedUpDays } from '../../utils';
+
+const MAX_COUNT_COMMENTS = 10;
 
 const mapStateToProps = ({comments, authorizationStatus}: State) => ({
   comments,
@@ -14,20 +17,20 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function CommentList({comments, authorizationStatus}: PropsFromRedux): JSX.Element {
-  const commentsCount = comments.length;
+  const commentsList = getSortedUpDays(comments).slice(0, MAX_COUNT_COMMENTS);
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsCount}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {comments.map((comment) => (
+        {commentsList.map((comment) => (
           <Comment
             comment={comment}
             key={comment.id}
           />
         ))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm/> : ''}
+      {authorizationStatus === AuthorizationStatus.Auth && <CommentForm/>}
     </section>
   );
 }
