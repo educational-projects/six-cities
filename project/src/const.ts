@@ -18,6 +18,7 @@ export enum APIRoute  {
   Logout = '/logout',
   Nearby = '/nearby',
   Comments = '/comments',
+  Favorites = '/favorite'
 }
 
 export const offersType: {[key: string]: string} = {

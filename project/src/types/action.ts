@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import {
   changeCity, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess,
-  loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest,
+  loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest,
   loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute,
   requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError,
   requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess
@@ -25,6 +25,9 @@ export enum ActionType {
   LoadCommentsRequets = 'data/loadCommentsRequets',
   LoadCommentsSuccess = 'data/loadCommentsSuccess',
   LoadCommentsError = 'data/loadCommentsError',
+  LoadFavoritesOffersRequets = 'data/loadFavoritesOffersRequets',
+  LoadFavoritesOffersSuccess = 'data/loadFavoritesOffersSuccess',
+  LoadFavoritesOffersError = 'data/LoadFavoritesOffersError',
   SendCommentsRequest = 'data/sendCommentsRequest',
   SendCommentsSuccess = 'data/sendCommentsSuccess',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
@@ -63,6 +66,9 @@ export type Actions =
   | ReturnType<typeof loadCommentsError>
   | ReturnType<typeof sendCommentsRequest>
   | ReturnType<typeof sendCommentsSuccess>
+  | ReturnType<typeof loadFavoritesOffersRequets>
+  | ReturnType<typeof loadFavoritesOffersSuccess>
+  | ReturnType<typeof loadFavoritesOffersError>
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

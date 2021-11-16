@@ -6,7 +6,7 @@ import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
-import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
+import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
 import { CommentData, UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
@@ -57,6 +57,18 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
       dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
     } catch {
       dispatch(loadCommentsError());
+    }
+  }
+);
+
+export const fetchFavoritesOffersAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadFavoritesOffersRequets());
+    try {
+      const {data} = await api.get<BackOffers>(APIRoute.Favorites);
+      dispatch(loadFavoritesOffersSuccess(data.map(adaptToClient)));
+    } catch {
+      dispatch(loadFavoritesOffersError());
     }
   }
 );

@@ -18,6 +18,9 @@ const initialState = {
   offersNearbyLoading: false,
   offersNearbyError: false,
   offersNearby: [],
+  FavoritesOffersLoading: false,
+  FavoritesOffersError: false,
+  FavoritesOffers: [],
   commentsLoading: false,
   commentsError: false,
   comments: [],
@@ -90,6 +93,23 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         ...state,
         commentsLoading: false,
         commentsError: true,
+      };
+    case ActionType.LoadFavoritesOffersRequets:
+      return {
+        ...state,
+        FavoritesOffersLoading: true,
+      };
+    case ActionType.LoadFavoritesOffersSuccess:
+      return {
+        ...state,
+        FavoritesOffersLoading: false,
+        FavoritesOffers: actions.payload,
+      };
+    case ActionType.LoadFavoritesOffersError:
+      return {
+        ...state,
+        FavoritesOffersLoading: false,
+        FavoritesOffersError: true,
       };
     case ActionType.SendCommentsRequest:
       return {...state, sendcommentsLoading: true};

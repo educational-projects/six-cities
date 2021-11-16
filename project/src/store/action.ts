@@ -71,6 +71,19 @@ export const loadCommentsError = () => ({
   type: ActionType.LoadCommentsError,
 } as const);
 
+export const loadFavoritesOffersRequets = () => ({
+  type: ActionType.LoadFavoritesOffersRequets,
+} as const);
+
+export const loadFavoritesOffersSuccess = (offers: Offers) => ({
+  type: ActionType.LoadFavoritesOffersSuccess,
+  payload: offers,
+} as const);
+
+export const loadFavoritesOffersError = () => ({
+  type: ActionType.LoadFavoritesOffersError,
+} as const);
+
 export const sendCommentsRequest = () => ({
   type: ActionType.SendCommentsRequest,
 } as const);

@@ -1,16 +1,48 @@
 import cn from 'classnames';
+import { useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import FavoritesBoard from '../../components/favorites-board/favorites-board';
 import FavoritesEmpty from '../../components/favorites-empty/favoristes-empty';
+import Loader from '../../pages/loading-screen/loading-screen';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import { Offers } from '../../types/offer';
+import { fetchFavoritesOffersAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
+import { State } from '../../types/state';
+import FallbackError from '../fallback-error/fallback-error';
 
-type FavoritesProps = {
-  favoritesCards: Offers;
-}
+const mapStateToProps = ({FavoritesOffers, FavoritesOffersLoading, FavoritesOffersError}: State) => ({
+  FavoritesOffers,
+  FavoritesOffersLoading,
+  FavoritesOffersError,
+});
 
-function Favorites({favoritesCards}: FavoritesProps): JSX.Element {
-  const favoritesList = favoritesCards.filter((card) => card.isFavorite);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLoadFavoritesOffers() {
+    dispatch(fetchFavoritesOffersAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Favorites(
+  {FavoritesOffers, FavoritesOffersLoading, FavoritesOffersError, onLoadFavoritesOffers}: PropsFromRedux,
+): JSX.Element {
+  useEffect(() => {
+    onLoadFavoritesOffers();
+  }, [onLoadFavoritesOffers]);
+
+  if (FavoritesOffersLoading) {
+    return <Loader/>;
+  }
+
+  if (FavoritesOffersError) {
+    return <FallbackError/>;
+  }
+
+  const favoritesList = FavoritesOffers.filter((card) => card.isFavorite);
   const cityesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
 
   const pageClass = cn('page', {
@@ -23,7 +55,6 @@ function Favorites({favoritesCards}: FavoritesProps): JSX.Element {
   return (
     <div className={pageClass}>
       <Header/>
-
       <main className={mainClass}>
         <div className="page__favorites-container container">
           {favoritesList.length ?
@@ -37,4 +68,5 @@ function Favorites({favoritesCards}: FavoritesProps): JSX.Element {
   );
 }
 
-export default Favorites;
+export {Favorites};
+export default connector(Favorites);
