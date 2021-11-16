@@ -84,6 +84,14 @@ export const loadFavoritesOffersError = () => ({
   type: ActionType.LoadFavoritesOffersError,
 } as const);
 
+export const changeFavoriteStatusRequest = () => ({
+  type: ActionType.ChangeFavoriteStatusRequest,
+} as const);
+
+export const changeFavoriteStatusSucces = () => ({
+  type: ActionType.ChangeFavoriteStatusSucces,
+} as const);
+
 export const sendCommentsRequest = () => ({
   type: ActionType.SendCommentsRequest,
 } as const);

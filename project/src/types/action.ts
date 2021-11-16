@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import {
-  changeCity, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess,
+  changeCity, changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess,
   loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest,
   loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute,
   requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError,
@@ -37,7 +37,9 @@ export enum ActionType {
   RequireLogoutSucces = 'user/requireLogoutSucces',
   RequireLogoutError = 'user/requireLogoutError',
   RedirectToRoute = 'data/redirectToRoute',
-  RedirectToBack = 'data/redirectToBack'
+  RedirectToBack = 'data/redirectToBack',
+  ChangeFavoriteStatusRequest = 'data/changeFavoriteStatusRequest',
+  ChangeFavoriteStatusSucces = 'data/changeFavoriteStatusSucces'
 }
 
 export type Actions =
@@ -69,6 +71,8 @@ export type Actions =
   | ReturnType<typeof loadFavoritesOffersRequets>
   | ReturnType<typeof loadFavoritesOffersSuccess>
   | ReturnType<typeof loadFavoritesOffersError>
+  | ReturnType<typeof changeFavoriteStatusRequest>
+  | ReturnType<typeof changeFavoriteStatusSucces>
 
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

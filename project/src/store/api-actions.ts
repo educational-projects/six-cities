@@ -6,11 +6,12 @@ import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
-import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
+import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
 import { CommentData, UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
 const SEND_COMMENT_MESSAGE = 'there was an error posting your comment, please try again';
+const STATUS_FAIL_MESSAGE = 'failed to add to favorites, please try again';
 
 
 export const fetchCardsAction = (): ThunkActionResult => (
@@ -69,6 +70,18 @@ export const fetchFavoritesOffersAction = (): ThunkActionResult => (
       dispatch(loadFavoritesOffersSuccess(data.map(adaptToClient)));
     } catch {
       dispatch(loadFavoritesOffersError());
+    }
+  }
+);
+
+export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(changeFavoriteStatusRequest());
+    try {
+      await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
+      dispatch(changeFavoriteStatusSucces());
+    } catch {
+      toast.error(STATUS_FAIL_MESSAGE);
     }
   }
 );

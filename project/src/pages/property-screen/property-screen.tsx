@@ -13,7 +13,7 @@ import { offersType } from '../../const';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
-import FallbackError from '../fallback-error/fallback-error';
+import NotFound from '../not-found/not-found-screen';
 
 const MAX_COUNT_NEARBY = 3;
 
@@ -54,12 +54,12 @@ function Property(
     onLoadCard(id);
   }, [id, onLoadCard]);
 
-  if (offerLoading || offersNearbyLoading || commentsLoading || !offer || !offersNearby) {
+  if (offerLoading || offersNearbyLoading || commentsLoading || !offersNearby) {
     return <Loader/>;
   }
 
-  if (offerError || offersNearbyError || commentsError) {
-    return <FallbackError/>;
+  if (offerError || offersNearbyError || commentsError || !offer) {
+    return <NotFound/>;
   }
 
   const nearbyList = offersNearby.slice(0, MAX_COUNT_NEARBY);

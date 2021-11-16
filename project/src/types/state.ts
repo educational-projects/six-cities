@@ -18,7 +18,8 @@ export type State = {
   offersNearby: Offers;
   FavoritesOffersLoading: boolean;
   FavoritesOffersError: boolean
-  FavoritesOffers: Offers
+  FavoritesOffers: Offers;
+  changeFavoriteStatusLoading: boolean;
   commentsLoading: boolean;
   commentsError: boolean;
   comments: UsersComments;
