@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
-import CommentForm from '../../components/comment-form/comment-form';
-import Comment from '../../components/comment/comment';
+import CommentForm from '../comment-form/comment-form';
+import Comment from '../comment/comment';
 import { AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
 import { getSortedUpDays } from '../../utils';
@@ -16,7 +16,7 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function CommentList({comments, authorizationStatus}: PropsFromRedux): JSX.Element {
+function Comments({comments, authorizationStatus}: PropsFromRedux): JSX.Element {
   const commentsList = getSortedUpDays(comments).slice(0, MAX_COUNT_COMMENTS);
 
   return (
@@ -35,5 +35,5 @@ function CommentList({comments, authorizationStatus}: PropsFromRedux): JSX.Eleme
   );
 }
 
-export {CommentList};
-export default connector(CommentList);
+export {Comments};
+export default connector(Comments);

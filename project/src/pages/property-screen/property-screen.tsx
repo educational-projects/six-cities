@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
 import CardList from '../../components/card-list/card-list';
-import CommentList from '../../components/comment-list/comment-list';
+import Comments from '../../components/comments/comments';
 import Header from '../../components/header/header';
 import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
@@ -50,19 +50,20 @@ function Property(
 ): JSX.Element {
   const { id } = useParams<{ id: string}>();
 
-  const nearbyList = offersNearby.slice(0, MAX_COUNT_NEARBY);
-
   useEffect(() =>{
     onLoadCard(id);
   }, [id, onLoadCard]);
+
+  if (offerLoading || offersNearbyLoading || commentsLoading || !offer || !offersNearby) {
+    return <Loader/>;
+  }
 
   if (offerError || offersNearbyError || commentsError) {
     return <FallbackError/>;
   }
 
-  if (offerLoading || offersNearbyLoading || commentsLoading || !offer || !offersNearby) {
-    return <Loader/>;
-  }
+  const nearbyList = offersNearby.slice(0, MAX_COUNT_NEARBY);
+  const offersPinsForMap = [...nearbyList, offer];
 
   return (
     <div className="page">
@@ -113,11 +114,12 @@ function Property(
               </div>
               <OptionList options={offer.goods}/>
               <HostList host={offer.host} description={offer.description}/>
-              <CommentList/>
+              <Comments/>
             </div>
           </div>
           <Map
-            cards={nearbyList}
+            cards={offersPinsForMap}
+            activeCard={offer.id}
             className="property__map"
           />
         </section>
