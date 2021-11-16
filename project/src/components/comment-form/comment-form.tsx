@@ -46,11 +46,6 @@ function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Eleme
     evt.preventDefault();
 
     onSubmit({id: id, rating: formState.rating, comment: formState.review});
-    setFormState({
-      ...formState,
-      rating: '0',
-      review: '',
-    });
   };
 
   const buttonText = sendcommentsLoading ? 'Submitting...' : 'Submit';
