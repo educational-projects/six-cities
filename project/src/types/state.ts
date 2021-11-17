@@ -1,12 +1,22 @@
 import { AuthorizationStatus } from '../const';
+import { RootState } from '../store/root-reducer';
 import { UsersComments } from './comment';
 import { Offer, Offers } from './offer';
 import { User } from './user';
 
-export type State = {
+export type AppState = {
   currentCity: string;
   currentSortType: string;
-  userData: null | User;
+}
+
+export type CommentsState = {
+  commentsLoading: boolean;
+  commentsError: boolean;
+  comments: UsersComments;
+  sendcommentsLoading: boolean,
+}
+
+export type OffersState = {
   cardList: Offers;
   offersLoading: boolean;
   offersError: boolean;
@@ -20,10 +30,12 @@ export type State = {
   FavoritesOffersError: boolean
   FavoritesOffers: Offers;
   changeFavoriteStatusLoading: boolean;
-  commentsLoading: boolean;
-  commentsError: boolean;
-  comments: UsersComments;
-  sendcommentsLoading: boolean,
+}
+
+export type UserState = {
+  userData: null | User;
   authorizationStatus: AuthorizationStatus;
   authorizationStatusLoading: boolean;
 }
+
+export type State = RootState

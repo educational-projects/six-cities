@@ -1,15 +1,8 @@
-import { AuthorizationStatus } from '../const';
-import { Actions, ActionType } from '../types/action';
-import { State } from '../types/state';
+import { Actions, ActionType } from '../../types/action';
+import { OffersState } from '../../types/state';
 
-const DEFAULT_CITY = 'Paris';
-const DEFAULT_SORT = 'Popular';
-
-const initialState = {
-  currentCity: DEFAULT_CITY,
-  currentSortType: DEFAULT_SORT,
+const initialState: OffersState = {
   cardList: [],
-  userData: null,
   offersLoading: false,
   offersError: false,
   offerLoading: false,
@@ -22,22 +15,10 @@ const initialState = {
   FavoritesOffersError: false,
   FavoritesOffers: [],
   changeFavoriteStatusLoading: false,
-  commentsLoading: false,
-  commentsError: false,
-  comments: [],
-  sendcommentsLoading: false,
-  authorizationStatus: AuthorizationStatus.Unknown,
-  authorizationStatusLoading: false,
 };
 
-const reducer = (state: State = initialState, actions: Actions): State => {
+const offers = (state = initialState, actions: Actions): OffersState => {
   switch (actions.type) {
-    case ActionType.ChangeCity:
-      return {...state, currentCity: actions.payload};
-    case ActionType.ChangeSortType:
-      return {...state, currentSortType: actions.payload};
-    case ActionType.ChangeUserData:
-      return {...state, userData: actions.payload};
     case ActionType.LoadCardsRequest:
       return {...state, offersLoading: true};
     case ActionType.LoadCardsSuccess:
@@ -81,20 +62,6 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         offersNearbyLoading: false,
         offersNearbyError: true,
       };
-    case ActionType.LoadCommentsRequets:
-      return {...state, commentsLoading: true};
-    case ActionType.LoadCommentsSuccess:
-      return {
-        ...state,
-        commentsLoading: false,
-        comments: actions.payload,
-      };
-    case ActionType.LoadCommentsError:
-      return {
-        ...state,
-        commentsLoading: false,
-        commentsError: true,
-      };
     case ActionType.LoadFavoritesOffersRequets:
       return {
         ...state,
@@ -122,29 +89,9 @@ const reducer = (state: State = initialState, actions: Actions): State => {
         ...state,
         changeFavoriteStatusLoading: false,
       };
-    case ActionType.SendCommentsRequest:
-      return {...state, sendcommentsLoading: true};
-    case ActionType.SendCommentsSuccess:
-      return {...state, sendcommentsLoading: false, comments: actions.payload};
-    case ActionType.RequireAuthorizationRequest:
-      return {...state, authorizationStatusLoading: true};
-    case ActionType.RequireAuthorizationSucces:
-      return {
-        ...state,
-        authorizationStatus: actions.payload,
-        authorizationStatusLoading: false,
-      };
-    case ActionType.RequireLogoutRequest:
-      return {...state, authorizationStatusLoading: true};
-    case ActionType.RequireLogoutSucces:
-      return {
-        ...state,
-        authorizationStatusLoading: false,
-        userData: null,
-      };
     default:
       return state;
   }
 };
 
-export {reducer};
+export {offers};

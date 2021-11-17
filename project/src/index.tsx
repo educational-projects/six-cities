@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
-import { reducer } from './store/reducer';
 import { createApi } from './services/api';
 import { ThunkAppDispatch } from './types/action';
 import { checkAuthAction, fetchCardsAction } from './store/api-actions';
@@ -14,13 +13,14 @@ import { AuthorizationStatus } from './const';
 import { redirect } from './store/middlewares/redirect';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { rootReducer } from './store/root-reducer';
 
 const api = createApi(
   () => store.dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth)),
 );
 
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
     applyMiddleware(redirect),
