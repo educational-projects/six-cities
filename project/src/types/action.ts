@@ -10,8 +10,8 @@ import {
 import { State } from './state';
 
 export enum ActionType {
-  ChangeCity = 'main/changeCity',
-  ChangeSortType ='main/changeSortType',
+  ChangeCity = 'app/changeCity',
+  ChangeSortType ='app/changeSortType',
   ChangeUserData = 'user/changeUserData',
   LoadCardsError = 'data/loadCardsError',
   LoadCardsSuccess = 'data/loadCardsSuccess',
