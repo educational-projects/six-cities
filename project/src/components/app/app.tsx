@@ -1,4 +1,3 @@
-import { connect, ConnectedProps } from 'react-redux';
 import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Favorites from '../../pages/favorites-screen/favorites-screen';
@@ -6,25 +5,10 @@ import Login from '../../pages/login-screen/login-screen';
 import Main from '../../pages/main-screen/main-screen';
 import NotFound from '../../pages/not-found/not-found-screen';
 import Property from '../../pages/property-screen/property-screen';
-import { UsersComments } from '../../types/comment';
-import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
 
-type AppScreenProps = {
-  comments: UsersComments
-}
-
-const mapStateToProps = ({cardList}: State) => ({
-  cardList,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux & AppScreenProps;
-
-function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -36,14 +20,11 @@ function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
         </Route>
         <PrivateRoute exact
           path={AppRoute.Favorites}
-          render={() => <Favorites favoritesCards={cardList}/>}
+          render={() => <Favorites/>}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
-          <Property
-            cards={cardList}
-            comments={comments}
-          />
+          <Property />
         </Route>
         <Route>
           <NotFound/>
@@ -53,6 +34,4 @@ function App({comments, cardList}: ConnectedComponentsProps): JSX.Element {
   );
 }
 
-export { App };
-
-export default connector(App);
+export default App;

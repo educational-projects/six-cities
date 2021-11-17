@@ -8,11 +8,11 @@ import { State } from '../../types/state';
 import FallbackError from '../fallback-error/fallback-error';
 import Loader from '../loading-screen/loading-screen';
 
-const mapStateToProps = ({currentCity, cardList, offersLoading, offersError}: State) => ({
-  currentCity,
-  cardList,
-  offersLoading,
-  offersError,
+const mapStateToProps = ({APP, OFFERS}: State) => ({
+  currentCity: APP.currentCity,
+  cardList: OFFERS.cardList,
+  offersLoading: OFFERS.offersLoading,
+  offersError: OFFERS.offersError,
 });
 
 const connector = connect(mapStateToProps);

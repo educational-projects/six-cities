@@ -9,7 +9,7 @@ type CardListProps = {
   cardType?: string
 }
 
-function CardList({cards, onActiveCard, cardType, listType ='default'}: CardListProps): JSX.Element {
+function CardList({cards, cardType, listType = 'default', onActiveCard = undefined}: CardListProps): JSX.Element {
   const listClasses = cn('places__list', {
     'cities__places-list tabs__content'  : listType === 'default',
     'near-places__list' : listType ==='near',

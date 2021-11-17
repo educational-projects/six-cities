@@ -1,14 +1,18 @@
 import { toast } from 'react-toastify';
 import { APIRoute, AuthorizationStatus } from '../const';
-import { dropToken, saveToken, Token } from '../services/token';
+import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
-import { adaptToClient, adaptUserDataToClient } from '../utils';
-import { BackUser, User } from '../types/user';
-import { changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces } from './action';
+import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
+import { BackUser } from '../types/user';
+import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
+import { CommentData, UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
+const SEND_COMMENT_MESSAGE = 'there was an error posting your comment, please try again';
+const STATUS_FAIL_MESSAGE = 'failed to add to favorites, please try again';
+
 
 export const fetchCardsAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
@@ -22,11 +26,11 @@ export const fetchCardsAction = (): ThunkActionResult => (
   }
 );
 
-export const fetchOfferAction = (): ThunkActionResult => (
+export const fetchOfferAction = (id: string): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(loadOfferRequest());
     try {
-      const {data} = await api.get<BackOffer>(APIRoute.Offer);
+      const {data} = await api.get<BackOffer>(`${APIRoute.Cards}/${id}`);
       dispatch(loadOfferSuccess(adaptToClient(data)));
     } catch {
       dispatch(loadOfferError());
@@ -34,13 +38,74 @@ export const fetchOfferAction = (): ThunkActionResult => (
   }
 );
 
+export const fetchOffersNearby = (id: string): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadNearbyRequest());
+    try {
+      const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
+      dispatch(loadNearbySuccess(data.map(adaptToClient)));
+    } catch {
+      dispatch(loadNearbyError());
+    }
+  }
+);
+
+export const fetchCommentsAction = (id: string): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadCommentsRequets());
+    try {
+      const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
+      dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
+    } catch(e) {
+      dispatch(loadCommentsError());
+      console.log({e});
+    }
+  }
+);
+
+export const fetchFavoritesOffersAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(loadFavoritesOffersRequets());
+    try {
+      const {data} = await api.get<BackOffers>(APIRoute.Favorites);
+      dispatch(loadFavoritesOffersSuccess(data.map(adaptToClient)));
+    } catch {
+      dispatch(loadFavoritesOffersError());
+    }
+  }
+);
+
+export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(changeFavoriteStatusRequest());
+    try {
+      await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
+      dispatch(changeFavoriteStatusSucces());
+    } catch {
+      toast.error(STATUS_FAIL_MESSAGE);
+    }
+  }
+);
+
+export const sendCommentsAction = ({id, rating, comment}: CommentData): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(sendCommentsRequest());
+    try {
+      const  {data} = await api.post<UsersComments>(`${APIRoute.Comments}/${id}`, {rating, comment});
+      dispatch(sendCommentsSuccess(data.map(adatpUsersCommentsToClient)));
+    } catch {
+      toast.error(SEND_COMMENT_MESSAGE);
+    }
+  }
+);
+
 export const checkAuthAction = (): ThunkActionResult => (
   async (dispatch, _getState, api) => {
     try {
-      const {data: {...user}} = await api.get<BackUser>(APIRoute.Login);
+      const {data} = await api.get<BackUser>(APIRoute.Login);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserData(adaptUserDataToClient(user)));
-    } catch {
+      dispatch(changeUserData(adaptUserDataToClient(data)));
+    } catch  {
       dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth));
     }
   }
@@ -50,10 +115,10 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
   async (dispatch, _getState, api) => {
     dispatch(requireAuthorizationRequest());
     try {
-      const {data: {token, ...user}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-      saveToken(token);
+      const {data} = await api.post<BackUser>(APIRoute.Login, {email, password});
+      saveToken(data.token);
       dispatch(requireAuthorizationSucces(AuthorizationStatus.Auth));
-      dispatch(changeUserData(adaptUserDataToClient(user as User)));
+      dispatch(changeUserData(adaptUserDataToClient(data)));
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));

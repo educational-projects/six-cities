@@ -7,8 +7,8 @@ import { changeSortType } from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 
-const mapStateToProps = ({currentSortType}: State) => ({
-  currentSortType,
+const mapStateToProps = ({APP}: State) => ({
+  currentSortType: APP.currentSortType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

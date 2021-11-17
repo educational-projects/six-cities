@@ -5,9 +5,9 @@ import UserLink from '../user-link/user-link';
 import ButtonLogout from '../user-button/user-button-logout';
 import ButtonSignIn from '../user-button/user-button-authorization';
 
-const mapStateToProps = ({authorizationStatus, userData}: State) => ({
-  authorizationStatus,
-  userData,
+const mapStateToProps = ({USER}: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  userData: USER.userData,
 });
 
 const connector = connect(mapStateToProps);

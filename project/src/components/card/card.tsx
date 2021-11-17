@@ -1,6 +1,9 @@
 import cn from 'classnames';
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { offersType } from '../../const';
+import { fetchChangeFavoriteStatus } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 
@@ -10,8 +13,20 @@ type ItemCardProps = {
   onActiveCard?: (id: number | null) => void;
 }
 
-function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  changeStatus(offer: Offer) {
+    dispatch(fetchChangeFavoriteStatus(offer.id, !offer.isFavorite));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type PropsFromCommector = PropsFromRedux & ItemCardProps
+
+function ItemCard({card, cardType ='cities', onActiveCard, changeStatus}: PropsFromCommector): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
+
   const offerRating = getRating(rating);
   const favoriteType = cardType === 'favorites';
 
@@ -35,6 +50,10 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
     'place-card__bookmark-button--active' : isFavorite,
   });
 
+  const handleClickStatus = (offer: Offer)  => {
+    changeStatus(offer);
+  };
+
   return (
     <article className={articleClasses}
       onMouseEnter={() => onActiveCard ? onActiveCard(id) : undefined}
@@ -45,7 +64,7 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
           <span>Premium</span>
         </div>)}
       <div className={imageWrapperClasses}>
-        <Link to="/">
+        <Link to={`offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -61,7 +80,11 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={buttonClasses} type="button">
+          <button
+            className={buttonClasses}
+            type="button"
+            onClick={() => handleClickStatus(card)}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -83,4 +106,5 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
   );
 }
 
-export default ItemCard;
+export {ItemCard};
+export default connector(ItemCard);

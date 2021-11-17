@@ -6,6 +6,11 @@ import { connect, ConnectedProps } from 'react-redux';
 import { AuthData } from '../../types/auth-data';
 import { loginAction } from '../../store/api-actions';
 import { State } from '../../types/state';
+import { getRandomArrayElement } from '../../utils';
+import { AppRoute, сitiesList } from '../../const';
+import { changeCity } from '../../store/action';
+import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 const formFields = {
   email: 'E-mail',
@@ -23,13 +28,17 @@ type FormStateProps = {
   [key: string]: FieldProps
 }
 
-const mapStateToProps = ({authorizationStatusLoading}: State) => ({
-  authorizationStatusLoading,
+const mapStateToProps = ({USER}: State) => ({
+  authorizationStatusLoading: USER.authorizationStatusLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     dispatch(loginAction(authData));
+  },
+
+  onclickCity(city: string) {
+    dispatch(changeCity(city));
   },
 });
 
@@ -37,7 +46,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function SignIn({onSubmit, authorizationStatusLoading}: PropsFromRedux): JSX.Element {
+const cityButton = getRandomArrayElement(сitiesList);
+
+function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRedux): JSX.Element {
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
       value: '',
@@ -68,6 +79,10 @@ function SignIn({onSubmit, authorizationStatusLoading}: PropsFromRedux): JSX.Ele
     });
   };
 
+  const handleChangeCity = () => {
+    onclickCity(cityButton);
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -77,8 +92,8 @@ function SignIn({onSubmit, authorizationStatusLoading}: PropsFromRedux): JSX.Ele
     });
   };
 
-  const buttonText = authorizationStatusLoading ? 'Loading...' : 'Sign in';
-  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value || formState.password.error;
+  const isDisabled = !formState.email.value || formState.email.error || !formState.password.value
+  ||formState.password.error || authorizationStatusLoading;
 
   return (
     <main className="page__main page__main--login">
@@ -119,15 +134,18 @@ function SignIn({onSubmit, authorizationStatusLoading}: PropsFromRedux): JSX.Ele
               type="submit"
               disabled={isDisabled}
             >
-              {buttonText}
+              {authorizationStatusLoading ? <ClipLoader/> : 'Sign in'}
             </button>
           </form>
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="/#">
-              <span>Amsterdam</span>
-            </a>
+            <Link className="locations__item-link" to={AppRoute.Main}>
+              <span
+                onClick={handleChangeCity}
+              >{cityButton}
+              </span>
+            </Link>
           </div>
         </section>
       </div>

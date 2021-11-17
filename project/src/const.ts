@@ -3,6 +3,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
+  NotFound = ''
 }
 
 export enum AuthorizationStatus {
@@ -15,7 +16,9 @@ export enum APIRoute  {
   Cards = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  Offer = '/hotels/11'
+  Nearby = '/nearby',
+  Comments = '/comments',
+  Favorites = '/favorite'
 }
 
 export const offersType: {[key: string]: string} = {
