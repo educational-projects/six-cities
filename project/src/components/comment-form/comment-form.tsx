@@ -11,8 +11,8 @@ import RatingStar from '../rating-star/rating-star';
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 300;
 
-const mapStateToProps = ({sendcommentsLoading}: State) => ({
-  sendcommentsLoading,
+const mapStateToProps = ({COMMENTS}: State) => ({
+  sendcommentsLoading: COMMENTS.sendcommentsLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

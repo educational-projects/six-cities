@@ -11,10 +11,10 @@ import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import FallbackError from '../fallback-error/fallback-error';
 
-const mapStateToProps = ({FavoritesOffers, FavoritesOffersLoading, FavoritesOffersError}: State) => ({
-  FavoritesOffers,
-  FavoritesOffersLoading,
-  FavoritesOffersError,
+const mapStateToProps = ({OFFERS}: State) => ({
+  FavoritesOffers: OFFERS.FavoritesOffers,
+  FavoritesOffersLoading: OFFERS.FavoritesOffersLoading,
+  FavoritesOffersError: OFFERS.FavoritesOffersError,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

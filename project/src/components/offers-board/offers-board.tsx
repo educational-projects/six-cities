@@ -11,9 +11,9 @@ type OffersBoardProps = {
   cards: Offers
 }
 
-const mapStateToProps = ({currentCity, currentSortType}: State) => ({
-  currentCity,
-  currentSortType,
+const mapStateToProps = ({APP}: State) => ({
+  currentCity: APP.currentCity,
+  currentSortType: APP.currentSortType,
 });
 
 const connector = connect(mapStateToProps);

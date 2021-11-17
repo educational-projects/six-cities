@@ -28,8 +28,8 @@ type FormStateProps = {
   [key: string]: FieldProps
 }
 
-const mapStateToProps = ({authorizationStatusLoading}: State) => ({
-  authorizationStatusLoading,
+const mapStateToProps = ({USER}: State) => ({
+  authorizationStatusLoading: USER.authorizationStatusLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

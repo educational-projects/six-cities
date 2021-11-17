@@ -7,9 +7,9 @@ import { getSortedUpDays } from '../../utils';
 
 const MAX_COUNT_COMMENTS = 10;
 
-const mapStateToProps = ({comments, authorizationStatus}: State) => ({
-  comments,
-  authorizationStatus,
+const mapStateToProps = ({COMMENTS, USER}: State) => ({
+  comments: COMMENTS.comments,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);

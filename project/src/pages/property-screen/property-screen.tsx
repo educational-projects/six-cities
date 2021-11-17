@@ -18,18 +18,17 @@ import NotFound from '../not-found/not-found-screen';
 const MAX_COUNT_NEARBY = 3;
 
 const mapStateToProps = (
-  {offer, offerLoading, offerError, offersNearby, offersNearbyError,
-    offersNearbyLoading, comments, commentsLoading, commentsError}: State,
+  {OFFERS, COMMENTS}: State,
 ) => ({
-  offer,
-  offerLoading,
-  offerError,
-  offersNearby,
-  offersNearbyError,
-  offersNearbyLoading,
-  comments,
-  commentsLoading,
-  commentsError,
+  offer: OFFERS.offer,
+  offerLoading: OFFERS.offerLoading,
+  offerError: OFFERS.offerError,
+  offersNearby: OFFERS.offersNearby,
+  offersNearbyError: OFFERS.offersNearbyError,
+  offersNearbyLoading: OFFERS.offersNearbyLoading,
+  comments: COMMENTS.comments,
+  commentsLoading: COMMENTS.commentsLoading,
+  commentsError: COMMENTS.commentsError,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

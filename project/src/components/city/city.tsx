@@ -9,8 +9,8 @@ type CityProps = {
   city: string;
 }
 
-const mapStateToProps = ({currentCity}: State) => ({
-  currentCity,
+const mapStateToProps = ({APP}: State) => ({
+  currentCity: APP.currentCity,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
