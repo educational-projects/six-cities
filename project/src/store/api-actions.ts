@@ -56,9 +56,8 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
     try {
       const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
       dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
-    } catch(e) {
+    } catch {
       dispatch(loadCommentsError());
-      console.log({e});
     }
   }
 );

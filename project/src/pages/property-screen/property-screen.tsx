@@ -43,17 +43,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Property(
-  {offer, offerLoading, offerError, offersNearby, offersNearbyLoading,
-    commentsLoading, onLoadCard}: PropsFromRedux,
-): JSX.Element {
+function Property({offer, offerLoading, offerError, offersNearby, onLoadCard}: PropsFromRedux): JSX.Element {
   const { id } = useParams<{ id: string}>();
 
   useEffect(() =>{
     onLoadCard(id);
   }, [id, onLoadCard]);
 
-  if (offerLoading || offersNearbyLoading || commentsLoading || !offersNearby) {
+  if (offerLoading) {
     return <Loader/>;
   }
 
