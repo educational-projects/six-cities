@@ -1,6 +1,7 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../const';
-import { Actions, ActionType } from '../../types/action';
 import { UserState } from '../../types/state';
+import { changeUserData, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutRequest, requireLogoutSucces } from '../action';
 
 const initialState: UserState = {
   userData: null,
@@ -8,29 +9,27 @@ const initialState: UserState = {
   authorizationStatusLoading: false,
 };
 
-const user = (state = initialState, actions: Actions): UserState => {
-  switch (actions.type) {
-    case ActionType.ChangeUserData:
-      return {...state, userData: actions.payload};
-    case ActionType.RequireAuthorizationRequest:
-      return {...state, authorizationStatusLoading: true};
-    case ActionType.RequireAuthorizationSucces:
-      return {
-        ...state,
-        authorizationStatus: actions.payload,
-        authorizationStatusLoading: false,
-      };
-    case ActionType.RequireLogoutRequest:
-      return {...state, authorizationStatusLoading: true};
-    case ActionType.RequireLogoutSucces:
-      return {
-        ...state,
-        authorizationStatusLoading: false,
-        userData: null,
-      };
-    default:
-      return state;
-  }
-};
+const user = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeUserData, (state, action) => {
+      const {userData} = action.payload;
+      state.userData = userData;
+    })
+    .addCase(requireAuthorizationRequest, (state) => {
+      state.authorizationStatusLoading = true;
+    })
+    .addCase(requireAuthorizationSucces, (state, action) => {
+      const {authStatus} = action.payload;
+      state.authorizationStatusLoading = false;
+      state.authorizationStatus = authStatus;
+    })
+    .addCase(requireLogoutRequest, (state) => {
+      state.authorizationStatusLoading = true;
+    })
+    .addCase(requireLogoutSucces, (state) => {
+      state.authorizationStatusLoading = false;
+      state.userData = null;
+    });
+});
 
 export {user};

@@ -1,12 +1,6 @@
 import { AxiosInstance } from 'axios';
+import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import {
-  changeCity, changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeSortType, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess,
-  loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest,
-  loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute,
-  requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError,
-  requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess
-} from '../store/action';
 import { State } from './state';
 
 export enum ActionType {
@@ -42,40 +36,7 @@ export enum ActionType {
   ChangeFavoriteStatusSucces = 'data/changeFavoriteStatusSucces'
 }
 
-export type Actions =
-  | ReturnType<typeof changeCity>
-  | ReturnType<typeof changeSortType>
-  | ReturnType<typeof changeUserData>
-  | ReturnType<typeof loadCardsRequest>
-  | ReturnType<typeof loadCardsError>
-  | ReturnType<typeof loadCardsSuccess>
-  | ReturnType<typeof requireAuthorizationRequest>
-  | ReturnType<typeof requireAuthorizationSucces>
-  | ReturnType<typeof requireAuthorizationError>
-  | ReturnType<typeof requireLogoutRequest>
-  | ReturnType<typeof requireLogoutSucces>
-  | ReturnType<typeof requireLogoutError>
-  | ReturnType<typeof redirectToRoute>
-  | ReturnType<typeof redirectToBack>
-  | ReturnType<typeof loadOfferRequest>
-  | ReturnType<typeof loadOfferSuccess>
-  | ReturnType<typeof loadOfferError>
-  | ReturnType<typeof loadNearbyRequest>
-  | ReturnType<typeof loadNearbySuccess>
-  | ReturnType<typeof loadNearbyError>
-  | ReturnType<typeof loadCommentsRequets>
-  | ReturnType<typeof loadCommentsSuccess>
-  | ReturnType<typeof loadCommentsError>
-  | ReturnType<typeof sendCommentsRequest>
-  | ReturnType<typeof sendCommentsSuccess>
-  | ReturnType<typeof loadFavoritesOffersRequets>
-  | ReturnType<typeof loadFavoritesOffersSuccess>
-  | ReturnType<typeof loadFavoritesOffersError>
-  | ReturnType<typeof changeFavoriteStatusRequest>
-  | ReturnType<typeof changeFavoriteStatusSucces>
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;
 
-
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 

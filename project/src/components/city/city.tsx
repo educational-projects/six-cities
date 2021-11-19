@@ -3,7 +3,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { State } from '../../types/state';
 import { changeCity } from '../../store/action';
-import { Actions } from '../../types/action';
 
 type CityProps = {
   city: string;
@@ -13,7 +12,7 @@ const mapStateToProps = ({APP}: State) => ({
   currentCity: APP.currentCity,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeCity(city: string) {
     dispatch(changeCity(city));
   },
