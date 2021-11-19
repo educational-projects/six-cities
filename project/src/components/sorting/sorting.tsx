@@ -1,28 +1,15 @@
 import cn from 'classnames';
 import { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SortType } from '../../const';
 import { changeSortType } from '../../store/action';
-import { State } from '../../types/state';
+import { getCurrentSortType } from '../../store/app/selectors';
 
-const mapStateToProps = ({APP}: State) => ({
-  currentSortType: APP.currentSortType,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeSortType(sortType: string) {
-    dispatch(changeSortType(sortType));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-type ConnectedComponentsProps = PropsFromRedux
-
-function Sorting({currentSortType, onChangeSortType}: ConnectedComponentsProps): JSX.Element {
+function Sorting(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
+  const currentSortType = useSelector(getCurrentSortType);
+
+  const dispatch = useDispatch();
 
   const sortedType = Object.values(SortType);
 
@@ -31,7 +18,7 @@ function Sorting({currentSortType, onChangeSortType}: ConnectedComponentsProps):
   });
 
   const handleClickItem = (sortType: string) => {
-    onChangeSortType(sortType);
+    dispatch(changeSortType(sortType));
     setIsOpen(!isOpen);
   };
 
@@ -65,5 +52,4 @@ function Sorting({currentSortType, onChangeSortType}: ConnectedComponentsProps):
   );
 }
 
-export {Sorting};
-export default connector(Sorting);
+export default Sorting;

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
 import CardList from '../../components/card-list/card-list';
@@ -11,44 +11,26 @@ import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
 import NotFound from '../not-found/not-found-screen';
+import { getOffer, getOfferError, getOfferLoading, getOffersNearby } from '../../store/offers/selectors';
 
 const MAX_COUNT_NEARBY = 3;
 
-const mapStateToProps = (
-  {OFFERS, COMMENTS}: State,
-) => ({
-  offer: OFFERS.offer,
-  offerLoading: OFFERS.offerLoading,
-  offerError: OFFERS.offerError,
-  offersNearby: OFFERS.offersNearby,
-  offersNearbyError: OFFERS.offersNearbyError,
-  offersNearbyLoading: OFFERS.offersNearbyLoading,
-  comments: COMMENTS.comments,
-  commentsLoading: COMMENTS.commentsLoading,
-  commentsError: COMMENTS.commentsError,
-});
+function Property(): JSX.Element {
+  const { id } = useParams<{ id: string}>();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadCard(id: string) {
+  const dispatch = useDispatch();
+
+  useEffect(() =>{
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
     dispatch(fetchCommentsAction(id));
-  },
-});
+  }, [dispatch, id]);
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Property({offer, offerLoading, offerError, offersNearby, onLoadCard}: PropsFromRedux): JSX.Element {
-  const { id } = useParams<{ id: string}>();
-
-  useEffect(() =>{
-    onLoadCard(id);
-  }, [id, onLoadCard]);
+  const offer = useSelector(getOffer);
+  const offerLoading = useSelector(getOfferLoading);
+  const offerError = useSelector(getOfferError);
+  const offersNearby = useSelector(getOffersNearby);
 
   if (offerLoading) {
     return <Loader/>;
@@ -134,4 +116,4 @@ function Property({offer, offerLoading, offerError, offersNearby, onLoadCard}: P
   );
 }
 
-export default connector(Property);
+export default Property;

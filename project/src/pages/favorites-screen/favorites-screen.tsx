@@ -1,38 +1,25 @@
 import cn from 'classnames';
 import { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FavoritesBoard from '../../components/favorites-board/favorites-board';
 import FavoritesEmpty from '../../components/favorites-empty/favoristes-empty';
 import Loader from '../../pages/loading-screen/loading-screen';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { fetchFavoritesOffersAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
 import FallbackError from '../fallback-error/fallback-error';
+import { getFavoritesOffers, getFavoritesOffersError, getFavoritesOffersLoading } from '../../store/offers/selectors';
 
-const mapStateToProps = ({OFFERS}: State) => ({
-  FavoritesOffers: OFFERS.FavoritesOffers,
-  FavoritesOffersLoading: OFFERS.FavoritesOffersLoading,
-  FavoritesOffersError: OFFERS.FavoritesOffersError,
-});
+function Favorites(): JSX.Element {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadFavoritesOffers() {
-    dispatch(fetchFavoritesOffersAction());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Favorites(
-  {FavoritesOffers, FavoritesOffersLoading, FavoritesOffersError, onLoadFavoritesOffers}: PropsFromRedux,
-): JSX.Element {
   useEffect(() => {
-    onLoadFavoritesOffers();
-  }, [onLoadFavoritesOffers]);
+    dispatch(fetchFavoritesOffersAction());
+  }, [dispatch]);
+
+  const FavoritesOffers = useSelector(getFavoritesOffers);
+  const FavoritesOffersLoading = useSelector(getFavoritesOffersLoading);
+  const FavoritesOffersError = useSelector(getFavoritesOffersError);
 
   if (FavoritesOffersLoading) {
     return <Loader/>;
@@ -68,5 +55,4 @@ function Favorites(
   );
 }
 
-export {Favorites};
-export default connector(Favorites);
+export default Favorites;

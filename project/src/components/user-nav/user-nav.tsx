@@ -1,20 +1,13 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AuthorizationStatus } from '../../const';
-import { State } from '../../types/state';
 import UserLink from '../user-link/user-link';
 import ButtonLogout from '../user-button/user-button-logout';
 import ButtonSignIn from '../user-button/user-button-authorization';
+import { getAuthorizationStatus, getUserData } from '../../store/user/selectors';
 
-const mapStateToProps = ({USER}: State) => ({
-  authorizationStatus: USER.authorizationStatus,
-  userData: USER.userData,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function UserLogin({authorizationStatus, userData}: PropsFromRedux): JSX.Element {
+function UserLogin(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const userData = useSelector(getUserData);
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -30,5 +23,4 @@ function UserLogin({authorizationStatus, userData}: PropsFromRedux): JSX.Element
   );
 }
 
-export {UserLogin};
-export default connector(UserLogin);
+export default UserLogin;

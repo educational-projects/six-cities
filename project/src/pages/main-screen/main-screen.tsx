@@ -1,27 +1,20 @@
 import cn from 'classnames';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
 import MainEmpty from '../../components/empty-main/empty-main';
 import Header from '../../components/header/header';
 import OffersBoard from '../../components/offers-board/offers-board';
-import { State } from '../../types/state';
+import { getCurrentCity } from '../../store/app/selectors';
+import { getCardList, getOffersError, getOffersLoading } from '../../store/offers/selectors';
 import FallbackError from '../fallback-error/fallback-error';
 import Loader from '../loading-screen/loading-screen';
 
-const mapStateToProps = ({APP, OFFERS}: State) => ({
-  currentCity: APP.currentCity,
-  cardList: OFFERS.cardList,
-  offersLoading: OFFERS.offersLoading,
-  offersError: OFFERS.offersError,
-});
+function Main(): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
+  const cardList = useSelector(getCardList);
+  const offersLoading = useSelector(getOffersLoading);
+  const offersError = useSelector(getOffersError);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux;
-
-
-function Main({currentCity, cardList, offersLoading, offersError}: ConnectedComponentsProps): JSX.Element {
   const cards = cardList.filter((card) => card.city.name === currentCity);
 
   const containerClass = cn('page__main page__main--index', {
@@ -52,5 +45,4 @@ function Main({currentCity, cardList, offersLoading, offersError}: ConnectedComp
   );
 }
 
-export {Main};
-export default connector(Main);
+export default Main;

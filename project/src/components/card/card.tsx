@@ -1,9 +1,8 @@
 import cn from 'classnames';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { offersType } from '../../const';
 import { fetchChangeFavoriteStatus } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 
@@ -13,19 +12,10 @@ type ItemCardProps = {
   onActiveCard?: (id: number | null) => void;
 }
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  changeStatus(offer: Offer) {
-    dispatch(fetchChangeFavoriteStatus(offer.id, !offer.isFavorite));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type PropsFromCommector = PropsFromRedux & ItemCardProps
-
-function ItemCard({card, cardType ='cities', onActiveCard, changeStatus}: PropsFromCommector): JSX.Element {
+function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
+
+  const dispatch = useDispatch();
 
   const offerRating = getRating(rating);
   const favoriteType = cardType === 'favorites';
@@ -49,10 +39,6 @@ function ItemCard({card, cardType ='cities', onActiveCard, changeStatus}: PropsF
   const buttonClasses = cn('place-card__bookmark-button button', {
     'place-card__bookmark-button--active' : isFavorite,
   });
-
-  const handleClickStatus = (offer: Offer)  => {
-    changeStatus(offer);
-  };
 
   return (
     <article className={articleClasses}
@@ -83,7 +69,7 @@ function ItemCard({card, cardType ='cities', onActiveCard, changeStatus}: PropsF
           <button
             className={buttonClasses}
             type="button"
-            onClick={() => handleClickStatus(card)}
+            onClick={() => dispatch(fetchChangeFavoriteStatus(id, !isFavorite))}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -106,5 +92,4 @@ function ItemCard({card, cardType ='cities', onActiveCard, changeStatus}: PropsF
   );
 }
 
-export {ItemCard};
-export default connector(ItemCard);
+export default ItemCard;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getCurrentCity, getCurrentSortType } from '../../store/app/selectors';
 import { Offers } from '../../types/offer';
-import { State } from '../../types/state';
 import { sort } from '../../utils';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
@@ -11,18 +11,10 @@ type OffersBoardProps = {
   cards: Offers
 }
 
-const mapStateToProps = ({APP}: State) => ({
-  currentCity: APP.currentCity,
-  currentSortType: APP.currentSortType,
-});
+function OffersBoard({cards}: OffersBoardProps): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
+  const currentSortType = useSelector(getCurrentSortType);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentsProps = PropsFromRedux & OffersBoardProps;
-
-
-function OffersBoard({cards, currentCity, currentSortType}: ConnectedComponentsProps): JSX.Element {
   const [activeCard, setActivCard] = useState<number | null>(null);
 
   const handleActiveCard = (id: number | null) => {
@@ -65,5 +57,4 @@ function OffersBoard({cards, currentCity, currentSortType}: ConnectedComponentsP
   );
 }
 
-export {OffersBoard};
-export default connector(OffersBoard);
+export default OffersBoard;
