@@ -26,8 +26,10 @@ const user = createReducer(initialState, (builder) => {
     .addCase(requireLogoutRequest, (state) => {
       state.authorizationStatusLoading = true;
     })
-    .addCase(requireLogoutSucces, (state) => {
+    .addCase(requireLogoutSucces, (state, action) => {
+      const {authStatus} = action.payload;
       state.authorizationStatusLoading = false;
+      state.authorizationStatus = authStatus;
       state.userData = null;
     });
 });

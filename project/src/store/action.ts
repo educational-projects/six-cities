@@ -141,7 +141,14 @@ export const requireAuthorizationError = createAction(
 
 export const requireLogoutRequest = createAction(ActionType.RequireLogoutRequest);
 
-export const requireLogoutSucces = createAction(ActionType.RequireLogoutSucces);
+export const requireLogoutSucces = createAction(
+  ActionType.RequireLogoutSucces,
+  (authStatus: AuthorizationStatus) => ({
+    payload: {
+      authStatus,
+    },
+  }),
+);
 
 export const requireLogoutError = createAction(ActionType.RequireLogoutError);
 
