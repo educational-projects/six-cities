@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { offersType } from '../../const';
@@ -92,4 +93,4 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
   );
 }
 
-export default ItemCard;
+export default memo(ItemCard);

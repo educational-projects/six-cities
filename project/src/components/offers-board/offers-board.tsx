@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentCity, getCurrentSortType } from '../../store/app/selectors';
 import { Offers } from '../../types/offer';
@@ -17,9 +17,9 @@ function OffersBoard({cards}: OffersBoardProps): JSX.Element {
 
   const [activeCard, setActivCard] = useState<number | null>(null);
 
-  const handleActiveCard = (id: number | null) => {
+  const handleActiveCard = useCallback((id: number | null) => {
     setActivCard(id);
-  };
+  }, []);
 
   const getSortedCards = (sortType: string, cardsList: Offers) => {
     switch(sortType) {
