@@ -33,7 +33,8 @@ export enum ActionType {
   RedirectToRoute = 'data/redirectToRoute',
   RedirectToBack = 'data/redirectToBack',
   ChangeFavoriteStatusRequest = 'data/changeFavoriteStatusRequest',
-  ChangeFavoriteStatusSucces = 'data/changeFavoriteStatusSucces'
+  ChangeFavoriteStatusSucces = 'data/changeFavoriteStatusSucces',
+  ResetOfferError = 'data/resetOfferError'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

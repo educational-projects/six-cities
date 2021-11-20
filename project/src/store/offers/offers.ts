@@ -3,7 +3,8 @@ import { OffersState } from '../../types/state';
 import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, loadCardsError, loadCardsRequest,
   loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess,
   loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest,
-  loadOfferSuccess } from '../action';
+  loadOfferSuccess,
+  resetOfferError} from '../action';
 
 const initialState: OffersState = {
   cardList: [],
@@ -76,6 +77,12 @@ const offers = createReducer(initialState, (builder) => {
     })
     .addCase(changeFavoriteStatusSucces, (state) => {
       state.changeFavoriteStatusLoading = false;
+    })
+    .addCase(resetOfferError, (state) => {
+      state.offer = null;
+      state.offersNearby = [];
+      state.offerError = false;
+      state.offersNearbyError = false;
     });
 });
 

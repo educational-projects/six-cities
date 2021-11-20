@@ -103,6 +103,8 @@ export const changeFavoriteStatusSucces = createAction(ActionType.ChangeFavorite
 
 export const sendCommentsRequest = createAction(ActionType.SendCommentsRequest);
 
+export const resetOfferError = createAction(ActionType.ResetOfferError);
+
 export const sendCommentsSuccess = createAction(
   ActionType.SendCommentsSuccess,
   (userComment: UsersComments) => ({

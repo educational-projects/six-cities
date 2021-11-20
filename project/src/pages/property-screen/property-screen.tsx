@@ -14,6 +14,7 @@ import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../
 import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
 import { getCommentsLoading } from '../../store/comments/selectors';
+import { resetOfferError } from '../../store/action';
 
 const MAX_COUNT_NEARBY = 3;
 
@@ -23,6 +24,7 @@ function Property(): JSX.Element {
   const dispatch = useDispatch();
 
   useEffect(() =>{
+    dispatch(resetOfferError());
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
     dispatch(fetchCommentsAction(id));
