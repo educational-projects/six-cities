@@ -78,8 +78,8 @@ export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkAct
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(changeFavoriteStatusRequest());
     try {
-      await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
-      dispatch(changeFavoriteStatusSucces());
+      const {data} = await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
+      dispatch(changeFavoriteStatusSucces(adaptToClient(data)));
     } catch {
       toast.error(STATUS_FAIL_MESSAGE);
     }

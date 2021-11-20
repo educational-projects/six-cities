@@ -99,7 +99,14 @@ export const loadFavoritesOffersError = createAction(ActionType.LoadFavoritesOff
 
 export const changeFavoriteStatusRequest = createAction(ActionType.ChangeFavoriteStatusRequest);
 
-export const changeFavoriteStatusSucces = createAction(ActionType.ChangeFavoriteStatusSucces);
+export const changeFavoriteStatusSucces = createAction(
+  ActionType.ChangeFavoriteStatusSucces,
+  (offer: Offer) => ({
+    payload: {
+      offer,
+    },
+  }),
+);
 
 export const sendCommentsRequest = createAction(ActionType.SendCommentsRequest);
 

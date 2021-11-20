@@ -75,7 +75,13 @@ const offers = createReducer(initialState, (builder) => {
     .addCase(changeFavoriteStatusRequest, (state) => {
       state.changeFavoriteStatusLoading = true;
     })
-    .addCase(changeFavoriteStatusSucces, (state) => {
+    .addCase(changeFavoriteStatusSucces, (state, action) => {
+      const {offer} = action.payload;
+      state.cardList = state.cardList.map((item) => item.id !== offer.id ? item : offer);
+      state.offersNearby = state.offersNearby.map((item) => item.id !== offer.id ? item : offer);
+      if (state.offer !== null) {
+        state.offer.isFavorite = offer.isFavorite;
+      }
       state.changeFavoriteStatusLoading = false;
     })
     .addCase(resetOfferError, (state) => {

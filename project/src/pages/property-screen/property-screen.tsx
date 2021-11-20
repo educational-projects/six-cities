@@ -10,7 +10,7 @@ import ImageList from '../../components/image-list/image-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
-import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
+import { fetchChangeFavoriteStatus, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
 import { getCommentsLoading } from '../../store/comments/selectors';
@@ -23,7 +23,7 @@ function Property(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(resetOfferError());
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
@@ -66,7 +66,10 @@ function Property(): JSX.Element {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button">
+                <button
+                  className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button"
+                  onClick={() => dispatch(fetchChangeFavoriteStatus(offer.id, !offer.isFavorite))}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
