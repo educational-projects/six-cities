@@ -12,7 +12,8 @@ import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
 import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
-import { getOffer, getOfferError, getOfferLoading, getOffersNearby } from '../../store/offers/selectors';
+import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
+import { getCommentsLoading } from '../../store/comments/selectors';
 
 const MAX_COUNT_NEARBY = 3;
 
@@ -31,8 +32,10 @@ function Property(): JSX.Element {
   const offerLoading = useSelector(getOfferLoading);
   const offerError = useSelector(getOfferError);
   const offersNearby = useSelector(getOffersNearby);
+  const offersNearbyLoading = useSelector(getOffersNearbyLoading);
+  const commentsLoading = useSelector(getCommentsLoading);
 
-  if (offerLoading) {
+  if (offerLoading || offersNearbyLoading || commentsLoading) {
     return <Loader/>;
   }
 
