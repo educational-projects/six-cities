@@ -1,17 +1,19 @@
 import { toast } from 'react-toastify';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient, adatpUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
-import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
+import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, changeUserData, loadCardsError, loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequets, loadCommentsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess, redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutError, requireLogoutRequest, requireLogoutSucces, sendCommentsRequest, sendCommentsSuccess } from './action';
 import { CommentData, UsersComments } from '../types/comment';
 
 const AUTH_FAIL_MESSAGE = 'something went wrong';
 const SEND_COMMENT_MESSAGE = 'there was an error posting your comment, please try again';
 const STATUS_FAIL_MESSAGE = 'failed to add to favorites, please try again';
+const NEARBY_FAIL_MESSAGE = 'could not load offers nearby, please try refreshing the page';
+const COMMENTS_FAIL_MESSAGE = 'failed to load comments, please refresh the page';
 
 
 export const fetchCardsAction = (): ThunkActionResult => (
@@ -44,7 +46,10 @@ export const fetchOffersNearby = (id: string): ThunkActionResult => (
     try {
       const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
       dispatch(loadNearbySuccess(data.map(adaptToClient)));
-    } catch {
+    } catch(e: any) {
+      if (e.response.status !== 404) {
+        toast.error(NEARBY_FAIL_MESSAGE);
+      }
       dispatch(loadNearbyError());
     }
   }
@@ -56,7 +61,10 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
     try {
       const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
       dispatch(loadCommentsSuccess(data.map(adatpUsersCommentsToClient)));
-    } catch {
+    } catch(e: any) {
+      if (e.response.status !== 400) {
+        toast.error(COMMENTS_FAIL_MESSAGE);
+      }
       dispatch(loadCommentsError());
     }
   }
@@ -80,8 +88,12 @@ export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkAct
     try {
       const {data} = await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
       dispatch(changeFavoriteStatusSucces(adaptToClient(data)));
-    } catch {
-      toast.error(STATUS_FAIL_MESSAGE);
+    } catch(e: any) {
+      if (e.response.status === 401) {
+        dispatch(redirectToRoute(AppRoute.Login));
+      } else {
+        toast.error(STATUS_FAIL_MESSAGE);
+      }
     }
   }
 );
