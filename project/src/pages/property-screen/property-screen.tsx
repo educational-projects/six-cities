@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
@@ -20,15 +20,19 @@ const MAX_COUNT_NEARBY = 3;
 
 function Property(): JSX.Element {
   const { id } = useParams<{ id: string}>();
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const onPageUnload = useCallback(() => {
     dispatch(resetOfferError());
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
     dispatch(fetchCommentsAction(id));
-  }, [dispatch, id]);
+
+    return () => onPageUnload();
+  }, [dispatch, id, onPageUnload]);
 
   const offer = useSelector(getOffer);
   const offerLoading = useSelector(getOfferLoading);
