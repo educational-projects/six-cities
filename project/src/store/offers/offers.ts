@@ -16,9 +16,9 @@ const initialState: OffersState = {
   offersNearbyLoading: false,
   offersNearbyError: false,
   offersNearby: [],
-  FavoritesOffersLoading: false,
-  FavoritesOffersError: false,
-  FavoritesOffers: [],
+  favoritesOffersLoading: false,
+  favoritesOffersError: false,
+  favoritesOffers: [],
   changeFavoriteStatusLoading: false,
 };
 
@@ -61,16 +61,16 @@ const offers = createReducer(initialState, (builder) => {
       state.offersNearbyError = true;
     })
     .addCase(loadFavoritesOffersRequets, (state) => {
-      state.FavoritesOffersLoading = true;
+      state.favoritesOffersLoading = true;
     })
     .addCase(loadFavoritesOffersSuccess, (state, action) => {
       const {favoritesOffers} = action.payload;
-      state.FavoritesOffersLoading = false;
-      state.FavoritesOffers = favoritesOffers;
+      state.favoritesOffersLoading = false;
+      state.favoritesOffers = favoritesOffers;
     })
     .addCase(loadFavoritesOffersError, (state) => {
-      state.FavoritesOffersLoading = false;
-      state.FavoritesOffersError = true;
+      state.favoritesOffersLoading = false;
+      state.favoritesOffersError = true;
     })
     .addCase(changeFavoriteStatusRequest, (state) => {
       state.changeFavoriteStatusLoading = true;

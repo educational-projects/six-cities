@@ -11,7 +11,7 @@ export const getOffer = (state: State): Offer | null => state[NameSpace.Offers].
 export const getOffersNearbyLoading = (state: State): boolean => state[NameSpace.Offers].offersNearbyLoading;
 export const getOffersNearbyError = (state: State): boolean => state[NameSpace.Offers].offersNearbyError;
 export const getOffersNearby = (state: State): Offers => state[NameSpace.Offers].offersNearby;
-export const getFavoritesOffersLoading = (state: State): boolean => state[NameSpace.Offers].FavoritesOffersLoading;
-export const getFavoritesOffersError = (state: State): boolean => state[NameSpace.Offers].FavoritesOffersError;
-export const getFavoritesOffers = (state: State): Offers => state[NameSpace.Offers].FavoritesOffers;
+export const getFavoritesOffersLoading = (state: State): boolean => state[NameSpace.Offers].favoritesOffersLoading;
+export const getFavoritesOffersError = (state: State): boolean => state[NameSpace.Offers].favoritesOffersError;
+export const getFavoritesOffers = (state: State): Offers => state[NameSpace.Offers].favoritesOffers;
 export const getChangeFavoriteStatusLoading = (state: State): boolean => state[NameSpace.Offers].changeFavoriteStatusLoading;

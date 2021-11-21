@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { ratingStarSetting } from '../../const';
 import { sendCommentsAction } from '../../store/api-actions';
-import { getSendcommentsLoading } from '../../store/comments/selectors';
+import { getSendCommentsLoading } from '../../store/comments/selectors';
 import RatingStar from '../rating-star/rating-star';
 
 const MIN_LENGTH_COMMENT = 50;
@@ -17,7 +17,7 @@ const initialState = {
 function CommentForm(): JSX.Element {
   const { id } = useParams<{ id: string}>();
   const dispatch = useDispatch();
-  const sendcommentsLoading = useSelector(getSendcommentsLoading);
+  const sendCommentsLoading = useSelector(getSendCommentsLoading);
   const [formState, setFormState] = useState(initialState);
 
   const resetForm = () => {
@@ -43,11 +43,11 @@ function CommentForm(): JSX.Element {
     }, resetForm));
   };
 
-  const buttonText = sendcommentsLoading ? 'Submitting...' : 'Submit';
+  const buttonText = sendCommentsLoading ? 'Submitting...' : 'Submit';
 
   const isDisabled = formState.rating === '0'
    || formState.review.length < MIN_LENGTH_COMMENT
-   || sendcommentsLoading
+   || sendCommentsLoading
    || formState.review.length > MAX_LENGTH_COMMENT;
 
   return (

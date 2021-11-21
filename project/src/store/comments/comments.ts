@@ -6,7 +6,7 @@ const initialState: CommentsState = {
   commentsLoading: false,
   commentsError: false,
   comments: [],
-  sendcommentsLoading: false,
+  sendCommentsLoading: false,
 };
 
 const comments = createReducer(initialState, (builder) => {
@@ -24,11 +24,11 @@ const comments = createReducer(initialState, (builder) => {
       state.commentsError = true;
     })
     .addCase(sendCommentsRequest, (state) => {
-      state.sendcommentsLoading = true;
+      state.sendCommentsLoading = true;
     })
     .addCase(sendCommentsSuccess, (state, action) => {
       const {userComment} = action.payload;
-      state.sendcommentsLoading = false;
+      state.sendCommentsLoading = false;
       state.comments = userComment;
     });
 });

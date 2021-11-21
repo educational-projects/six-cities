@@ -82,7 +82,7 @@ export const fetchFavoritesOffersAction = (): ThunkActionResult => (
   }
 );
 
-export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkActionResult => (
+export const ChangeFavorite = (id: number, status: boolean): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(changeFavoriteStatusRequest());
     try {
