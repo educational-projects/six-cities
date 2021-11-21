@@ -26,7 +26,7 @@ export const offersType: {[key: string]: string} = {
   room: 'Room',
   house: 'House',
   hotel: 'Hotel',
-};
+} as const;
 
 export const ratingStarSetting: {[key: string]: string} = {
   1: 'terribly',
@@ -34,13 +34,13 @@ export const ratingStarSetting: {[key: string]: string} = {
   3: 'not bad',
   4: 'good',
   5: 'perfect',
-};
+} as const;
 
 export const SortType = {
   POPULAR: 'Popular',
   PRICE_UP: 'Price: low to high',
   PRICE_DOWN: 'Price: high to low',
   RATING_DOWN: 'Top rated first',
-};
+} as const;
 
 export const сitiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

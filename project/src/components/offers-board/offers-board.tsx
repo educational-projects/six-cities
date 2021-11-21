@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentCity, getCurrentSortType } from '../../store/app/selectors';
 import { Offers } from '../../types/offer';
-import { sort } from '../../utils';
+import { sortMap } from '../../utils';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
@@ -24,7 +24,7 @@ function OffersBoard({cards}: OffersBoardProps): JSX.Element {
   const getSortedCards = (sortType: string, cardsList: Offers) => {
     switch(sortType) {
       case sortType:
-        return cardsList.slice().sort(sort[sortType]);
+        return cardsList.slice().sort(sortMap[sortType]);
       default:
         return cardsList;
     }

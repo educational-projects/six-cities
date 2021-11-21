@@ -12,10 +12,10 @@ export const getRandomArrayElement = (arr: string[]): string => arr[Math.floor(M
 
 export const getSortedUpDays = (arr: UsersComments): UsersComments => arr.slice().sort((a, b) => (dayjs(b.date).isAfter(dayjs(a.date)) ? 1 : -1));
 
-export const sort = {
-  [SortType.PRICE_DOWN]: (cardA: Offer, cardB: Offer): number => cardB.price - cardA.price,
-  [SortType.PRICE_UP]: (cardA: Offer, cardB: Offer): number => cardA.price - cardB.price,
-  [SortType.RATING_DOWN]: (cardA: Offer, cardB: Offer): number => cardB.rating - cardA.rating,
+export const sortMap: {[key: string]: (cardA: Offer, cardB: Offer) => number} = {
+  [SortType.PRICE_DOWN]: (cardA, cardB) => cardB.price - cardA.price,
+  [SortType.PRICE_UP]: (cardA, cardB) => cardA.price - cardB.price,
+  [SortType.RATING_DOWN]: (cardA, cardB) => cardB.rating - cardA.rating,
 };
 
 export const adaptToClient = (card: BackOffer): Offer => {
