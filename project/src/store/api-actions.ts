@@ -98,12 +98,13 @@ export const fetchChangeFavoriteStatus = (id: number, status: boolean): ThunkAct
   }
 );
 
-export const sendCommentsAction = ({id, rating, comment}: CommentData): ThunkActionResult => (
+export const sendCommentsAction = ({id, rating, comment}: CommentData, resetForm: () => void): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(sendCommentsRequest());
     try {
       const  {data} = await api.post<UsersComments>(`${APIRoute.Comments}/${id}`, {rating, comment});
       dispatch(sendCommentsSuccess(data.map(adatpUsersCommentsToClient)));
+      resetForm();
     } catch {
       toast.error(SEND_COMMENT_MESSAGE);
     }

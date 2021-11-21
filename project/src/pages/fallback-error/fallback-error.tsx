@@ -1,15 +1,9 @@
-import { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import styles from './fallback-error.module.css';
 
 function FallbackError(): JSX.Element {
-  const handleClickRefresh = (evt: ChangeEvent<HTMLSpanElement>) => {
-    evt.preventDefault();
-    window.location.reload();
-  };
-
   return (
     <div className={styles.container}>
       <Header/>
@@ -21,7 +15,7 @@ function FallbackError(): JSX.Element {
         <Link className={styles.link} to='/'>
           <span
             className={styles.span}
-            onClick={() => handleClickRefresh}
+            onClick={() => window.location.reload()}
           >Refresh
           </span>
         </Link>

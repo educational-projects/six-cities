@@ -9,17 +9,20 @@ import RatingStar from '../rating-star/rating-star';
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 300;
 
+const initialState = {
+  review: '',
+  rating: '0',
+};
+
 function CommentForm(): JSX.Element {
-  const sendcommentsLoading = useSelector(getSendcommentsLoading);
-
   const { id } = useParams<{ id: string}>();
-
   const dispatch = useDispatch();
+  const sendcommentsLoading = useSelector(getSendcommentsLoading);
+  const [formState, setFormState] = useState(initialState);
 
-  const [formState, setFormState] = useState({
-    review: '',
-    rating: '0',
-  });
+  const resetForm = () => {
+    setFormState(initialState);
+  };
 
   const handleChangeForm = ({target}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = target;
@@ -37,7 +40,7 @@ function CommentForm(): JSX.Element {
       id,
       rating: formState.rating,
       comment: formState.review,
-    }));
+    }, resetForm));
   };
 
   const buttonText = sendcommentsLoading ? 'Submitting...' : 'Submit';
