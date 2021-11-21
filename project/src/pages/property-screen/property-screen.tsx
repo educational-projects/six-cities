@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
 import CardList from '../../components/card-list/card-list';
@@ -10,50 +10,34 @@ import ImageList from '../../components/image-list/image-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
 import { offersType } from '../../const';
-import { fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
+import { fetchChangeFavoriteStatus, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
+import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
+import { getCommentsLoading } from '../../store/comments/selectors';
+import { resetOfferError } from '../../store/action';
 
 const MAX_COUNT_NEARBY = 3;
 
-const mapStateToProps = (
-  {OFFERS, COMMENTS}: State,
-) => ({
-  offer: OFFERS.offer,
-  offerLoading: OFFERS.offerLoading,
-  offerError: OFFERS.offerError,
-  offersNearby: OFFERS.offersNearby,
-  offersNearbyError: OFFERS.offersNearbyError,
-  offersNearbyLoading: OFFERS.offersNearbyLoading,
-  comments: COMMENTS.comments,
-  commentsLoading: COMMENTS.commentsLoading,
-  commentsError: COMMENTS.commentsError,
-});
+function Property(): JSX.Element {
+  const { id } = useParams<{ id: string}>();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadCard(id: string) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetOfferError());
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
     dispatch(fetchCommentsAction(id));
-  },
-});
+  }, [dispatch, id]);
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const offer = useSelector(getOffer);
+  const offerLoading = useSelector(getOfferLoading);
+  const offerError = useSelector(getOfferError);
+  const offersNearby = useSelector(getOffersNearby);
+  const offersNearbyLoading = useSelector(getOffersNearbyLoading);
+  const commentsLoading = useSelector(getCommentsLoading);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Property(
-  {offer, offerLoading, offerError, offersNearby, offersNearbyLoading,
-    commentsLoading, onLoadCard}: PropsFromRedux,
-): JSX.Element {
-  const { id } = useParams<{ id: string}>();
-
-  useEffect(() =>{
-    onLoadCard(id);
-  }, [id, onLoadCard]);
-
-  if (offerLoading || offersNearbyLoading || commentsLoading || !offersNearby) {
+  if (offerLoading || offersNearbyLoading || commentsLoading) {
     return <Loader/>;
   }
 
@@ -82,7 +66,10 @@ function Property(
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button">
+                <button
+                  className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button"
+                  onClick={() => dispatch(fetchChangeFavoriteStatus(offer.id, !offer.isFavorite))}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -137,4 +124,4 @@ function Property(
   );
 }
 
-export default connector(Property);
+export default Property;

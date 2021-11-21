@@ -10,7 +10,7 @@ export const getFormatDate = (date: string, format: string): string => dayjs(dat
 
 export const getRandomArrayElement = (arr: string[]): string => arr[Math.floor(Math.random()*arr.length)];
 
-export const getSortedUpDays = (arr: UsersComments): UsersComments => arr.sort((a, b) => (dayjs(b.date).isAfter(dayjs(a.date)) ? 1 : -1));
+export const getSortedUpDays = (arr: UsersComments): UsersComments => arr.slice().sort((a, b) => (dayjs(b.date).isAfter(dayjs(a.date)) ? 1 : -1));
 
 export const sort = {
   [SortType.PRICE_DOWN]: (cardA: Offer, cardB: Offer): number => cardB.price - cardA.price,

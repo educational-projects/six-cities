@@ -1,5 +1,10 @@
-import { Actions, ActionType } from '../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
 import { OffersState } from '../../types/state';
+import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, loadCardsError, loadCardsRequest,
+  loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess,
+  loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest,
+  loadOfferSuccess,
+  resetOfferError} from '../action';
 
 const initialState: OffersState = {
   cardList: [],
@@ -17,81 +22,74 @@ const initialState: OffersState = {
   changeFavoriteStatusLoading: false,
 };
 
-const offers = (state = initialState, actions: Actions): OffersState => {
-  switch (actions.type) {
-    case ActionType.LoadCardsRequest:
-      return {...state, offersLoading: true};
-    case ActionType.LoadCardsSuccess:
-      return {
-        ...state,
-        cardList: actions.payload,
-        offersLoading: false,
-      };
-    case ActionType.LoadCardsError:
-      return {
-        ...state,
-        offersError: true,
-        offersLoading: false,
-      };
-    case ActionType.LoadOfferRequest:
-      return {...state, offerLoading: true};
-    case ActionType.LoadOfferSuccess:
-      return {
-        ...state,
-        offerLoading: false,
-        offer: actions.payload,
-      };
-    case ActionType.LoadOfferError:
-      return {
-        ...state,
-        offerLoading: false,
-        offerError: true,
-
-      };
-    case ActionType.LoadNearbyRequest:
-      return {...state, offersNearbyLoading: true};
-    case ActionType.LoadNearbySuccess:
-      return {
-        ...state,
-        offersNearbyLoading: false,
-        offersNearby: actions.payload,
-      };
-    case ActionType.LoadNearbyError:
-      return {
-        ...state,
-        offersNearbyLoading: false,
-        offersNearbyError: true,
-      };
-    case ActionType.LoadFavoritesOffersRequets:
-      return {
-        ...state,
-        FavoritesOffersLoading: true,
-      };
-    case ActionType.LoadFavoritesOffersSuccess:
-      return {
-        ...state,
-        FavoritesOffersLoading: false,
-        FavoritesOffers: actions.payload,
-      };
-    case ActionType.LoadFavoritesOffersError:
-      return {
-        ...state,
-        FavoritesOffersLoading: false,
-        FavoritesOffersError: true,
-      };
-    case ActionType.ChangeFavoriteStatusRequest:
-      return {
-        ...state,
-        changeFavoriteStatusLoading: true,
-      };
-    case ActionType.ChangeFavoriteStatusSucces:
-      return {
-        ...state,
-        changeFavoriteStatusLoading: false,
-      };
-    default:
-      return state;
-  }
-};
+const offers = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadCardsRequest, (state) => {
+      state.offersLoading = true;
+    })
+    .addCase(loadCardsSuccess, (state, action) => {
+      const {cards} = action.payload;
+      state.offersLoading = false;
+      state.cardList = cards;
+    })
+    .addCase(loadCardsError, (state) => {
+      state.offersLoading = false;
+      state.offersError = true;
+    })
+    .addCase(loadOfferRequest, (state) => {
+      state.offerLoading = true;
+    })
+    .addCase(loadOfferSuccess, (state, action) => {
+      const {offer} = action.payload;
+      state.offerLoading = false;
+      state.offer = offer;
+    })
+    .addCase(loadOfferError, (state) => {
+      state.offerLoading = false;
+      state.offerError = true;
+    })
+    .addCase(loadNearbyRequest, (state) => {
+      state.offersNearbyLoading = true;
+    })
+    .addCase(loadNearbySuccess, (state, action) => {
+      const {nearOffers} = action.payload;
+      state.offersNearbyLoading = false;
+      state.offersNearby = nearOffers;
+    })
+    .addCase(loadNearbyError, (state) => {
+      state.offersNearbyLoading = false;
+      state.offersNearbyError = true;
+    })
+    .addCase(loadFavoritesOffersRequets, (state) => {
+      state.FavoritesOffersLoading = true;
+    })
+    .addCase(loadFavoritesOffersSuccess, (state, action) => {
+      const {favoritesOffers} = action.payload;
+      state.FavoritesOffersLoading = false;
+      state.FavoritesOffers = favoritesOffers;
+    })
+    .addCase(loadFavoritesOffersError, (state) => {
+      state.FavoritesOffersLoading = false;
+      state.FavoritesOffersError = true;
+    })
+    .addCase(changeFavoriteStatusRequest, (state) => {
+      state.changeFavoriteStatusLoading = true;
+    })
+    .addCase(changeFavoriteStatusSucces, (state, action) => {
+      const {offer} = action.payload;
+      state.cardList = state.cardList.map((item) => item.id !== offer.id ? item : offer);
+      state.offersNearby = state.offersNearby.map((item) => item.id !== offer.id ? item : offer);
+      if (state.offer !== null) {
+        state.offer.isFavorite = offer.isFavorite;
+      }
+      state.changeFavoriteStatusLoading = false;
+    })
+    .addCase(resetOfferError, (state) => {
+      state.offer = null;
+      state.offersNearby = [];
+      state.offerError = false;
+      state.offersNearbyError = false;
+    });
+});
 
 export {offers};

@@ -1,39 +1,27 @@
 import { FormEvent, useState, ChangeEvent } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { ratingStarSetting } from '../../const';
 import { sendCommentsAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { CommentData } from '../../types/comment';
-import { State } from '../../types/state';
+import { getSendcommentsLoading } from '../../store/comments/selectors';
 import RatingStar from '../rating-star/rating-star';
 
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 300;
 
-const mapStateToProps = ({COMMENTS}: State) => ({
-  sendcommentsLoading: COMMENTS.sendcommentsLoading,
-});
+function CommentForm(): JSX.Element {
+  const sendcommentsLoading = useSelector(getSendcommentsLoading);
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit({id, rating, comment}: CommentData) {
-    dispatch(sendCommentsAction({id, rating, comment}));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Element {
   const { id } = useParams<{ id: string}>();
+
+  const dispatch = useDispatch();
 
   const [formState, setFormState] = useState({
     review: '',
     rating: '0',
   });
 
-  const handleChange = ({target}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeForm = ({target}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = target;
 
     setFormState((prevState) => ({
@@ -45,7 +33,11 @@ function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Eleme
   const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    onSubmit({id: id, rating: formState.rating, comment: formState.review});
+    dispatch(sendCommentsAction({
+      id,
+      rating: formState.rating,
+      comment: formState.review,
+    }));
   };
 
   const buttonText = sendcommentsLoading ? 'Submitting...' : 'Submit';
@@ -65,7 +57,7 @@ function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Eleme
             key={number}
             title={ratingStarSetting[number]}
             value={formState.rating}
-            onChange={handleChange}
+            onChange={handleChangeForm}
           />))}
       </div>
       <textarea
@@ -74,7 +66,7 @@ function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Eleme
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formState.review}
-        onChange={handleChange}
+        onChange={handleChangeForm}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -98,5 +90,4 @@ function CommentForm({sendcommentsLoading, onSubmit}: PropsFromRedux): JSX.Eleme
   );
 }
 
-export {CommentForm};
-export default connector(CommentForm);
+export default CommentForm;

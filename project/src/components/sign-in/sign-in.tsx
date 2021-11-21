@@ -1,16 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './sign-in.module.css';
 import cn from 'classnames';
-import { ThunkAppDispatch } from '../../types/action';
-import { connect, ConnectedProps } from 'react-redux';
-import { AuthData } from '../../types/auth-data';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
-import { State } from '../../types/state';
 import { getRandomArrayElement } from '../../utils';
 import { AppRoute, сitiesList } from '../../const';
 import { changeCity } from '../../store/action';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import { getAuthorizationStatusLoading } from '../../store/user/selectors';
 
 const formFields = {
   email: 'E-mail',
@@ -28,27 +26,13 @@ type FormStateProps = {
   [key: string]: FieldProps
 }
 
-const mapStateToProps = ({USER}: State) => ({
-  authorizationStatusLoading: USER.authorizationStatusLoading,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
-  },
-
-  onclickCity(city: string) {
-    dispatch(changeCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
 const cityButton = getRandomArrayElement(сitiesList);
 
-function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRedux): JSX.Element {
+function SignIn(): JSX.Element {
+  const authorizationStatusLoading = useSelector(getAuthorizationStatusLoading);
+
+  const dispatch = useDispatch();
+
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
       value: '',
@@ -79,17 +63,13 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
     });
   };
 
-  const handleChangeCity = () => {
-    onclickCity(cityButton);
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(loginAction({
       login: formState.email.value,
       password: formState.password.value,
-    });
+    }));
   };
 
   const isDisabled = !formState.email.value || formState.email.error || !formState.password.value
@@ -142,7 +122,7 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
           <div className="locations__item">
             <Link className="locations__item-link" to={AppRoute.Main}>
               <span
-                onClick={handleChangeCity}
+                onClick={() => dispatch(changeCity(cityButton))}
               >{cityButton}
               </span>
             </Link>
@@ -153,5 +133,4 @@ function SignIn({onSubmit, onclickCity, authorizationStatusLoading}: PropsFromRe
   );
 }
 
-export {SignIn};
-export default connector(SignIn);
+export default SignIn;

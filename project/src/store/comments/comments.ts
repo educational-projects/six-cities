@@ -1,5 +1,6 @@
-import { Actions, ActionType } from '../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
 import { CommentsState } from '../../types/state';
+import { loadCommentsError, loadCommentsRequets, loadCommentsSuccess, sendCommentsRequest, sendCommentsSuccess } from '../action';
 
 const initialState: CommentsState = {
   commentsLoading: false,
@@ -8,29 +9,28 @@ const initialState: CommentsState = {
   sendcommentsLoading: false,
 };
 
-const comments = (state = initialState, actions: Actions): CommentsState => {
-  switch (actions.type) {
-    case ActionType.LoadCommentsRequets:
-      return {...state, commentsLoading: true};
-    case ActionType.LoadCommentsSuccess:
-      return {
-        ...state,
-        commentsLoading: false,
-        comments: actions.payload,
-      };
-    case ActionType.LoadCommentsError:
-      return {
-        ...state,
-        commentsLoading: false,
-        commentsError: true,
-      };
-    case ActionType.SendCommentsRequest:
-      return {...state, sendcommentsLoading: true};
-    case ActionType.SendCommentsSuccess:
-      return {...state, sendcommentsLoading: false, comments: actions.payload};
-    default:
-      return state;
-  }
-};
+const comments = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadCommentsRequets, (state) => {
+      state.commentsLoading = true;
+    })
+    .addCase(loadCommentsSuccess, (state, action) => {
+      const {usersComments} = action.payload;
+      state.commentsLoading = false;
+      state.comments = usersComments;
+    })
+    .addCase(loadCommentsError, (state) => {
+      state.commentsLoading = false;
+      state.commentsError = true;
+    })
+    .addCase(sendCommentsRequest, (state) => {
+      state.sendcommentsLoading = true;
+    })
+    .addCase(sendCommentsSuccess, (state, action) => {
+      const {userComment} = action.payload;
+      state.sendcommentsLoading = false;
+      state.comments = userComment;
+    });
+});
 
 export {comments};
