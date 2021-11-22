@@ -1,4 +1,5 @@
 import { FormEvent, useState, ChangeEvent } from 'react';
+import { ClipLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { ratingStarSetting } from '../../const';
@@ -43,8 +44,6 @@ function CommentForm(): JSX.Element {
     }, resetForm));
   };
 
-  const buttonText = sendCommentsLoading ? 'Submitting...' : 'Submit';
-
   const isDisabled = formState.rating === '0'
    || formState.review.length < MIN_LENGTH_COMMENT
    || sendCommentsLoading
@@ -86,7 +85,7 @@ function CommentForm(): JSX.Element {
           type="submit"
           disabled={isDisabled}
         >
-          {buttonText}
+          {sendCommentsLoading ? <ClipLoader/> : 'Submit'}
         </button>
       </div>
     </form>

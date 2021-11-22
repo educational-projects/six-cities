@@ -8,9 +8,8 @@ type CityProps = {
 }
 
 function City({city}: CityProps): JSX.Element {
-  const currentCity = useSelector(getCurrentCity);
-
   const dispatch = useDispatch();
+  const currentCity = useSelector(getCurrentCity);
 
   const linkClasses = cn('locations__item-link tabs__item', {
     'tabs__item--active': city === currentCity,
