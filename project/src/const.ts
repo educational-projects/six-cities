@@ -21,13 +21,6 @@ export enum APIRoute  {
   Favorites = '/favorite'
 }
 
-export const offersType: {[key: string]: string} = {
-  apartment: 'Apartment',
-  room: 'Room',
-  house: 'House',
-  hotel: 'Hotel',
-} as const;
-
 export const ratingStarSetting: {[key: string]: string} = {
   1: 'terribly',
   2: 'badly',

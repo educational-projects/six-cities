@@ -9,7 +9,6 @@ import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
-import { offersType } from '../../const';
 import { ChangeFavorite, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
@@ -88,8 +87,11 @@ function Property(): JSX.Element {
                 <span className="property__rating-value rating__value">${offer.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {offersType[offer.type]}
+                <li
+                  className="property__feature property__feature--entire"
+                  style={{textTransform: 'capitalize'}}
+                >
+                  {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {`${offer.bedrooms} Bedrooms`}

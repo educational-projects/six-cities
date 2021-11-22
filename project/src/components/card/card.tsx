@@ -2,7 +2,6 @@ import cn from 'classnames';
 import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { offersType } from '../../const';
 import { ChangeFavorite } from '../../store/api-actions';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
@@ -86,7 +85,12 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
         <h2 className="place-card__name">
           <Link to={`offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{offersType[type]}</p>
+        <p
+          className="place-card__type"
+          style={{textTransform: 'capitalize'}}
+        >
+          {type}
+        </p>
       </div>
     </article>
   );
