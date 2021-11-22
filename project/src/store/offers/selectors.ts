@@ -1,8 +1,17 @@
+import { createSelector } from 'reselect';
+import { SortType } from '../../const';
 import { Offer, Offers } from '../../types/offer';
 import { State } from '../../types/state';
+import { getCurrentCity, getCurrentSortType } from '../app/selectors';
 import { NameSpace } from '../root-reducer';
 
-export const getCardList = (state: State): Offers => state[NameSpace.Offers].cardList;
+const sortMap: {[key: string]: (cardA: Offer, cardB: Offer) => number} = {
+  [SortType.PRICE_DOWN]: (cardA, cardB) => cardB.price - cardA.price,
+  [SortType.PRICE_UP]: (cardA, cardB) => cardA.price - cardB.price,
+  [SortType.RATING_DOWN]: (cardA, cardB) => cardB.rating - cardA.rating,
+};
+
+const getCardList = (state: State): Offers => state[NameSpace.Offers].cardList;
 export const getOffersLoading = (state: State): boolean => state[NameSpace.Offers].offersLoading;
 export const getOffersError = (state: State): boolean => state[NameSpace.Offers].offersError;
 export const getOfferLoading = (state: State): boolean => state[NameSpace.Offers].offerLoading;
@@ -11,7 +20,14 @@ export const getOffer = (state: State): Offer | null => state[NameSpace.Offers].
 export const getOffersNearbyLoading = (state: State): boolean => state[NameSpace.Offers].offersNearbyLoading;
 export const getOffersNearbyError = (state: State): boolean => state[NameSpace.Offers].offersNearbyError;
 export const getOffersNearby = (state: State): Offers => state[NameSpace.Offers].offersNearby;
-export const getFavoritesOffersLoading = (state: State): boolean => state[NameSpace.Offers].FavoritesOffersLoading;
-export const getFavoritesOffersError = (state: State): boolean => state[NameSpace.Offers].FavoritesOffersError;
-export const getFavoritesOffers = (state: State): Offers => state[NameSpace.Offers].FavoritesOffers;
+export const getFavoritesOffersLoading = (state: State): boolean => state[NameSpace.Offers].favoritesOffersLoading;
+export const getFavoritesOffersError = (state: State): boolean => state[NameSpace.Offers].favoritesOffersError;
+export const getFavoritesOffers = (state: State): Offers => state[NameSpace.Offers].favoritesOffers;
 export const getChangeFavoriteStatusLoading = (state: State): boolean => state[NameSpace.Offers].changeFavoriteStatusLoading;
+
+export const getSortedAndFilteredOffers = createSelector(
+  [getCardList, getCurrentCity, getCurrentSortType],
+  (offers: Offers, city: string, sortType: string) => offers
+    .filter((offer) => offer.city.name === city)
+    .slice().sort(sortMap[sortType]),
+);

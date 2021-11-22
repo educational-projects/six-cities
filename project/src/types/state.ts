@@ -13,7 +13,7 @@ export type CommentsState = {
   commentsLoading: boolean;
   commentsError: boolean;
   comments: UsersComments;
-  sendcommentsLoading: boolean,
+  sendCommentsLoading: boolean,
 }
 
 export type OffersState = {
@@ -26,9 +26,9 @@ export type OffersState = {
   offersNearbyLoading: boolean;
   offersNearbyError: boolean;
   offersNearby: Offers;
-  FavoritesOffersLoading: boolean;
-  FavoritesOffersError: boolean
-  FavoritesOffers: Offers;
+  favoritesOffersLoading: boolean;
+  favoritesOffersError: boolean
+  favoritesOffers: Offers;
   changeFavoriteStatusLoading: boolean;
 }
 

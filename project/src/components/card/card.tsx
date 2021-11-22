@@ -2,8 +2,7 @@ import cn from 'classnames';
 import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { offersType } from '../../const';
-import { fetchChangeFavoriteStatus } from '../../store/api-actions';
+import { ChangeFavorite } from '../../store/api-actions';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 
@@ -15,7 +14,6 @@ type ItemCardProps = {
 
 function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
-
   const dispatch = useDispatch();
 
   const offerRating = getRating(rating);
@@ -70,7 +68,7 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
           <button
             className={buttonClasses}
             type="button"
-            onClick={() => dispatch(fetchChangeFavoriteStatus(id, !isFavorite))}
+            onClick={() => dispatch(ChangeFavorite(id, !isFavorite))}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -87,7 +85,12 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
         <h2 className="place-card__name">
           <Link to={`offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{offersType[type]}</p>
+        <p
+          className="place-card__type"
+          style={{textTransform: 'capitalize'}}
+        >
+          {type}
+        </p>
       </div>
     </article>
   );

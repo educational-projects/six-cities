@@ -16,9 +16,9 @@ const initialState: OffersState = {
   offersNearbyLoading: false,
   offersNearbyError: false,
   offersNearby: [],
-  FavoritesOffersLoading: false,
-  FavoritesOffersError: false,
-  FavoritesOffers: [],
+  favoritesOffersLoading: false,
+  favoritesOffersError: false,
+  favoritesOffers: [],
   changeFavoriteStatusLoading: false,
 };
 
@@ -61,26 +61,30 @@ const offers = createReducer(initialState, (builder) => {
       state.offersNearbyError = true;
     })
     .addCase(loadFavoritesOffersRequets, (state) => {
-      state.FavoritesOffersLoading = true;
+      state.favoritesOffersLoading = true;
     })
     .addCase(loadFavoritesOffersSuccess, (state, action) => {
       const {favoritesOffers} = action.payload;
-      state.FavoritesOffersLoading = false;
-      state.FavoritesOffers = favoritesOffers;
+      state.favoritesOffersLoading = false;
+      state.favoritesOffers = favoritesOffers;
     })
     .addCase(loadFavoritesOffersError, (state) => {
-      state.FavoritesOffersLoading = false;
-      state.FavoritesOffersError = true;
+      state.favoritesOffersLoading = false;
+      state.favoritesOffersError = true;
     })
     .addCase(changeFavoriteStatusRequest, (state) => {
       state.changeFavoriteStatusLoading = true;
     })
     .addCase(changeFavoriteStatusSucces, (state, action) => {
       const {offer} = action.payload;
-      state.cardList = state.cardList.map((item) => item.id !== offer.id ? item : offer);
-      state.offersNearby = state.offersNearby.map((item) => item.id !== offer.id ? item : offer);
+      const indexOfCardList = state.cardList.findIndex((card) => card.id === offer.id);
+      const indexOfNearby = state.offersNearby.findIndex((card) => card.id === offer.id);
+      const indexOfFavorites = state.favoritesOffers.findIndex((card) => card.id === offer.id);
+      state.cardList[indexOfCardList] = offer;
+      state.offersNearby[indexOfNearby] = offer;
+      state.favoritesOffers[indexOfFavorites] = offer;
       if (state.offer !== null) {
-        state.offer.isFavorite = offer.isFavorite;
+        state.offer = offer;
       }
       state.changeFavoriteStatusLoading = false;
     })

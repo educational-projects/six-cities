@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Loader from '../../pages/loading-screen/loading-screen';
@@ -9,8 +9,7 @@ import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
-import { offersType } from '../../const';
-import { fetchChangeFavoriteStatus, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
+import { ChangeFavorite, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
 import { getCommentsLoading } from '../../store/comments/selectors';
@@ -20,15 +19,19 @@ const MAX_COUNT_NEARBY = 3;
 
 function Property(): JSX.Element {
   const { id } = useParams<{ id: string}>();
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const onPageUnload = useCallback(() => {
     dispatch(resetOfferError());
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(fetchOfferAction(id));
     dispatch(fetchOffersNearby(id));
     dispatch(fetchCommentsAction(id));
-  }, [dispatch, id]);
+
+    return () => onPageUnload();
+  }, [dispatch, id, onPageUnload]);
 
   const offer = useSelector(getOffer);
   const offerLoading = useSelector(getOfferLoading);
@@ -68,7 +71,7 @@ function Property(): JSX.Element {
                 </h1>
                 <button
                   className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button"
-                  onClick={() => dispatch(fetchChangeFavoriteStatus(offer.id, !offer.isFavorite))}
+                  onClick={() => dispatch(ChangeFavorite(offer.id, !offer.isFavorite))}
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -84,8 +87,11 @@ function Property(): JSX.Element {
                 <span className="property__rating-value rating__value">${offer.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {offersType[offer.type]}
+                <li
+                  className="property__feature property__feature--entire"
+                  style={{textTransform: 'capitalize'}}
+                >
+                  {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {`${offer.bedrooms} Bedrooms`}

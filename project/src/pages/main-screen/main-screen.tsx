@@ -5,20 +5,18 @@ import MainEmpty from '../../components/empty-main/empty-main';
 import Header from '../../components/header/header';
 import OffersBoard from '../../components/offers-board/offers-board';
 import { getCurrentCity } from '../../store/app/selectors';
-import { getCardList, getOffersError, getOffersLoading } from '../../store/offers/selectors';
+import { getOffersError, getOffersLoading, getSortedAndFilteredOffers } from '../../store/offers/selectors';
 import FallbackError from '../fallback-error/fallback-error';
 import Loader from '../loading-screen/loading-screen';
 
 function Main(): JSX.Element {
   const currentCity = useSelector(getCurrentCity);
-  const cardList = useSelector(getCardList);
+  const offers = useSelector(getSortedAndFilteredOffers);
   const offersLoading = useSelector(getOffersLoading);
   const offersError = useSelector(getOffersError);
 
-  const cards = cardList.filter((card) => card.city.name === currentCity);
-
   const containerClass = cn('page__main page__main--index', {
-    'page__main--index-empty' : !cards.length,
+    'page__main--index-empty' : !offers.length,
   });
 
   if (offersLoading) {
@@ -35,8 +33,8 @@ function Main(): JSX.Element {
       <main className={containerClass}>
         <CitiesMenu/>
         {
-          cards.length ?
-            <OffersBoard cards={cards}/>
+          offers.length ?
+            <OffersBoard cards={offers}/>
             :
             <MainEmpty currentCity={currentCity}/>
         }
