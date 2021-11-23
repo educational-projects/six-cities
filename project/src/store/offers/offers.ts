@@ -82,8 +82,10 @@ const offers = createReducer(initialState, (builder) => {
       const indexOfFavorites = state.favoritesOffers.findIndex((card) => card.id === offer.id);
       state.cardList[indexOfCardList] = offer;
       state.offersNearby[indexOfNearby] = offer;
-      state.favoritesOffers[indexOfFavorites] = offer;
-      if (state.offer !== null) {
+      if (indexOfFavorites !== -1) {
+        state.favoritesOffers.splice(indexOfFavorites, 1);
+      }
+      if (state.offer !== null && state.offer.id === offer.id) {
         state.offer = offer;
       }
       state.changeFavoriteStatusLoading = false;

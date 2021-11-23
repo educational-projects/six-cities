@@ -29,14 +29,13 @@ function Favorites(): JSX.Element {
     return <FallbackError/>;
   }
 
-  const favoritesList = favoritesOffers.filter((card) => card.isFavorite);
-  const citiesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
+  const citiesList = Array.from(new Set(favoritesOffers.map(({city}) => city.name)));
 
   const pageClass = cn('page', {
-    'page--favorites-empty' : !favoritesList.length,
+    'page--favorites-empty' : !favoritesOffers.length,
   });
   const mainClass = cn('page__main', 'page__main--favorites', {
-    'page__main--favorites-empty' : !favoritesList.length,
+    'page__main--favorites-empty' : !favoritesOffers.length,
   });
 
   return (
@@ -44,8 +43,8 @@ function Favorites(): JSX.Element {
       <Header/>
       <main className={mainClass}>
         <div className="page__favorites-container container">
-          {favoritesList.length ?
-            <FavoritesBoard cities={citiesList} favoritesList={favoritesList}/>
+          {favoritesOffers.length ?
+            <FavoritesBoard cities={citiesList} favoritesList={favoritesOffers}/>
             :
             <FavoritesEmpty/> }
         </div>
