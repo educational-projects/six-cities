@@ -71,7 +71,7 @@ export const loadNearbySuccess = createAction(
 
 export const loadNearbyError = createAction(ActionType.LoadNearbyError);
 
-export const loadCommentsRequets = createAction(ActionType.LoadCommentsRequets);
+export const loadCommentsRequest = createAction(ActionType.LoadCommentsRequest);
 
 export const loadCommentsSuccess = createAction(
   ActionType.LoadCommentsSuccess,
@@ -84,7 +84,7 @@ export const loadCommentsSuccess = createAction(
 
 export const loadCommentsError = createAction(ActionType.LoadCommentsError);
 
-export const loadFavoritesOffersRequets = createAction(ActionType.LoadFavoritesOffersRequets);
+export const loadFavoritesOffersRequest = createAction(ActionType.LoadFavoritesOffersRequest);
 
 export const loadFavoritesOffersSuccess = createAction(
   ActionType.LoadFavoritesOffersSuccess,
@@ -99,8 +99,8 @@ export const loadFavoritesOffersError = createAction(ActionType.LoadFavoritesOff
 
 export const changeFavoriteStatusRequest = createAction(ActionType.ChangeFavoriteStatusRequest);
 
-export const changeFavoriteStatusSucces = createAction(
-  ActionType.ChangeFavoriteStatusSucces,
+export const changeFavoriteStatusSuccess = createAction(
+  ActionType.ChangeFavoriteStatusSuccess,
   (offer: Offer) => ({
     payload: {
       offer,
@@ -123,8 +123,8 @@ export const sendCommentsSuccess = createAction(
 
 export const requireAuthorizationRequest = createAction(ActionType.RequireAuthorizationRequest);
 
-export const requireAuthorizationSucces = createAction(
-  ActionType.RequireAuthorizationSucces,
+export const requireAuthorizationSuccess = createAction(
+  ActionType.RequireAuthorizationSuccess,
   (authStatus: AuthorizationStatus) => ({
     payload: {
       authStatus,
@@ -141,8 +141,8 @@ export const requireAuthorizationError = createAction(
 
 export const requireLogoutRequest = createAction(ActionType.RequireLogoutRequest);
 
-export const requireLogoutSucces = createAction(
-  ActionType.RequireLogoutSucces,
+export const requireLogoutSuccess = createAction(
+  ActionType.RequireLogoutSuccess,
   (authStatus: AuthorizationStatus) => ({
     payload: {
       authStatus,

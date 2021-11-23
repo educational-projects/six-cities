@@ -9,7 +9,7 @@ import HostList from '../../components/host-list/host-list';
 import ImageList from '../../components/image-list/image-list';
 import Map from '../../components/map/map';
 import OptionList from '../../components/option-list/option-list';
-import { ChangeFavorite, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
+import { changeFavorite, fetchCommentsAction, fetchOfferAction, fetchOffersNearby } from '../../store/api-actions';
 import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
 import { getCommentsLoading } from '../../store/comments/selectors';
@@ -71,7 +71,7 @@ function Property(): JSX.Element {
                 </h1>
                 <button
                   className={`property__bookmark-button  button ${offer.isFavorite && 'property__bookmark-button--active'}`} type="button"
-                  onClick={() => dispatch(ChangeFavorite(offer.id, !offer.isFavorite))}
+                  onClick={() => dispatch(changeFavorite(offer.id, !offer.isFavorite))}
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -117,7 +117,7 @@ function Property(): JSX.Element {
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <h2 className="near-places__title">Other places in the neighborhood</h2>
             <CardList
               cards={nearbyList}
               listType="near"

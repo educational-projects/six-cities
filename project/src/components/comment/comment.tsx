@@ -1,11 +1,11 @@
 import { UserComment } from '../../types/comment';
 import { getFormatDate, getRating } from '../../utils';
 
-type CommentPrors = {
+type CommentProps = {
   comment: UserComment;
 }
 
-function Comment({comment}: CommentPrors): JSX.Element {
+function Comment({comment}: CommentProps): JSX.Element {
   const {
     rating,
     user,

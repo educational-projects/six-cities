@@ -17,20 +17,20 @@ function Favorites(): JSX.Element {
     dispatch(fetchFavoritesOffersAction());
   }, [dispatch]);
 
-  const FavoritesOffers = useSelector(getFavoritesOffers);
-  const FavoritesOffersLoading = useSelector(getFavoritesOffersLoading);
-  const FavoritesOffersError = useSelector(getFavoritesOffersError);
+  const favoritesOffers = useSelector(getFavoritesOffers);
+  const favoritesOffersLoading = useSelector(getFavoritesOffersLoading);
+  const favoritesOffersError = useSelector(getFavoritesOffersError);
 
-  if (FavoritesOffersLoading) {
+  if (favoritesOffersLoading) {
     return <Loader/>;
   }
 
-  if (FavoritesOffersError) {
+  if (favoritesOffersError) {
     return <FallbackError/>;
   }
 
-  const favoritesList = FavoritesOffers.filter((card) => card.isFavorite);
-  const cityesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
+  const favoritesList = favoritesOffers.filter((card) => card.isFavorite);
+  const citiesList = Array.from(new Set(favoritesList.map(({city}) => city.name)));
 
   const pageClass = cn('page', {
     'page--favorites-empty' : !favoritesList.length,
@@ -45,7 +45,7 @@ function Favorites(): JSX.Element {
       <main className={mainClass}>
         <div className="page__favorites-container container">
           {favoritesList.length ?
-            <FavoritesBoard cities={cityesList} favoritesList={favoritesList}/>
+            <FavoritesBoard cities={citiesList} favoritesList={favoritesList}/>
             :
             <FavoritesEmpty/> }
         </div>

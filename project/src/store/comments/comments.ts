@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { CommentsState } from '../../types/state';
-import { loadCommentsError, loadCommentsRequets, loadCommentsSuccess, sendCommentsRequest, sendCommentsSuccess } from '../action';
+import { loadCommentsError, loadCommentsRequest, loadCommentsSuccess, sendCommentsRequest, sendCommentsSuccess } from '../action';
 
 const initialState: CommentsState = {
   commentsLoading: false,
@@ -11,7 +11,7 @@ const initialState: CommentsState = {
 
 const comments = createReducer(initialState, (builder) => {
   builder
-    .addCase(loadCommentsRequets, (state) => {
+    .addCase(loadCommentsRequest, (state) => {
       state.commentsLoading = true;
     })
     .addCase(loadCommentsSuccess, (state, action) => {

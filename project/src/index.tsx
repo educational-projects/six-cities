@@ -5,7 +5,7 @@ import App from './components/app/app';
 import { createApi } from './services/api';
 import { ThunkAppDispatch } from './types/action';
 import { checkAuthAction, fetchCardsAction } from './store/api-actions';
-import { requireAuthorizationSucces } from './store/action';
+import { requireAuthorizationSuccess } from './store/action';
 import { AuthorizationStatus } from './const';
 import { redirect } from './store/middlewares/redirect';
 import { ToastContainer } from 'react-toastify';
@@ -14,7 +14,7 @@ import { rootReducer } from './store/root-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 
 const api = createApi(
-  () => store.dispatch(requireAuthorizationSucces(AuthorizationStatus.NoAuth)),
+  () => store.dispatch(requireAuthorizationSuccess(AuthorizationStatus.NoAuth)),
 );
 
 const store = configureStore({

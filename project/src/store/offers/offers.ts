@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OffersState } from '../../types/state';
-import { changeFavoriteStatusRequest, changeFavoriteStatusSucces, loadCardsError, loadCardsRequest,
-  loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequets, loadFavoritesOffersSuccess,
+import { changeFavoriteStatusRequest, changeFavoriteStatusSuccess, loadCardsError, loadCardsRequest,
+  loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequest, loadFavoritesOffersSuccess,
   loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest,
   loadOfferSuccess,
   resetOfferError} from '../action';
@@ -60,7 +60,7 @@ const offers = createReducer(initialState, (builder) => {
       state.offersNearbyLoading = false;
       state.offersNearbyError = true;
     })
-    .addCase(loadFavoritesOffersRequets, (state) => {
+    .addCase(loadFavoritesOffersRequest, (state) => {
       state.favoritesOffersLoading = true;
     })
     .addCase(loadFavoritesOffersSuccess, (state, action) => {
@@ -75,7 +75,7 @@ const offers = createReducer(initialState, (builder) => {
     .addCase(changeFavoriteStatusRequest, (state) => {
       state.changeFavoriteStatusLoading = true;
     })
-    .addCase(changeFavoriteStatusSucces, (state, action) => {
+    .addCase(changeFavoriteStatusSuccess, (state, action) => {
       const {offer} = action.payload;
       const indexOfCardList = state.cardList.findIndex((card) => card.id === offer.id);
       const indexOfNearby = state.offersNearby.findIndex((card) => card.id === offer.id);
