@@ -15,7 +15,7 @@ function UserLink({userEmail, userAvatar}: UserLinkProps): JSX.Element {
         to={AppRoute.Favorites}
       >
         <div className="header__avatar-wrapper user__avatar-wrapper">
-          {userAvatar ? <img className={styles.avatar} src={userAvatar} alt="avatart" /> : ''}
+          {userAvatar ? <img className={styles.avatar} src={userAvatar} alt="avatar" /> : ''}
         </div>
         <span className="header__user-name user__name">{userEmail}</span>
       </Link>

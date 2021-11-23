@@ -3,7 +3,7 @@ import leaflet from 'leaflet';
 import { City } from '../../types/offer';
 
 const URL_TILE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-const MAP_TEXT_COPPYRITING = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const MAP_TEXT_COPYWRITING = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): leaflet.Map | null {
   const { location } = city;
@@ -23,7 +23,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): leafl
         .tileLayer(
           URL_TILE_LAYER,
           {
-            attribution: MAP_TEXT_COPPYRITING,
+            attribution: MAP_TEXT_COPYWRITING,
           },
         )
         .addTo(instance);

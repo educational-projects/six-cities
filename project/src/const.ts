@@ -36,4 +36,4 @@ export const SortType = {
   RATING_DOWN: 'Top rated first',
 } as const;
 
-export const сitiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

@@ -1,8 +1,9 @@
 import cn from 'classnames';
 import { memo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ChangeFavorite } from '../../store/api-actions';
+import { changeFavorite } from '../../store/api-actions';
+import { getChangeFavoriteStatusLoading } from '../../store/offers/selectors';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 
@@ -15,6 +16,7 @@ type ItemCardProps = {
 function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
   const dispatch = useDispatch();
+  const favoriteStatusLoading = useSelector(getChangeFavoriteStatusLoading);
 
   const offerRating = getRating(rating);
   const favoriteType = cardType === 'favorites';
@@ -39,6 +41,9 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
     'place-card__bookmark-button--active' : isFavorite,
   });
 
+  const spanText = card.isFavorite ? 'In bookmarks' : 'To bookmarks';
+  const isDisabled = favoriteStatusLoading;
+
   return (
     <article className={articleClasses}
       onMouseEnter={() => onActiveCard ? onActiveCard(id) : undefined}
@@ -55,7 +60,7 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
             src={previewImage}
             width={`${favoriteType ? '150' : '260'}`}
             height={`${favoriteType ? '110' : '200'}`}
-            alt="Apartament"
+            alt={title}
           />
         </Link>
       </div>
@@ -68,12 +73,13 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
           <button
             className={buttonClasses}
             type="button"
-            onClick={() => dispatch(ChangeFavorite(id, !isFavorite))}
+            onClick={() => dispatch(changeFavorite(id, !isFavorite))}
+            disabled={isDisabled}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{spanText}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -83,7 +89,7 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p
           className="place-card__type"

@@ -1,4 +1,4 @@
-import { сitiesList } from '../../const';
+import { citiesList } from '../../const';
 import City from '../city/city';
 
 function CitiesMenu(): JSX.Element {
@@ -11,7 +11,7 @@ function CitiesMenu(): JSX.Element {
           <ul
             className="locations__list tabs__list"
           >
-            {сitiesList.map((city) => (
+            {citiesList.map((city) => (
               <City
                 city={city}
                 key={city}

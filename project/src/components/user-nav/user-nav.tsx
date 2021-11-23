@@ -8,6 +8,7 @@ import { getAuthorizationStatus, getUserData } from '../../store/user/selectors'
 function UserLogin(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const userData = useSelector(getUserData);
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">

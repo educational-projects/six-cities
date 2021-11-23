@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { getRandomArrayElement } from '../../utils';
-import { AppRoute, сitiesList } from '../../const';
+import { AppRoute, citiesList } from '../../const';
 import { changeCity } from '../../store/action';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
@@ -26,12 +26,11 @@ type FormStateProps = {
   [key: string]: FieldProps
 }
 
-const cityButton = getRandomArrayElement(сitiesList);
+const cityButton = getRandomArrayElement(citiesList);
 
 function SignIn(): JSX.Element {
-  const authorizationStatusLoading = useSelector(getAuthorizationStatusLoading);
-
   const dispatch = useDispatch();
+  const authorizationStatusLoading = useSelector(getAuthorizationStatusLoading);
 
   const [formState, setFormState] = useState<FormStateProps>({
     email: {

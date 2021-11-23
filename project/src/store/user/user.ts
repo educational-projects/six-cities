@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../const';
 import { UserState } from '../../types/state';
-import { changeUserData, requireAuthorizationRequest, requireAuthorizationSucces, requireLogoutRequest, requireLogoutSucces } from '../action';
+import { changeUserData, requireAuthorizationRequest, requireAuthorizationSuccess, requireLogoutRequest, requireLogoutSuccess } from '../action';
 
 const initialState: UserState = {
   userData: null,
@@ -18,7 +18,7 @@ const user = createReducer(initialState, (builder) => {
     .addCase(requireAuthorizationRequest, (state) => {
       state.authorizationStatusLoading = true;
     })
-    .addCase(requireAuthorizationSucces, (state, action) => {
+    .addCase(requireAuthorizationSuccess, (state, action) => {
       const {authStatus} = action.payload;
       state.authorizationStatusLoading = false;
       state.authorizationStatus = authStatus;
@@ -26,7 +26,7 @@ const user = createReducer(initialState, (builder) => {
     .addCase(requireLogoutRequest, (state) => {
       state.authorizationStatusLoading = true;
     })
-    .addCase(requireLogoutSucces, (state, action) => {
+    .addCase(requireLogoutSuccess, (state, action) => {
       const {authStatus} = action.payload;
       state.authorizationStatusLoading = false;
       state.authorizationStatus = authStatus;

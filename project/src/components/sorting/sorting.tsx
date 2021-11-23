@@ -7,9 +7,8 @@ import { getCurrentSortType } from '../../store/app/selectors';
 
 function Sorting(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const currentSortType = useSelector(getCurrentSortType);
-
   const dispatch = useDispatch();
+  const currentSortType = useSelector(getCurrentSortType);
 
   const sortedType = Object.values(SortType);
 

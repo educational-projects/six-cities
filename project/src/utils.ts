@@ -54,7 +54,7 @@ export const adaptUserDataToClient = (userData: BackUser): User => {
   return adaptedUserData;
 };
 
-export const adatpUsersCommentsToClient = (userComment: BackUserComment): UserComment => {
+export const adaptUsersCommentsToClient = (userComment: BackUserComment): UserComment => {
   const adaptedComments = Object.assign(
     {},
     userComment,
