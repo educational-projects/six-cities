@@ -155,7 +155,6 @@ export const logoutAction = (): ThunkActionResult => (
       api.delete(APIRoute.Logout);
       dropToken();
       dispatch(requireLogoutSuccess(AuthorizationStatus.NoAuth));
-      dispatch(fetchCardsAction());
     } catch {
       dispatch(requireLogoutError());
       toast.error(AUTH_FAIL_MESSAGE);
