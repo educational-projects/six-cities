@@ -19,7 +19,7 @@ export enum ActionType {
   LoadCommentsRequest = 'data/loadCommentsRequest',
   LoadCommentsSuccess = 'data/loadCommentsSuccess',
   LoadCommentsError = 'data/loadCommentsError',
-  LoadFavoritesOffersRequest = 'data/loadFavoritesOffersRequetss',
+  LoadFavoritesOffersRequest = 'data/loadFavoritesOffersRequest',
   LoadFavoritesOffersSuccess = 'data/loadFavoritesOffersSuccess',
   LoadFavoritesOffersError = 'data/LoadFavoritesOffersError',
   SendCommentsRequest = 'data/sendCommentsRequest',
@@ -34,6 +34,7 @@ export enum ActionType {
   RedirectToBack = 'data/redirectToBack',
   ChangeFavoriteStatusRequest = 'data/changeFavoriteStatusRequest',
   ChangeFavoriteStatusSuccess = 'data/changeFavoriteStatusSuccess',
+  ChangeFavoriteStatusError = 'data/changeFavoriteStatusError',
   ResetOfferError = 'data/resetOfferError'
 }
 

@@ -1,9 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OffersState } from '../../types/state';
-import { changeFavoriteStatusRequest, changeFavoriteStatusSuccess, loadCardsError, loadCardsRequest,
-  loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequest, loadFavoritesOffersSuccess,
-  loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest,
-  loadOfferSuccess,
+import { changeFavoriteStatusError, changeFavoriteStatusRequest, changeFavoriteStatusSuccess, loadCardsError,
+  loadCardsRequest, loadCardsSuccess, loadFavoritesOffersError, loadFavoritesOffersRequest,
+  loadFavoritesOffersSuccess, loadNearbyError, loadNearbyRequest, loadNearbySuccess, loadOfferError,
+  loadOfferRequest, loadOfferSuccess,
   resetOfferError} from '../action';
 
 const initialState: OffersState = {
@@ -88,6 +88,9 @@ const offers = createReducer(initialState, (builder) => {
       if (state.offer !== null && state.offer.id === offer.id) {
         state.offer = offer;
       }
+      state.changeFavoriteStatusLoading = false;
+    })
+    .addCase(changeFavoriteStatusError, (state) => {
       state.changeFavoriteStatusLoading = false;
     })
     .addCase(resetOfferError, (state) => {

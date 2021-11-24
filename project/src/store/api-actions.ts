@@ -7,6 +7,7 @@ import { BackOffer, BackOffers } from '../types/offer';
 import { adaptToClient, adaptUserDataToClient, adaptUsersCommentsToClient } from '../utils';
 import { BackUser } from '../types/user';
 import {
+  changeFavoriteStatusError,
   changeFavoriteStatusRequest, changeFavoriteStatusSuccess, changeUserData, loadCardsError,
   loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequest, loadCommentsSuccess,
   loadFavoritesOffersError, loadFavoritesOffersRequest, loadFavoritesOffersSuccess, loadNearbyError,
@@ -99,6 +100,7 @@ export const changeFavorite = (id: number, status: boolean): ThunkActionResult =
     } catch(e: any) {
       if (e.response.status === 401) {
         dispatch(redirectToRoute(AppRoute.Login));
+        dispatch(changeFavoriteStatusError());
       } else {
         toast.error(STATUS_FAIL_MESSAGE);
       }
