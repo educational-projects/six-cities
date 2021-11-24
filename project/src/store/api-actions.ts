@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { APIRoute, AppRoute, AuthorizationStatus, FailMessage } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, FailMessage, HttpCode } from '../const';
 import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
@@ -49,7 +49,7 @@ export const fetchOffersNearby = (id: string): ThunkActionResult => (
       const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
       dispatch(loadNearbySuccess(data.map(adaptToClient)));
     } catch(e: any) {
-      if (e.response.status !== 404) {
+      if (e.response.status !== HttpCode.NotFound) {
         toast.error(FailMessage.Nearby);
       }
       dispatch(loadNearbyError());
@@ -64,7 +64,7 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
       const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
       dispatch(loadCommentsSuccess(data.map(adaptUsersCommentsToClient)));
     } catch(e: any) {
-      if (e.response.status !== 400) {
+      if (e.response.status !== HttpCode.BadRequest) {
         toast.error(FailMessage.LoadComments);
       }
       dispatch(loadCommentsError());
@@ -91,7 +91,7 @@ export const changeFavorite = (id: number, status: boolean): ThunkActionResult =
       const {data} = await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
       dispatch(changeFavoriteStatusSuccess(adaptToClient(data)));
     } catch(e: any) {
-      if (e.response.status === 401) {
+      if (e.response.status === HttpCode.Unauthorized) {
         dispatch(redirectToRoute(AppRoute.Login));
         dispatch(changeFavoriteStatusError());
       } else {

@@ -12,6 +12,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum HttpCode {
+  Unauthorized = 401,
+  NotFound = 404,
+  BadRequest = 400
+}
+
 export enum APIRoute  {
   Cards = '/hotels',
   Login = '/login',
