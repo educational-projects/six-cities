@@ -7,8 +7,10 @@ import { sendCommentsAction } from '../../store/api-actions';
 import { getSendCommentsLoading } from '../../store/comments/selectors';
 import RatingStar from '../rating-star/rating-star';
 
-const MIN_LENGTH_COMMENT = 50;
-const MAX_LENGTH_COMMENT = 300;
+enum LengthComment {
+  Min = 50,
+  Max = 300
+}
 
 const initialState = {
   review: '',
@@ -45,9 +47,9 @@ function CommentForm(): JSX.Element {
   };
 
   const isDisabled = formState.rating === '0'
-   || formState.review.length < MIN_LENGTH_COMMENT
+   || formState.review.length < LengthComment.Min
    || sendCommentsLoading
-   || formState.review.length > MAX_LENGTH_COMMENT;
+   || formState.review.length > LengthComment.Max;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmitForm}>

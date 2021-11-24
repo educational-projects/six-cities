@@ -30,10 +30,18 @@ export const ratingStarSetting: {[key: string]: string} = {
 } as const;
 
 export const SortType = {
-  POPULAR: 'Popular',
-  PRICE_UP: 'Price: low to high',
-  PRICE_DOWN: 'Price: high to low',
-  RATING_DOWN: 'Top rated first',
+  Popular: 'Popular',
+  PriceUp: 'Price: low to high',
+  PriceDown: 'Price: high to low',
+  RatingDown: 'Top rated first',
 } as const;
+
+export enum FailMessage {
+  Auth = 'something went wrong',
+  SendComment = 'there was an error posting your comment, please try again',
+  ChangeFavorite = 'failed to add to favorites, please try again',
+  Nearby = 'could not load offers nearby, please try refreshing the page',
+  LoadComments = 'failed to load comments, please refresh the page',
+}
 
 export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
