@@ -24,6 +24,7 @@ export enum ActionType {
   LoadFavoritesOffersError = 'data/LoadFavoritesOffersError',
   SendCommentsRequest = 'data/sendCommentsRequest',
   SendCommentsSuccess = 'data/sendCommentsSuccess',
+  SendCommentsError = 'data/sendCommentsError',
   RequireAuthorizationRequest = 'user/requireAuthorizationRequest',
   RequireAuthorizationSuccess = 'user/requireAuthorizationSuccess',
   RequireAuthorizationError = 'data/requireAuthorizationError',

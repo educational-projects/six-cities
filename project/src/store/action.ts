@@ -123,6 +123,8 @@ export const sendCommentsSuccess = createAction(
   }),
 );
 
+export const sendCommentsError = createAction(ActionType.SendCommentsError);
+
 export const requireAuthorizationRequest = createAction(ActionType.RequireAuthorizationRequest);
 
 export const requireAuthorizationSuccess = createAction(

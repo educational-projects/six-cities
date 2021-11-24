@@ -14,7 +14,7 @@ import {
   loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess,
   redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest,
   requireAuthorizationSuccess, requireLogoutError, requireLogoutRequest, requireLogoutSuccess,
-  sendCommentsRequest, sendCommentsSuccess
+  sendCommentsError, sendCommentsRequest, sendCommentsSuccess
 } from './action';
 import { CommentData, UsersComments } from '../types/comment';
 
@@ -117,6 +117,7 @@ export const sendCommentsAction = ({id, rating, comment}: CommentData, resetForm
       resetForm();
     } catch {
       toast.error(SEND_COMMENT_MESSAGE);
+      dispatch(sendCommentsError());
     }
   }
 );
