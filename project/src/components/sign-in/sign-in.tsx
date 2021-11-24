@@ -43,7 +43,7 @@ function SignIn(): JSX.Element {
       value: '',
       error: false,
       errorText: 'incorrect password',
-      regex: /^[0-9A-Za-z]{3,10}$/i,
+      regex: /([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})/,
     },
   });
 
