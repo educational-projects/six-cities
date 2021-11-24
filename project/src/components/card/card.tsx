@@ -7,13 +7,13 @@ import { getChangeFavoriteStatusLoading } from '../../store/offers/selectors';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 
-type ItemCardProps = {
+type CardProps = {
   card: Offer;
   cardType?: string;
   onActiveCard?: (id: number | null) => void;
 }
 
-function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.Element {
+function Card({card, cardType ='cities', onActiveCard}: CardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, type, rating, title, id} = card;
   const dispatch = useDispatch();
   const favoriteStatusLoading = useSelector(getChangeFavoriteStatusLoading);
@@ -102,4 +102,4 @@ function ItemCard({card, cardType ='cities', onActiveCard}: ItemCardProps): JSX.
   );
 }
 
-export default memo(ItemCard);
+export default memo(Card);

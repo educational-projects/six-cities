@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UserLogin from '../user-nav/user-nav';
+import UserNav from '../user-nav/user-nav';
 
 function Header(): JSX.Element {
   return (
@@ -11,7 +11,7 @@ function Header(): JSX.Element {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
             </Link>
           </div>
-          <UserLogin/>
+          <UserNav/>
         </div>
       </div>
     </header>
