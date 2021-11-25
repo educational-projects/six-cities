@@ -4,7 +4,7 @@ import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
-import { adaptToClient, adaptUserDataToClient, adaptUsersCommentsToClient } from '../utils';
+import { adaptToClient, adaptUserDataToClient, adaptUsersCommentsToClient } from '../utils/utils';
 import { BackUser } from '../types/user';
 import {
   changeFavoriteStatusError,

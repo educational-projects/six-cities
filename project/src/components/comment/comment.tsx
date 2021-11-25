@@ -1,5 +1,5 @@
 import { UserComment } from '../../types/comment';
-import { getFormatDate, getRating } from '../../utils';
+import { getFormatDate, getRating } from '../../utils/utils';
 
 type CommentProps = {
   comment: UserComment;

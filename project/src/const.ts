@@ -51,3 +51,8 @@ export enum FailMessage {
 }
 
 export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export enum DefaultSettingApp {
+  City = 'Paris',
+  SortedType = 'Popular'
+}

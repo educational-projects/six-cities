@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { changeFavorite } from '../../store/api-actions';
 import { getChangeFavoriteStatusLoading } from '../../store/offers/selectors';
 import { Offer } from '../../types/offer';
-import { getRating } from '../../utils';
+import { getRating } from '../../utils/utils';
 
 type CardProps = {
   card: Offer;

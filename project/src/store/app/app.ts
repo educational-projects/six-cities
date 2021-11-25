@@ -1,13 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { DefaultSettingApp } from '../../const';
 import { AppState } from '../../types/state';
 import { changeCity, changeSortType } from '../action';
 
-const DEFAULT_CITY = 'Paris';
-const DEFAULT_SORT = 'Popular';
-
 const initialState: AppState = {
-  currentCity: DEFAULT_CITY,
-  currentSortType: DEFAULT_SORT,
+  currentCity: DefaultSettingApp.City,
+  currentSortType: DefaultSettingApp.SortedType,
 };
 
 const app = createReducer(initialState, (builder) => {

@@ -3,7 +3,7 @@ import styles from './sign-in.module.css';
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
-import { getRandomArrayElement } from '../../utils';
+import { getRandomArrayElement } from '../../utils/utils';
 import { AppRoute, citiesList } from '../../const';
 import { changeCity } from '../../store/action';
 import { Link } from 'react-router-dom';
