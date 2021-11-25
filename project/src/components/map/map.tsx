@@ -4,10 +4,15 @@ import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap/useMap';
 import { Offers } from '../../types/offer';
 
-const URL_MARKER_DEFAULT = 'img/pin.svg';
-const URL_MARKER_CURRENT = 'img/pin-active.svg';
-const PIN_WIDTH = 27;
-const PIN_HEIGHT = 39;
+enum UrlMarker {
+  Default = 'img/pin.svg',
+  Current = 'img/pin-active.svg'
+}
+
+enum Pin {
+  Width = 27,
+  Height = 39
+}
 
 type MapProps = {
   cards: Offers;
@@ -16,15 +21,15 @@ type MapProps = {
 }
 
 const defaultCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [PIN_WIDTH, PIN_HEIGHT],
-  iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
+  iconUrl: UrlMarker.Default,
+  iconSize: [Pin.Width, Pin.Height],
+  iconAnchor: [Pin.Width / 2, Pin.Height],
 });
 
 const currentCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [PIN_WIDTH, PIN_HEIGHT],
-  iconAnchor: [PIN_WIDTH / 2, PIN_HEIGHT],
+  iconUrl: UrlMarker.Current,
+  iconSize: [Pin.Width, Pin.Height],
+  iconAnchor: [Pin.Width / 2, Pin.Height],
 });
 
 function Map({cards, activeCard, className }: MapProps): JSX.Element {

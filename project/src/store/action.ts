@@ -108,6 +108,8 @@ export const changeFavoriteStatusSuccess = createAction(
   }),
 );
 
+export const changeFavoriteStatusError = createAction(ActionType.ChangeFavoriteStatusError);
+
 export const sendCommentsRequest = createAction(ActionType.SendCommentsRequest);
 
 export const resetOfferError = createAction(ActionType.ResetOfferError);
@@ -120,6 +122,8 @@ export const sendCommentsSuccess = createAction(
     },
   }),
 );
+
+export const sendCommentsError = createAction(ActionType.SendCommentsError);
 
 export const requireAuthorizationRequest = createAction(ActionType.RequireAuthorizationRequest);
 

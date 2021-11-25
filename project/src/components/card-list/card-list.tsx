@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import ItemCard from '../card/card';
+import Card from '../card/card';
 import { Offers } from '../../types/offer';
 
 type CardListProps = {
@@ -18,7 +18,7 @@ function CardList({cards, cardType, listType = 'default', onActiveCard = undefin
   return (
     <div className={listClasses}>
       {cards.map((card) => (
-        <ItemCard
+        <Card
           card={card}
           key={card.id}
           cardType={cardType}

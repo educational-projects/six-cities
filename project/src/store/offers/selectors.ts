@@ -6,9 +6,9 @@ import { getCurrentCity, getCurrentSortType } from '../app/selectors';
 import { NameSpace } from '../root-reducer';
 
 const sortMap: {[key: string]: (cardA: Offer, cardB: Offer) => number} = {
-  [SortType.PRICE_DOWN]: (cardA, cardB) => cardB.price - cardA.price,
-  [SortType.PRICE_UP]: (cardA, cardB) => cardA.price - cardB.price,
-  [SortType.RATING_DOWN]: (cardA, cardB) => cardB.rating - cardA.rating,
+  [SortType.PriceDown]: (cardA, cardB) => cardB.price - cardA.price,
+  [SortType.PriceUp]: (cardA, cardB) => cardA.price - cardB.price,
+  [SortType.RatingDown]: (cardA, cardB) => cardB.rating - cardA.rating,
 };
 
 const getCardList = (state: State): Offers => state[NameSpace.Offers].cardList;

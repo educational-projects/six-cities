@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { fetchCardsAction, logoutAction } from '../../store/api-actions';
 
-function ButtonLogout(): JSX.Element {
+function UserButtonLogout(): JSX.Element {
   const dispatch = useDispatch();
 
   return (
@@ -19,4 +19,4 @@ function ButtonLogout(): JSX.Element {
   );
 }
 
-export default ButtonLogout;
+export default UserButtonLogout;

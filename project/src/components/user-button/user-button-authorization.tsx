@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-function ButtonSignIn(): JSX.Element {
+function UserButtonAuthorization(): JSX.Element {
   return (
     <li className="header__nav-item user">
       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
@@ -13,4 +13,4 @@ function ButtonSignIn(): JSX.Element {
   );
 }
 
-export default ButtonSignIn;
+export default UserButtonAuthorization;

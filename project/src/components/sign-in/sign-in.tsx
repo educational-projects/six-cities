@@ -3,7 +3,7 @@ import styles from './sign-in.module.css';
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
-import { getRandomArrayElement } from '../../utils';
+import { getRandomArrayElement } from '../../utils/utils';
 import { AppRoute, citiesList } from '../../const';
 import { changeCity } from '../../store/action';
 import { Link } from 'react-router-dom';
@@ -43,7 +43,7 @@ function SignIn(): JSX.Element {
       value: '',
       error: false,
       errorText: 'incorrect password',
-      regex: /^[0-9A-Za-z]{3,10}$/i,
+      regex: /([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})/,
     },
   });
 

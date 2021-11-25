@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import { BackUserComment, UserComment } from './types/comment';
-import { BackOffer, Offer } from './types/offer';
-import { BackUser, User } from './types/user';
+import { BackUserComment, UserComment } from '../types/comment';
+import { BackOffer, Offer } from '../types/offer';
+import { BackUser, User } from '../types/user';
 
 export const getRating = (rating: number): string => `${(Math.round(rating) / 5) * 100}%`;
 

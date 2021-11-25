@@ -14,7 +14,7 @@ import NotFound from '../not-found/not-found-screen';
 import { getOffer, getOfferError, getOfferLoading, getOffersNearby, getOffersNearbyLoading } from '../../store/offers/selectors';
 import { getCommentsLoading } from '../../store/comments/selectors';
 import { resetOfferError } from '../../store/action';
-import { getRating } from '../../utils';
+import { getRating } from '../../utils/utils';
 
 const MAX_COUNT_NEARBY = 3;
 

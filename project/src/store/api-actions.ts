@@ -1,28 +1,22 @@
 import { toast } from 'react-toastify';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, FailMessage, HttpCode } from '../const';
 import { dropToken, saveToken} from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { BackOffer, BackOffers } from '../types/offer';
-import { adaptToClient, adaptUserDataToClient, adaptUsersCommentsToClient } from '../utils';
+import { adaptToClient, adaptUserDataToClient, adaptUsersCommentsToClient } from '../utils/utils';
 import { BackUser } from '../types/user';
 import {
+  changeFavoriteStatusError,
   changeFavoriteStatusRequest, changeFavoriteStatusSuccess, changeUserData, loadCardsError,
   loadCardsRequest, loadCardsSuccess, loadCommentsError, loadCommentsRequest, loadCommentsSuccess,
   loadFavoritesOffersError, loadFavoritesOffersRequest, loadFavoritesOffersSuccess, loadNearbyError,
   loadNearbyRequest, loadNearbySuccess, loadOfferError, loadOfferRequest, loadOfferSuccess,
   redirectToBack, redirectToRoute, requireAuthorizationError, requireAuthorizationRequest,
   requireAuthorizationSuccess, requireLogoutError, requireLogoutRequest, requireLogoutSuccess,
-  sendCommentsRequest, sendCommentsSuccess
+  sendCommentsError, sendCommentsRequest, sendCommentsSuccess
 } from './action';
 import { CommentData, UsersComments } from '../types/comment';
-
-const AUTH_FAIL_MESSAGE = 'something went wrong';
-const SEND_COMMENT_MESSAGE = 'there was an error posting your comment, please try again';
-const STATUS_FAIL_MESSAGE = 'failed to add to favorites, please try again';
-const NEARBY_FAIL_MESSAGE = 'could not load offers nearby, please try refreshing the page';
-const COMMENTS_FAIL_MESSAGE = 'failed to load comments, please refresh the page';
-
 
 export const fetchCardsAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
@@ -55,8 +49,8 @@ export const fetchOffersNearby = (id: string): ThunkActionResult => (
       const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
       dispatch(loadNearbySuccess(data.map(adaptToClient)));
     } catch(e: any) {
-      if (e.response.status !== 404) {
-        toast.error(NEARBY_FAIL_MESSAGE);
+      if (e.response.status !== HttpCode.NotFound) {
+        toast.error(FailMessage.Nearby);
       }
       dispatch(loadNearbyError());
     }
@@ -70,8 +64,8 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
       const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
       dispatch(loadCommentsSuccess(data.map(adaptUsersCommentsToClient)));
     } catch(e: any) {
-      if (e.response.status !== 400) {
-        toast.error(COMMENTS_FAIL_MESSAGE);
+      if (e.response.status !== HttpCode.BadRequest) {
+        toast.error(FailMessage.LoadComments);
       }
       dispatch(loadCommentsError());
     }
@@ -97,10 +91,11 @@ export const changeFavorite = (id: number, status: boolean): ThunkActionResult =
       const {data} = await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
       dispatch(changeFavoriteStatusSuccess(adaptToClient(data)));
     } catch(e: any) {
-      if (e.response.status === 401) {
+      if (e.response.status === HttpCode.Unauthorized) {
         dispatch(redirectToRoute(AppRoute.Login));
+        dispatch(changeFavoriteStatusError());
       } else {
-        toast.error(STATUS_FAIL_MESSAGE);
+        toast.error(FailMessage.ChangeFavorite);
       }
     }
   }
@@ -114,7 +109,8 @@ export const sendCommentsAction = ({id, rating, comment}: CommentData, resetForm
       dispatch(sendCommentsSuccess(data.map(adaptUsersCommentsToClient)));
       resetForm();
     } catch {
-      toast.error(SEND_COMMENT_MESSAGE);
+      toast.error(FailMessage.SendComment);
+      dispatch(sendCommentsError());
     }
   }
 );
@@ -143,7 +139,7 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
       dispatch(redirectToBack());
     } catch {
       dispatch(requireAuthorizationError(AuthorizationStatus.NoAuth));
-      toast.error(AUTH_FAIL_MESSAGE);
+      toast.error(FailMessage.Auth);
     }
   }
 );
@@ -157,7 +153,7 @@ export const logoutAction = (): ThunkActionResult => (
       dispatch(requireLogoutSuccess(AuthorizationStatus.NoAuth));
     } catch {
       dispatch(requireLogoutError());
-      toast.error(AUTH_FAIL_MESSAGE);
+      toast.error(FailMessage.Auth);
     }
   }
 );

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { CommentsState } from '../../types/state';
-import { loadCommentsError, loadCommentsRequest, loadCommentsSuccess, sendCommentsRequest, sendCommentsSuccess } from '../action';
+import { loadCommentsError, loadCommentsRequest, loadCommentsSuccess, sendCommentsError, sendCommentsRequest, sendCommentsSuccess } from '../action';
 
 const initialState: CommentsState = {
   commentsLoading: false,
@@ -30,6 +30,9 @@ const comments = createReducer(initialState, (builder) => {
       const {userComment} = action.payload;
       state.sendCommentsLoading = false;
       state.comments = userComment;
+    })
+    .addCase(sendCommentsError, (state) => {
+      state.sendCommentsLoading = false;
     });
 });
 

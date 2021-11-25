@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import CitiesMenu from '../../components/cities-menu/cities-menu';
-import MainEmpty from '../../components/empty-main/empty-main';
+import EmptyMain from '../../components/empty-main/empty-main';
 import Header from '../../components/header/header';
 import OffersBoard from '../../components/offers-board/offers-board';
 import { getCurrentCity } from '../../store/app/selectors';
@@ -36,7 +36,7 @@ function Main(): JSX.Element {
           offers.length ?
             <OffersBoard cards={offers}/>
             :
-            <MainEmpty currentCity={currentCity}/>
+            <EmptyMain currentCity={currentCity}/>
         }
       </main>
     </div>
