@@ -48,6 +48,7 @@ export const fetchOffersNearby = (id: string): ThunkActionResult => (
     try {
       const {data} = await api.get<BackOffers>(`${APIRoute.Cards}/${id}${APIRoute.Nearby}`);
       dispatch(loadNearbySuccess(data.map(adaptToClient)));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(e: any) {
       if (e.response.status !== HttpCode.NotFound) {
         toast.error(FailMessage.Nearby);
@@ -63,6 +64,7 @@ export const fetchCommentsAction = (id: string): ThunkActionResult => (
     try {
       const {data} = await api.get<UsersComments>(`${APIRoute.Comments}/${id}`);
       dispatch(loadCommentsSuccess(data.map(adaptUsersCommentsToClient)));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(e: any) {
       if (e.response.status !== HttpCode.BadRequest) {
         toast.error(FailMessage.LoadComments);
@@ -90,6 +92,7 @@ export const changeFavorite = (id: number, status: boolean): ThunkActionResult =
     try {
       const {data} = await api.post(`${APIRoute.Favorites}/${id}/${Number(status)}`);
       dispatch(changeFavoriteStatusSuccess(adaptToClient(data)));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(e: any) {
       if (e.response.status === HttpCode.Unauthorized) {
         dispatch(redirectToRoute(AppRoute.Login));
